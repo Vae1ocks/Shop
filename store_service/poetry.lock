@@ -293,7 +293,18 @@ files = [
     {file = "tzdata-2024.1.tar.gz", hash = "sha256:2674120f8d891909751c38abcdfd386ac0a5a1127954fbc332af6b5ceae07efd"},
 ]
 
+[[package]]
+name = "unidecode"
+version = "1.3.8"
+description = "ASCII transliterations of Unicode text"
+optional = false
+python-versions = ">=3.5"
+files = [
+    {file = "Unidecode-1.3.8-py3-none-any.whl", hash = "sha256:d130a61ce6696f8148a3bd8fe779c99adeb4b870584eeb9526584e9aa091fd39"},
+    {file = "Unidecode-1.3.8.tar.gz", hash = "sha256:cfdb349d46ed3873ece4586b96aa75258726e2fa8ec21d6f00a591d98806c2f4"},
+]
+
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "a7ca5e5285e33c4ae3ac3962b38b0693a9a444dba76b97dd1faed6830c3c6ab0"
+content-hash = "1af9e62c1cfbc1a290c2f5992d2bc74a12ae8fef232fab24c4b8487c39596f70"
