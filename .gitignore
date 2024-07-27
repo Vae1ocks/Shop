@@ -3,6 +3,7 @@
 *.pot
 *.pyc
 __pycache__
+__pycache__/**
 db.sqlite3
 media
 
@@ -12,6 +13,7 @@ media
 # If you are using PyCharm #
 # User-specific stuff
 .idea
+.idea/**
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml
