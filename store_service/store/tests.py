@@ -164,7 +164,7 @@ class StoreTest(APITestCase):
 
         mock_response = MagicMock()
         mock_response.status_code = 200
-        mock_response.json.return_value = {'first_name': 'Username', 'user_image': None}
+        mock_response.json.return_value = {'first_name': 'Username', 'profile_picture': None}
         mock_get.return_value = mock_response
 
         self.goods.users_bought.append(self.user.id)
