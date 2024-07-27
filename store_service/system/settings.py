@@ -31,12 +31,17 @@ INSTALLED_APPS = [
 # Frameworks
 INSTALLED_APPS += [
     'rest_framework',
-    'djangorestframework_simplejwt',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 # Django apps
 INSTALLED_APPS += [
     'store',
+]
+
+INSTALLED_APPS += [
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -75,9 +80,11 @@ WSGI_APPLICATION = 'system.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'store_service',
+        'USER': 'admin',
+        'PASSWORD': 'admin',
+    },
 }
 
 
@@ -129,7 +136,7 @@ REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ],
 
     'DEFAULT_SCHEMA_CLASS':

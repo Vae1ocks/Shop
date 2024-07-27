@@ -78,7 +78,7 @@ class PriceHistory(models.Model): # Для истории цен, создани
 class Comment(models.Model):
     author = models.PositiveIntegerField()
     author_name = models.CharField(max_length=30)
-    author_profile_picture = models.ImageField() # получается, авы тоже дублировать придётся
+    author_profile_picture = models.ImageField(blank=True, null=True)
 
     goods = models.ForeignKey(Goods,
                               on_delete=models.CASCADE,
