@@ -28,7 +28,7 @@ INSTALLED_APPS += [
 
 # apps
 INSTALLED_APPS += [
-    'auth'
+    'authentication',
 ]
 
 # another
@@ -60,7 +60,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'authentication.User'
 
 ROOT_URLCONF = 'system.urls'
 
@@ -82,10 +82,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'system.wsgi.application'
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'auth_db',
+        'USER': 'ophely',
+        'PASSWORD': 'ophely159',
+        'HOST': 'localhost',
+        'POST': '5432'
     }
 }
 
@@ -109,11 +120,11 @@ TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = '/auth/static/'
-STATIC_ROOT = os.path.join(BASE_DIR / 'auth/static')
+STATIC_URL = '/authentication/static/'
+STATIC_ROOT = os.path.join(BASE_DIR / 'authentication/static')
 
-MEDIA_URL = '/auth/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR / 'auth/media')
+MEDIA_URL = '/authentication/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR / 'authentication/media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
