@@ -38,7 +38,7 @@ class Registration(generics.GenericAPIView):
             subject = f'Регистрация'
             message = (f'{serializer.validated_data['first_name']}, для подтверждения регистрации перейдите по ссылке '
                        f'http://127.0.0.1:8000/{short_code}')
-            # send_mail(subject, message, settings.EMAIL_HOST_USER, serializer.data['email'])
+            send_mail(subject, message, settings.EMAIL_HOST_USER, [serializer.data['email']])
             return Response({'detail': f'Письмо отправлено. Код: {short_code}'})
 
 
