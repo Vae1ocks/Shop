@@ -12,3 +12,4 @@ class UserRepresentationalInfo(ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ['first_name', 'profile_picture']
+

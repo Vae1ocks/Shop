@@ -34,8 +34,9 @@ class Registration(generics.GenericAPIView):
                 'full_code': full_code
             }
             subject = f'Регистрация'
-            message = (f'{serializer.validated_data['first_name']}, для подтверждения регистрации перейдите по ссылке '
-                       f'http://127.0.0.1:8000/{short_code}')
+            message = (f'{serializer.validated_data['first_name']},'
+                       f' для подтверждения регистрации введите код '
+                       f'{short_code}')
             send_mail(subject, message, settings.EMAIL_HOST_USER, [serializer.data['email']])
             return Response({'detail': f'Письмо отправлено. Код: {short_code}'})
 
@@ -50,7 +51,7 @@ class ConfirmRegistration(generics.GenericAPIView):
                     'то происходит создание пользователя.'
     )
     def post(self, request, *args, **kwargs):
-        short_code = kwargs['short_code']
+        short_code = request.data.get('short_code')
         full_code = request.session['reg'].get('full_code')
         serializer = ConfirmRegistrationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
