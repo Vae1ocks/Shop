@@ -4,6 +4,7 @@
 *.pyc
 __pycache__
 __pycache__/**
+**/__pychache/
 db.sqlite3
 media
 

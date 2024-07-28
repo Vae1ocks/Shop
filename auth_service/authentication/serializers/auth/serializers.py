@@ -11,13 +11,6 @@ class RegistrationSerializer(serializers.ModelSerializer):
         model = User
         fields = ['email', 'first_name']
 
-    def validate(self, attrs):
-        try:
-            user = User.objects.get(email=attrs['email'])
-            raise serializers.ValidationError('Пользователь с таким email уже существует.')
-        except ObjectDoesNotExist:
-            return attrs
-
 
 class ConfirmRegistrationSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, required=True)

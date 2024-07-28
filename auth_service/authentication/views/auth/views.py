@@ -26,15 +26,13 @@ class Registration(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = RegistrationSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            full_code = make_password(str(random.randrange(100000, 999999)).encode('utf-8'))
-            if full_code[-7] == '/':
-                full_code[-7] = 'a'
+            short_code = str(random.randrange(100000, 999999))
+            full_code = make_password(short_code)
             request.session['reg'] = {
                 'email': serializer.validated_data.get('email'),
                 'first_name': serializer.validated_data.get('first_name'),
-                'code': full_code
+                'full_code': full_code
             }
-            short_code = full_code[len(full_code) - 7:]
             subject = f'Регистрация'
             message = (f'{serializer.validated_data['first_name']}, для подтверждения регистрации перейдите по ссылке '
                        f'http://127.0.0.1:8000/{short_code}')
@@ -53,10 +51,10 @@ class ConfirmRegistration(generics.GenericAPIView):
     )
     def post(self, request, *args, **kwargs):
         short_code = kwargs['short_code']
-        full_code = request.session['reg'].get('code')
+        full_code = request.session['reg'].get('full_code')
         serializer = ConfirmRegistrationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        if short_code == full_code[len(full_code) - 7:]:
+        if check_password(short_code, full_code):
             user = User.objects.create_user(
                 email=request.session['reg'].get('email'),
                 first_name=request.session['reg'].get('first_name'),
