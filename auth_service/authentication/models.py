@@ -51,5 +51,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     class Meta:
+        ordering = ['-is_verified']
+        indexes = [
+            models.Index(fields=['is_verified'])
+        ]
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'

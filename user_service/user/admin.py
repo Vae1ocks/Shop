@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from .models import User
 
+
 class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
@@ -24,5 +25,6 @@ class UserAdmin(BaseUserAdmin):
     list_display = ('email', 'name', 'is_staff')
     search_fields = ('email', 'name')
     ordering = ('email', )
+
 
 admin.site.register(User, UserAdmin)

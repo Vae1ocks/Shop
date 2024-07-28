@@ -4,9 +4,9 @@ from .views import *
 
 
 urlpatterns = [
-    path('registration/', Registration.as_view()),
-    path('confirm-registration/<str:short_code>/', ConfirmRegistration.as_view()),
-    path('login/', Login.as_view()),
-    path('logout/', Logout.as_view()),
-    path('new-access-token/', GenerateAccessToken.as_view()),
+    path('registration/', Registration.as_view(), name='registration'),
+    path('confirm-registration/<str:short_code>/', ConfirmRegistration.as_view(), name='confirm-registration'),
+    path('login/', Login.as_view(), name='login'),
+    path('logout/', Logout.as_view(), name='logout'),
+    path('new-access-token/', GenerateAccessToken.as_view(), name='refresh-token'),
 ]
