@@ -3,7 +3,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import mixins
 from django.db.models import Case, When
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiTypes
+from drf_spectacular.utils import extend_schema, OpenApiParameter, \
+    OpenApiTypes, OpenApiResponse, inline_serializer, OpenApiExample
+from rest_framework import serializers
 import requests
 
 from ...models import Category, Goods, Comment
@@ -20,7 +22,7 @@ class GoodsListView(GenericAPIView):
     def get_recommended_goods(self, queryset):
         if self.request.user.is_authenticated:
             base_uri = self.request.build_absolute_uri('/')
-            relative_url = f'users/user/{self.request.user.id}/purchase-history'
+            relative_url = f'users/{self.request.user.id}/purchase-history'
             url = f'{base_uri}{relative_url}'
             response = requests.get(url) # потом нужно закешировать
             if response.status_code == status.HTTP_200_OK:
@@ -63,8 +65,53 @@ class GoodsListView(GenericAPIView):
                                                        'Формат: "min;max"',
                              required=False, type=OpenApiTypes.STR)
         ],
-        responses={200: GoodsListSerializer}
+        responses={
+            200: OpenApiResponse(
+                response=inline_serializer(
+                    name='GoodsListResponse',
+                    fields={
+                        'recommended_goods': GoodsListSerializer(many=True),
+                        'other_goods': GoodsListSerializer(many=True)
+                    }
+                ),
+                description='Список рекомендованных товаров и других товаров. '
+                            'Поле available = True если количество товаров превышает 0. '
+                            'В случае, если идёт фильтрация по категории т.е '
+                            'ендпоинт category/<str:category>/, то возвращается '
+                            'вместо recommended_goods и other_goods только 1: '
+                            '"goods" без изменения самой структуры возвращаемых данных '
+                            'и полей. Поле "rating" равно 0 в случае отсутствия отзывов,'
+                            'из которых и формируется рейтинг товара.',
+                examples=[
+                    OpenApiExample(
+                        'Пример в случае отсутствия фильтрации по категории',
+                        value={
+                            'recommended_goods': [
+                                {"id": 1, "image": "image file", "title": "string",
+                                 "price": "3453454", "rating": "3", "available": True},
+                            ],
+                            'other_goods': [
+                                {"id": 2, "image": "image file", "title": "string",
+                                 "price": "100", "rating": "5", "available": True},
+                            ]
+                        },
+                    ),
+                    OpenApiExample(
+                        'Пример в случае фильтрации по категории',
+                        value={
+                            'goods': [
+                                {"id": 1, "image": "image file", "title": "string",
+                                 "price": "3453454", "rating": "3", "available": True},
+                                {"id": 2, "image": "image file", "title": "string",
+                                 "price": "100", "rating": "5", "available": True}
+                            ],
+                        },
+                    )
+                ]
+            ),
+        }
     )
+
     def get(self, request, *args, **kwargs):
         queryset = Goods.objects.all().select_related('category').only(
             'image', 'title', 'price', 'rating', 'category__title'
@@ -121,7 +168,7 @@ class CommentCreateView(CreateAPIView):
                           permissions.IsGoodsBoughtByUser]
 
     @extend_schema(
-        description='Поля "author_name" и "author_profile_picture" не требуются,'
+        description='Поля "author_name" и "author_profile_picture" не требуются, '
                     'достаточно body(опциональное поле), rating (int от 1 до 5) и goods (id товара)'
     )
     def post(self, request, *args, **kwargs):
@@ -130,13 +177,13 @@ class CommentCreateView(CreateAPIView):
     def create(self, request, *args, **kwargs):
         data = request.data
         base_uri = self.request.build_absolute_uri('/')
-        relative_url = f'users/user/{request.user.id}/presentational-data/'
+        relative_url = f'users/{request.user.id}/representational-data/'
         url = f'{base_uri}{relative_url}'
         response = requests.get(url)
         if response.status_code == status.HTTP_200_OK:
-            response_data = response.json()  # {'first_name': 'str', 'user_image': 'img'}
+            response_data = response.json()  # {'first_name': 'str', 'profile_picture': 'img'}
             user_data = {'author_name': response_data['first_name'],
-                         'author_profile_picture': response_data['user_image']}
+                         'author_profile_picture': response_data['profile_picture']}
             full_data = {**data, **user_data}
             serializer = self.get_serializer(data=full_data)
             serializer.is_valid(raise_exception=True)

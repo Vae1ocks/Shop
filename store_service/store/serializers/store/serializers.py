@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from drf_spectacular.utils import extend_schema_field, OpenApiTypes
+
 from ...models import Category, Goods, Comment, PriceHistory
 
 
@@ -30,7 +32,7 @@ class CommentUpdateSerializer(serializers.ModelSerializer):
 class PriceHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = PriceHistory
-        fields = '__all__'
+        exclude = ['goods']
 
 
 class GoodsListSerializer(serializers.ModelSerializer):
@@ -40,6 +42,7 @@ class GoodsListSerializer(serializers.ModelSerializer):
         model = Goods
         fields = ['id', 'image', 'title', 'price', 'rating', 'available']
 
+    @extend_schema_field(OpenApiTypes.BOOL)
     def get_available(self, obj):
         if obj.amount >= 1:
             return True

@@ -17,7 +17,8 @@ class UserManager(BaseUserManager):
         )
 
         user.set_password(password)
-        user.name = f'Пользователь {user.id}'
+        if not user.first_name:
+            user.first_name = f'Пользователь {user.id}'
         user.save()
         return user
 
