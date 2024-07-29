@@ -38,6 +38,7 @@ INSTALLED_APPS += [
 # Django apps
 INSTALLED_APPS += [
     'store',
+    'basket'
 ]
 
 INSTALLED_APPS += [
@@ -131,7 +132,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        'rest_framework.permissions.AllowAny',
     ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -165,3 +166,5 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Q",),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
 }
+
+SHOPPING_BASKET_KEY = 'shopping_basket'

@@ -57,7 +57,7 @@ class Goods(models.Model):
         return self.title
     
 
-class PriceHistory(models.Model): # Для истории цен, создание в signals.py
+class PriceHistory(models.Model):  # Для истории цен, создание в signals.py
     goods = models.ForeignKey(Goods,
                               on_delete=models.CASCADE,
                               related_name='price_history')
