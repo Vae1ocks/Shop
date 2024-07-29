@@ -1,23 +1,14 @@
 from pathlib import Path
 from datetime import timedelta
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECRET_KEY = 'django-insecure-uzw794@u-s@=**q*g0+l+q)rf%x(@f*c+t9e*07$!+8^n%axp&'
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6twwvifhv(wf*hmlyxd8368k@4ps9_6o$$*jm9#k!_-%mn(bff'
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -36,14 +27,30 @@ INSTALLED_APPS += [
 ]
 
 # Django apps
-INSTALLED_APPS += [
-    'store',
-    'basket'
-]
+# INSTALLED_APPS += [
+#     'store',
+#     'basket'
+# ]
 
 INSTALLED_APPS += [
     'drf_spectacular',
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+
+    'DEFAULT_SCHEMA_CLASS':
+        'drf_spectacular.openapi.AutoSchema',
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -79,7 +86,7 @@ WSGI_APPLICATION = 'system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'store_service',
+        'NAME': 'payment_service',
         'USER': 'admin',
         'PASSWORD': 'admin',
     },
@@ -111,28 +118,14 @@ USE_I18N = True
 USE_TZ = True
 
 
-STATIC_URL = 'store/static/'
-
+STATIC_URL = 'payment/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ],
-
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ],
-
-    'DEFAULT_SCHEMA_CLASS':
-        'drf_spectacular.openapi.AutoSchema',
-}
 
 # SPECTACULAR
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Store',
+    'TITLE': 'Payment',
     'DESCRIPTION': 'Processing ....',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
@@ -152,5 +145,3 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Q",),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
 }
-
-SHOPPING_BASKET_KEY = 'shopping_basket'
