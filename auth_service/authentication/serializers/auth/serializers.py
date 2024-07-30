@@ -12,8 +12,11 @@ class RegistrationSerializer(serializers.ModelSerializer):
         fields = ['email', 'first_name']
 
 
-class ConfirmRegistrationSerializer(serializers.Serializer):
+class SendCodeSerializer(serializers.Serializer):
     short_code = serializers.CharField(write_only=True, required=True)
+
+
+class SetNewPasswordSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, required=True)
     password2 = serializers.CharField(write_only=True, required=True)
 
@@ -35,5 +38,8 @@ class LoginSerializer(serializers.Serializer):
 class RefreshSerializer(serializers.Serializer):
     refresh = serializers.CharField(write_only=True, required=True)
 
+
+class ResetPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField(write_only=True, required=True)
 
 

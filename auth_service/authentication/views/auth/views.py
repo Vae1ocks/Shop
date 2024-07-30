@@ -1,19 +1,25 @@
+import datetime
 import random
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import permissions
-from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from rest_framework.authentication import authenticate
 from django.contrib.auth.hashers import check_password, make_password
 from rest_framework_simplejwt.tokens import RefreshToken
 from drf_spectacular.utils import extend_schema
+from django.utils import timezone
+from celery import current_app
+from rest_framework import status
 
-from authentication.models import User
 from authentication.serializers.auth.serializers import *
+from authentication.tasks import *
 
 
-# TODO: Донастроить отправку Email в настройках
+User = get_user_model()
+
+
 class Registration(generics.GenericAPIView):
     serializer_class = RegistrationSerializer
     permission_classes = [permissions.AllowAny]
@@ -28,21 +34,25 @@ class Registration(generics.GenericAPIView):
         if serializer.is_valid(raise_exception=True):
             short_code = str(random.randrange(100000, 999999))
             full_code = make_password(short_code)
+            request.session.set_expiry(300)
             request.session['reg'] = {
                 'email': serializer.validated_data.get('email'),
                 'first_name': serializer.validated_data.get('first_name'),
-                'full_code': full_code
+                'full_code': full_code,
+                'expire_at': str(datetime.datetime.now() + timezone.timedelta(minutes=5))
             }
-            subject = f'Регистрация'
-            message = (f'{serializer.validated_data['first_name']},'
-                       f' для подтверждения регистрации введите код '
-                       f'{short_code}')
-            send_mail(subject, message, settings.EMAIL_HOST_USER, [serializer.data['email']])
-            return Response({'detail': f'Письмо отправлено. Код: {short_code}'})
+
+            send_mail_code_task.delay(
+                user_email=serializer.validated_data.get('email'),
+                first_name=serializer.validated_data.get('first_name'),
+                code=short_code
+            )
+            return Response({'detail': f'Письмо отправлено. Код: {short_code}'},
+                            status=status.HTTP_200_OK)
 
 
 class ConfirmRegistration(generics.GenericAPIView):
-    serializer_class = ConfirmRegistrationSerializer
+    serializer_class = SendCodeSerializer
     permission_classes = [permissions.AllowAny]
 
     @extend_schema(
@@ -53,18 +63,40 @@ class ConfirmRegistration(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         short_code = request.data.get('short_code')
         full_code = request.session['reg'].get('full_code')
-        serializer = ConfirmRegistrationSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
         if check_password(short_code, full_code):
-            user = User.objects.create_user(
-                email=request.session['reg'].get('email'),
-                first_name=request.session['reg'].get('first_name'),
-                password=serializer.validated_data['password'],
-                is_verified=True,
-            )
-            del request.session['reg']
-            return Response({'detail': f'Пользователь {user.email} создан'})
-        return Response({'detail': 'Код не совпадает'})
+            if request.session['reg'].get('expire_at') > str(datetime.datetime.now()):
+                return Response({'detail': f'Код введен верно'}, status=status.HTTP_200_OK)
+            else:
+                return Response({'detail': 'Время действия кода истекло.'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'detail': 'Код не совпадает'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SetNewPassword(generics.GenericAPIView):
+    serializer_class = SetNewPasswordSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        serializer = SetNewPasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        session_reg = request.session['reg']
+        user = User.objects.create_user(
+            email=session_reg['email'],
+            first_name=session_reg['first_name'],
+            password=serializer.validated_data['password'],
+            is_verified=True,
+        )
+        user.save()
+        # Создать task с отправкой в user_service данные пользователя.
+        current_app.send_task(
+            'send_data_user_create_user',
+            kwargs={
+                'email': request.session['reg'].get('email'),
+                'first_name': request.session['reg'].get('first_name'),
+                'password': serializer.validated_data['password']
+            },
+            queue='user_system_queue'
+        )
+        return Response({'detail': f'Пользователь {user.email} создан.'}, status=status.HTTP_200_OK)
 
 
 class Login(generics.GenericAPIView):
@@ -89,7 +121,7 @@ class Login(generics.GenericAPIView):
         return Response({
             'refresh': str(token),
             'access': str(token.access_token)
-        })
+        }, status=status.HTTP_200_OK)
 
 
 class Logout(generics.GenericAPIView):
@@ -104,7 +136,7 @@ class Logout(generics.GenericAPIView):
         refresh = request.data.get('refresh')
         token = RefreshToken(refresh)
         token.blacklist()
-        return Response({'detail': 'Выход выполнен.'})
+        return Response({'detail': 'Выход выполнен.'}, status=status.HTTP_200_OK)
 
 
 class GenerateAccessToken(generics.GenericAPIView):
@@ -117,4 +149,42 @@ class GenerateAccessToken(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         refresh = request.data.get('refresh')
         token = RefreshToken(refresh)
-        return Response({'access': str(token.access_token)})
+        return Response({'access': str(token.access_token)}, status=status.HTTP_200_OK)
+
+
+class ResetPassword(generics.GenericAPIView):
+    serializer_class = ResetPasswordSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        email = request.data.get('email')
+        try:
+            user = User.objects.get(email=email)
+            short_code = str(random.randrange(100000, 999999))
+            full_code = make_password(short_code)
+            request.session['reset'] = {
+                'email': email,
+                'full_code': full_code
+            }
+
+            send_mail_code_task.delay(
+                user_email=user.email,
+                first_name=user.first_name,
+                code=short_code)
+            return Response({'detail': f'Письмо отправлено. Код: {short_code}'}, status=status.HTTP_200_OK)
+        except ObjectDoesNotExist:
+            return Response({'detail': f'Такого пользователя не существует.'},status=status.HTTP_400_BAD_REQUEST)
+
+
+class ConfirmResetPassword(generics.GenericAPIView):
+    serializer_class = SendCodeSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        short_code = request.data.get('short_code')
+        email = request.session['reset'].get('email')
+        full_code = request.session['reset'].get('full_code')
+        if check_password(short_code, full_code):
+            return Response({'detail': 'Код введен верно.'}, status=status.HTTP_200_OK)
+        return Response({'detail': 'Код введен не верно.'}, status=status.HTTP_400_BAD_REQUEST)
+
