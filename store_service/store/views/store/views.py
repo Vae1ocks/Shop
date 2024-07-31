@@ -111,7 +111,6 @@ class GoodsListView(GenericAPIView):
             ),
         }
     )
-
     def get(self, request, *args, **kwargs):
         queryset = Goods.objects.all().select_related('category').only(
             'image', 'title', 'price', 'rating', 'category__title'

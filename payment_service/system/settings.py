@@ -24,13 +24,13 @@ INSTALLED_APPS += [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+    'corsheaders',
 ]
 
-# Django apps
-# INSTALLED_APPS += [
-#     'store',
-#     'basket'
-# ]
+# 8Django apps
+INSTALLED_APPS += [
+    'payment'
+]
 
 INSTALLED_APPS += [
     'drf_spectacular',
@@ -55,6 +55,7 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -122,6 +123,25 @@ STATIC_URL = 'payment/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CORS_ALLOW_ALL_ORIGINS: True
+
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
+
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "authorization",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+)
 
 # SPECTACULAR
 SPECTACULAR_SETTINGS = {
@@ -145,3 +165,8 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Q",),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
 }
+
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51PiKZCRoqNvzI7MBI5Cy1pGps7XWQA22CURdiLZYzzBurojZSNfPlYhdos4kXORt5bo3tWku22RZrhToOADHNfJP00mOG7Vo51'
+STRIPE_SECRET_KEY = 'sk_test_51PiKZCRoqNvzI7MB71omwJPIcZAkZdqTQd8UylCODX9sa9qSEzGOuOQynEju9ohFskH84l4i5KVOGTfwj9Ohuhgb00jU173Yjr'
+STRIPE_API_VERSION = '2024-06-20'
+STRIPE_WEBHOOK_SECRET = 'whsec_bc2310283d2ec93884f0c7aa09a3edd090a689b097a648ae28e83bb1b4d2a0a2'
