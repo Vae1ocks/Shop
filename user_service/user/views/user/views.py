@@ -17,28 +17,6 @@ from user.serializers.user.serializers import *
 from user.tasks import *
 
 
-# View для межсервисного взаимодействия, используется в store_service в GoodsListView
-class CategoriesBoughByUserView(RetrieveAPIView):
-    serializer_class = CategoriesBoughtByUserSerializer
-    queryset = get_user_model().objects.all()
-
-    @extend_schema(description='Для межсервисного бэкенд взаимодействия, '
-                               'не для фронтенд части.')
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-
-# View для межсервисного взаимодействия, используется в store_service в CommentCreateView
-class UserRepresentationalView(RetrieveAPIView):
-    serializer_class = UserRepresentationalInfo
-    queryset = get_user_model().objects.all()
-
-    @extend_schema(description='Для межсервисного бэкенд взаимодействия, '
-                               'не для фронтенд части.')
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-
 class GetUserInfoView(RetrieveAPIView):
     serializer_class = GetUserInfoSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -172,4 +150,3 @@ class EditUserPasswordView(GenericAPIView):
         user.save()
         return Response({'detail': f'У пользователя {user.email} изменен пароль'},
                         status=status.HTTP_200_OK)
-

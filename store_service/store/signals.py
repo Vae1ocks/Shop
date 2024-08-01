@@ -2,6 +2,9 @@ from django.db.models.signals import post_save, pre_delete
 from django.db.models import Avg
 from django.dispatch import receiver
 from .models import PriceHistory, Goods, Comment
+from django.urls import reverse
+
+from celery import current_app
 
 
 @receiver(post_save, sender=Goods)
@@ -18,7 +21,18 @@ def add_price_history(sender, instance, created, **kwargs):
             '-date'
         ).first().price
         if previous_price != instance.price:
+            relative_url = reverse('store:goods_detail', args=[instance.id])
             PriceHistory.objects.create(goods=instance, price=instance.price)
+            current_app.send_task(
+                'user_service.send_notification',
+                kwargs={
+                    'goods_id': instance.id,
+                    'goods_title': instance.title,
+                    'price': instance.price,
+                    'relative_url': relative_url
+                },
+                queue='user_system_queue'
+            )
 
 
 @receiver(post_save, sender=Comment)

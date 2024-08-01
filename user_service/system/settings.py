@@ -143,8 +143,10 @@ SIMPLE_JWT = {
 CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
+
 # Send_mail
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -153,3 +155,7 @@ EMAIL_HOST_PASSWORD = "mshw brfc pgey ugck"
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
+DEFAULT_PROTOCOL = 'http'
+DEFAULT_HOST = ALLOWED_HOSTS[0] if (ALLOWED_HOSTS and
+                                    ALLOWED_HOSTS[0] != '*') else '127.0.0.1'
+DEFAULT_PORT = '8000' if DEFAULT_HOST == '127.0.0.1' or DEFAULT_HOST == 'localhost' else ''
