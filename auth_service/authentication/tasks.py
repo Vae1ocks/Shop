@@ -14,6 +14,3 @@ def send_mail_code_task(user_email, code=None, first_name=None, message=None):
     else:
         message = f'Пользователь, для подтверждения регистрации введите код: {code}'
     send_mail(subject, message, settings.EMAIL_HOST_USER, [user_email], fail_silently=False)
-
-
-

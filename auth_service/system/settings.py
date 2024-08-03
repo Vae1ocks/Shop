@@ -5,6 +5,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-1*fs+e8@fzww%v1cuk_t9&79ifpqv0fze2ikahz2bu$#f93od+'
+JWT_SECRET_KEY = 'django-insecure-stj&7uj5z2pf=rrcj-5(%lyy6^eh6%2r0$ni_z3ro@c8i%vms1'
 
 DEBUG = True
 
@@ -147,6 +148,7 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 
     "ALGORITHM": "HS256",
+    "SIGNING_KEY": JWT_SECRET_KEY,
     "AUTH_HEADER_TYPES": ("Q",),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
 }
@@ -164,3 +166,8 @@ EMAIL_USE_SSL = False
 # Celery settings
 CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
+
+# Google
+GOOGLE_CLIENT_ID = '373455764380-jt5m9uef4qnp2grkhmv2upvc9b4loml7.apps.googleusercontent.com'
+GOOGLE_SECRET = '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'
+# Я хз куда пихать secret, в гайде чел его не юзал

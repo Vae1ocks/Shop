@@ -113,7 +113,8 @@ class Login(generics.GenericAPIView):
         password = request.data.get('password')
         user = authenticate(email=email, password=password)
         if not user:
-            return Response({'detail': 'Неверный логин'})
+            return Response({'detail': 'Неверные авторизационные данные'},
+                            401)
         token = RefreshToken.for_user(user)
         token.payload.update({
             'user_id': user.pk,

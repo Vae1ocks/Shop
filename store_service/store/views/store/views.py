@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import mixins
 from django.db.models import Case, When
+from django.core.cache import cache
 from drf_spectacular.utils import extend_schema, OpenApiParameter, \
     OpenApiTypes, OpenApiResponse, inline_serializer, OpenApiExample
 from rest_framework import serializers
@@ -24,11 +25,19 @@ class GoodsListView(GenericAPIView):
             base_uri = self.request.build_absolute_uri('/')
             relative_url = f'users/{self.request.user.id}/purchase-history'
             url = f'{base_uri}{relative_url}'
-            response = requests.get(url) # потом нужно закешировать
-            if response.status_code == status.HTTP_200_OK:
-                categories_bought = response.json()
-            else:
-                categories_bought = []
+            cache_key = f'user.{self.request.user.id}.purchase-history'
+            categories_bought = cache.get(cache_key)
+
+            if categories_bought is None:
+                response = requests.get(url)
+                if response.status_code == status.HTTP_200_OK:
+                    categories_bought = response.json()
+                    cache.set(cache_key, categories_bought, timeout=60*60*2)
+                else:
+                    categories_bought = []
+                    # в данном случае мб можно тоже закешировать, только на более
+                    # короткий промежуток времени, около 10 минут
+
             if categories_bought:
                 sorted_categories_bought = sorted(
                     categories_bought.items(),
@@ -122,8 +131,9 @@ class GoodsListView(GenericAPIView):
         if title or category:
             '''
             если пользователь фильтрует товары по категории или по названию --> он не просто
-            просматривает список всех товаров, а пришёл с какой-то конкретной целью и просматривает
-            определённый диапазон товаров --> предлагаем ему отфильтровать по цене
+            просматривает список всех товаров, а пришёл с какой-то конкретной целью и
+            просматривает определённый диапазон товаров --> предлагаем ему 
+            отфильтровать по цене
             '''
             allowable_price = self.request.query_params.get('price', None)
             if allowable_price:

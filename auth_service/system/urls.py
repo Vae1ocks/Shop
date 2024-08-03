@@ -11,5 +11,5 @@ urlpatterns = [
     path('api/auth/', include('authentication.urls')),
 
     path('api/token/verify/', TokenRefreshView.as_view(), name='token-verify'),
-    path('admin/', admin.site.urls),
+    path('auth/admin/', admin.site.urls),
 ]
