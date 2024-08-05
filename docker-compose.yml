@@ -54,7 +54,7 @@ services:
     container_name: auth-service
     command: ["./wait-for-it.sh", "db_auth:5432", "--", "sh", "-c",
               "poetry run python manage.py migrate &&
-              poetry run python manage.py runserver 127.0.0.1:8000"]
+              poetry run uwsgi --ini /auth_service/config/uwsgi/uwsgi.ini"]
     volumes:
       - ./auth_service:/auth_service
     environment:
@@ -85,7 +85,7 @@ services:
     container_name: payment-service
     command: ["./wait-for-it.sh", "db_payment:5432", "--", "sh", "-c",
               "poetry run python manage.py migrate &&
-              poetry run python manage.py runserver 127.0.0.1:8001"]
+              poetry run uwsgi --ini /payment_service/config/uwsgi/uwsgi.ini"]
     volumes:
       - ./payment_service:/payment_service
     environment:
@@ -116,7 +116,7 @@ services:
     container_name: store-service
     command: ["./wait-for-it.sh", "db_store:5432", "--", "sh", "-c",
               "poetry run python manage.py migrate &&
-              poetry run python manage.py runserver 127.0.0.1:8002"]
+              poetry run uwsgi --ini /store_service/config/uwsgi/uwsgi.ini"]
     volumes:
       - ./store_service:/store_service
     environment:
@@ -147,7 +147,7 @@ services:
     container_name: user-service
     command: ["./wait-for-it.sh", "db_user:5432", "--", "sh", "-c",
               "poetry run python manage.py migrate &&
-              poetry run python manage.py runserver 127.0.0.1:8003"]
+              poetry run uwsgi --ini /user_service/config/uwsgi/uwsgi.ini"]
     volumes:
       - ./user_service:/user_service
     environment:
@@ -171,3 +171,15 @@ services:
     depends_on:
       - user_service
       - redis
+
+  nginx:
+    image: nginx:1.23.1
+    restart: always
+    volumes:
+      - ./config/nginx:/etc/nginx/templates
+      - ./auth_service:/auth_service
+      - ./payment_service:/payment_service
+      - ./store_service:/store_service
+      - ./user_service:/user_service
+    ports:
+      - "80:80"

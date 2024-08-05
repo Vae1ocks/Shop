@@ -1,0 +1,71 @@
+upstream auth_service {
+    server unix:/auth_service/system/uwsgi_app.sock;
+}
+
+upstream payment_service {
+    server unix:/payment_service/system/uwsgi_app.sock;
+}
+
+upstream store_service {
+    server unix:/store_service/system/uwsgi_app.sock;
+}
+
+upstream user_service {
+    server unix:/user_service/system/uwsgi_app.sock;
+}
+
+server {
+    listen 80;
+
+    location /auth/static/ {
+        alias /auth_service/static/;
+    }
+
+    location /auth/media/ {
+        alias /auth_service/media/;
+    }
+
+    location /payment/static/ {
+        alias /auth_service/static/;
+    }
+
+    location /payment/media/ {
+        alias /auth_service/media/;
+    }
+
+    location /store/static/ {
+        alias /auth_service/static/;
+    }
+
+    location /store/media/ {
+        alias /auth_service/media/;
+    }
+
+    location /user/static/ {
+        alias /auth_service/static/;
+    }
+
+    location /user/media/ {
+        alias /auth_service/media/;
+    }
+
+    location /auth/ {
+        include /etc/nginx/uwsgi_params;
+        uwsgi_pass auth_service;
+    }
+
+    location /payment/ {
+        include /etc/nginx/uwsgi_params;
+        uwsgi_pass payment_service;
+    }
+
+    location /store/ {
+        include /etc/nginx/uwsgi_params;
+        uwsgi_pass store_service;
+    }
+
+    location /user/ {
+        include /etc/nginx/uwsgi_params;
+        uwsgi_pass user_service;
+    }
+}

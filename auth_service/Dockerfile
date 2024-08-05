@@ -10,5 +10,7 @@ RUN pip install poetry
 
 COPY poetry.lock pyproject.toml /auth_service/
 RUN poetry install --no-interaction
+RUN poetry add uwsgi
+# на винде uwsgi нельзя установить
 
 COPY . /auth_service/
