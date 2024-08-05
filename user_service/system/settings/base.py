@@ -1,21 +1,10 @@
-from pathlib import Path
 from datetime import timedelta
-import os
+from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-SECRET_KEY = 'django-insecure-6twwvifhv(wf*hmlyxd8368k@4ps9_6o$$*jm9#k!_-%mn(bff'
+SECRET_KEY = 'django-insecure-stj&7uj5z2pf=rrcj-5(%lyy6^eh6%2r0$ni_z3ro@c8i%vms1'
 JWT_SECRET_KEY = 'django-insecure-stj&7uj5z2pf=rrcj-5(%lyy6^eh6%2r0$ni_z3ro@c8i%vms1'
-
-
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -35,13 +24,27 @@ INSTALLED_APPS += [
 
 # Django apps
 INSTALLED_APPS += [
-    'store',
-    'basket'
+    'user',
 ]
 
+# Others
 INSTALLED_APPS += [
     'drf_spectacular',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+
+    'DEFAULT_SCHEMA_CLASS':
+        'drf_spectacular.openapi.AutoSchema',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -74,16 +77,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'system.wsgi.application'
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'store_service',
-        'USER': 'admin',
-        'PASSWORD': 'admin',
-    },
-}
-
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -99,38 +92,20 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 LANGUAGE_CODE = 'ru-ru'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
-STATIC_URL = 'store/static/'
-
+STATIC_URL = 'user/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ],
-
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ],
-
-    'DEFAULT_SCHEMA_CLASS':
-        'drf_spectacular.openapi.AutoSchema',
-}
+AUTH_USER_MODEL = 'user.User'
 
 # SPECTACULAR
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Store',
+    'TITLE': 'Authorization/Register',
     'DESCRIPTION': 'Processing ....',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
@@ -150,19 +125,4 @@ SIMPLE_JWT = {
     "SIGNING_KEY": JWT_SECRET_KEY,
     "AUTH_HEADER_TYPES": ("Q",),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
-}
-
-SHOPPING_BASKET_KEY = 'shopping_basket'
-
-
-# Celery
-CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
-
-# Кеширование на основе файлов
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
-        "LOCATION": os.path.join(BASE_DIR, 'cache'),
-    }
 }

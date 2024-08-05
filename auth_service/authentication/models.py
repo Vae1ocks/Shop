@@ -34,7 +34,6 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-# в user_service эта модель расширена, тут необходимый минимум
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=250, unique=True)
     first_name = models.CharField(max_length=50, blank=True, null=True)

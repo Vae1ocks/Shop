@@ -1,0 +1,173 @@
+services:
+  db_auth:
+    image: postgres:15.6
+    restart: always
+    volumes:
+      - ./db_auth_data:/var/lib/postgresql/data
+    environment:
+      PGDATA: /var/lib/postgresql/data/auth_service/
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: auth_service
+
+  db_store:
+    image: postgres:15.6
+    restart: always
+    volumes:
+      - ./db_store_data:/var/lib/postgresql/data
+    environment:
+      PGDATA: /var/lib/postgresql/data/store_service
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: store_service
+
+  db_payment:
+    image: postgres:15.6
+    restart: always
+    volumes:
+      - ./db_payment_data:/var/lib/postgresql/data
+    environment:
+      PGDATA: /var/lib/postgresql/data/payment_service
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: payment_service
+
+  db_user:
+    image: postgres:15.6
+    restart: always
+    volumes:
+      - ./db_user_data:/var/lib/postgresql/data
+    environment:
+      PGDATA: /var/lib/postgresql/data/user_service/
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: user_service
+
+  redis:
+    image: redis:latest
+    restart: always
+    container_name: redis
+
+  auth_service:
+    build:
+      context: ./auth_service
+    container_name: auth-service
+    command: ["./wait-for-it.sh", "db_auth:5432", "--", "sh", "-c",
+              "poetry run python manage.py migrate &&
+              poetry run python manage.py runserver 127.0.0.1:8000"]
+    volumes:
+      - ./auth_service:/auth_service
+    environment:
+      - DJANGO_SETTINGS_MODULE=system.settings.prod
+      - POSTGRES_DB=auth_service
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    depends_on:
+      - db_auth
+
+  auth_service_worker:
+    build:
+      context: ./auth_service
+    command: poetry run celery -A system worker -l info
+    restart: always
+    environment:
+      - DJANGO_SETTINGS_MODULE=system.settings.prod
+      - POSTGRES_DB=auth_service
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    depends_on:
+      - auth_service
+      - redis
+
+  payment_service:
+    build:
+      context: ./payment_service
+    container_name: payment-service
+    command: ["./wait-for-it.sh", "db_payment:5432", "--", "sh", "-c",
+              "poetry run python manage.py migrate &&
+              poetry run python manage.py runserver 127.0.0.1:8001"]
+    volumes:
+      - ./payment_service:/payment_service
+    environment:
+      - DJANGO_SETTINGS_MODULE=system.settings.prod
+      - POSTGRES_DB=payment_service
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    depends_on:
+      - db_payment
+
+#  payment_service_worker:
+#    build:
+#      context: ./payment_service
+#    command: poetry run celery -A system worker -l info
+#    restart: always
+#    environment:
+#      - DJANGO_SETTINGS_MODULE=system.settings.prod
+#      - POSTGRES_DB=payment_service
+#      - POSTGRES_USER=admin
+#      - POSTGRES_PASSWORD=admin
+#    depends_on:
+#      - payment_service
+#      - redis
+
+  store_service:
+    build:
+      context: ./store_service
+    container_name: store-service
+    command: ["./wait-for-it.sh", "db_store:5432", "--", "sh", "-c",
+              "poetry run python manage.py migrate &&
+              poetry run python manage.py runserver 127.0.0.1:8002"]
+    volumes:
+      - ./store_service:/store_service
+    environment:
+      - DJANGO_SETTINGS_MODULE=system.settings.prod
+      - POSTGRES_DB=store_service
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    depends_on:
+      - db_store
+
+  store_service_worker:
+    build:
+      context: ./store_service
+    command: poetry run celery -A system worker -l info
+    restart: always
+    environment:
+      - DJANGO_SETTINGS_MODULE=system.settings.prod
+      - POSTGRES_DB=store_service
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    depends_on:
+      - store_service
+      - redis
+
+  user_service:
+    build:
+      context: ./user_service
+    container_name: user-service
+    command: ["./wait-for-it.sh", "db_user:5432", "--", "sh", "-c",
+              "poetry run python manage.py migrate &&
+              poetry run python manage.py runserver 127.0.0.1:8003"]
+    volumes:
+      - ./user_service:/user_service
+    environment:
+      - DJANGO_SETTINGS_MODULE=system.settings.prod
+      - POSTGRES_DB=user_service
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    depends_on:
+      - db_user
+
+  user_service_worker:
+    build:
+      context: ./user_service
+    command: poetry run celery -A system worker -l info
+    restart: always
+    environment:
+      - DJANGO_SETTINGS_MODULE=system.settings.prod
+      - POSTGRES_DB=user_service
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    depends_on:
+      - user_service
+      - redis

@@ -1,17 +1,20 @@
 import datetime
 import random
+
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import permissions
+from rest_framework import status
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from rest_framework.authentication import authenticate
 from django.contrib.auth.hashers import check_password, make_password
+from django.utils import timezone
+
 from rest_framework_simplejwt.tokens import RefreshToken
 from drf_spectacular.utils import extend_schema
-from django.utils import timezone
 from celery import current_app
-from rest_framework import status
 
 from authentication.serializers.auth.serializers import *
 from authentication.tasks import *

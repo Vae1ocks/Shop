@@ -7,10 +7,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1*fs+e8@fzww%v1cuk_t9&79ifpqv0fze2ikahz2bu$#f93od+'
 JWT_SECRET_KEY = 'django-insecure-stj&7uj5z2pf=rrcj-5(%lyy6^eh6%2r0$ni_z3ro@c8i%vms1'
 
-DEBUG = True
-
-ALLOWED_HOSTS = ['*']
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -83,24 +79,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'system.wsgi.application'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'auth_db',
-        'USER': 'ophely',
-        'PASSWORD': 'ophely159',
-        'HOST': 'localhost',
-        'POST': '5432'
-    }
-}
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -152,20 +130,6 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Q",),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
 }
-
-# Send_mail
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = "ophely1992@gmail.com"
-EMAIL_HOST_PASSWORD = "mshw brfc pgey ugck"
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-
-# Celery settings
-CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
 # Google
 GOOGLE_CLIENT_ID = '373455764380-jt5m9uef4qnp2grkhmv2upvc9b4loml7.apps.googleusercontent.com'
