@@ -1,3 +1,5 @@
+"""API для authentication"""
+
 import datetime
 import random
 
