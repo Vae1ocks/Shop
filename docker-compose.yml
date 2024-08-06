@@ -53,8 +53,8 @@ services:
       context: ./auth_service
     container_name: auth-service
     command: ["./wait-for-it.sh", "db_auth:5432", "--", "sh", "-c",
-              "poetry run python manage.py migrate &&
-              poetry run uwsgi --ini /auth_service/config/uwsgi/uwsgi.ini"]
+              "python manage.py migrate &&
+              uwsgi --ini /auth_service/config/uwsgi/uwsgi.ini"]
     volumes:
       - ./auth_service:/auth_service
     environment:
@@ -68,7 +68,7 @@ services:
   auth_service_worker:
     build:
       context: ./auth_service
-    command: poetry run celery -A system worker -l info
+    command: celery -A system worker -l info
     restart: always
     environment:
       - DJANGO_SETTINGS_MODULE=system.settings.prod
@@ -84,8 +84,8 @@ services:
       context: ./payment_service
     container_name: payment-service
     command: ["./wait-for-it.sh", "db_payment:5432", "--", "sh", "-c",
-              "poetry run python manage.py migrate &&
-              poetry run uwsgi --ini /payment_service/config/uwsgi/uwsgi.ini"]
+              "python manage.py migrate &&
+              uwsgi --ini /payment_service/config/uwsgi/uwsgi.ini"]
     volumes:
       - ./payment_service:/payment_service
     environment:
@@ -99,7 +99,7 @@ services:
 #  payment_service_worker:
 #    build:
 #      context: ./payment_service
-#    command: poetry run celery -A system worker -l info
+#    command: celery -A system worker -l info
 #    restart: always
 #    environment:
 #      - DJANGO_SETTINGS_MODULE=system.settings.prod
@@ -115,8 +115,8 @@ services:
       context: ./store_service
     container_name: store-service
     command: ["./wait-for-it.sh", "db_store:5432", "--", "sh", "-c",
-              "poetry run python manage.py migrate &&
-              poetry run uwsgi --ini /store_service/config/uwsgi/uwsgi.ini"]
+              "python manage.py migrate &&
+              uwsgi --ini /store_service/config/uwsgi/uwsgi.ini"]
     volumes:
       - ./store_service:/store_service
     environment:
@@ -130,7 +130,7 @@ services:
   store_service_worker:
     build:
       context: ./store_service
-    command: poetry run celery -A system worker -l info
+    command: celery -A system worker -l info
     restart: always
     environment:
       - DJANGO_SETTINGS_MODULE=system.settings.prod
@@ -146,8 +146,8 @@ services:
       context: ./user_service
     container_name: user-service
     command: ["./wait-for-it.sh", "db_user:5432", "--", "sh", "-c",
-              "poetry run python manage.py migrate &&
-              poetry run uwsgi --ini /user_service/config/uwsgi/uwsgi.ini"]
+              "python manage.py migrate &&
+              uwsgi --ini /user_service/config/uwsgi/uwsgi.ini"]
     volumes:
       - ./user_service:/user_service
     environment:
@@ -161,7 +161,7 @@ services:
   user_service_worker:
     build:
       context: ./user_service
-    command: poetry run celery -A system worker -l info
+    command: celery -A system worker -l info
     restart: always
     environment:
       - DJANGO_SETTINGS_MODULE=system.settings.prod

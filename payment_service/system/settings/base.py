@@ -1,7 +1,7 @@
 from pathlib import Path
 from datetime import timedelta
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = 'django-insecure-uzw794@u-s@=**q*g0+l+q)rf%x(@f*c+t9e*07$!+8^n%axp&'
 JWT_SECRET_KEY = 'django-insecure-stj&7uj5z2pf=rrcj-5(%lyy6^eh6%2r0$ni_z3ro@c8i%vms1'
@@ -107,6 +107,7 @@ USE_TZ = True
 
 
 STATIC_URL = 'payment/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

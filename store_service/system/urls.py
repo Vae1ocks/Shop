@@ -5,12 +5,12 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 urlpatterns = [
-    path('api/store/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/store/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('store/api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('store/api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 
-    path('api/store/', include('store.urls', namespace='store')),
-    path('api/basket/', include('basket.urls', namespace='basket')),
-    path('admin/', admin.site.urls),
+    path('store/api/', include('store.urls', namespace='store')),
+    path('store/api/basket/', include('basket.urls', namespace='basket')),
+    path('store/admin/', admin.site.urls),
 
-    path('api/store/login', TokenObtainPairView.as_view()),
+    path('store/api/login', TokenObtainPairView.as_view()),
 ]

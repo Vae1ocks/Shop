@@ -2,7 +2,7 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = 'django-insecure-1*fs+e8@fzww%v1cuk_t9&79ifpqv0fze2ikahz2bu$#f93od+'
 JWT_SECRET_KEY = 'django-insecure-stj&7uj5z2pf=rrcj-5(%lyy6^eh6%2r0$ni_z3ro@c8i%vms1'
@@ -99,10 +99,10 @@ TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = '/authentication/static/'
-STATIC_ROOT = os.path.join(BASE_DIR / 'authentication/static')
+STATIC_URL = '/auth/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
-MEDIA_URL = '/authentication/media/'
+MEDIA_URL = '/auth/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR / 'authentication/media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
