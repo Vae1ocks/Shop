@@ -22,11 +22,12 @@ INSTALLED_APPS += [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
+    'yookassa'
 ]
 
 # 8Django apps
 INSTALLED_APPS += [
-    'payment'
+    'payment',
 ]
 
 INSTALLED_APPS += [
@@ -159,3 +160,10 @@ STRIPE_PUBLISHABLE_KEY = 'pk_test_51PiKZCRoqNvzI7MBI5Cy1pGps7XWQA22CURdiLZYzzBur
 STRIPE_SECRET_KEY = 'sk_test_51PiKZCRoqNvzI7MB71omwJPIcZAkZdqTQd8UylCODX9sa9qSEzGOuOQynEju9ohFskH84l4i5KVOGTfwj9Ohuhgb00jU173Yjr'
 STRIPE_API_VERSION = '2024-06-20'
 STRIPE_WEBHOOK_SECRET = 'whsec_bc2310283d2ec93884f0c7aa09a3edd090a689b097a648ae28e83bb1b4d2a0a2'
+
+# Yookassa
+YOOKASSA_SECRET_KEY = 'test_fhVgsvbGbBiAMSwls-6HtEbfzN7hEL3i3zAHxV9xrHQ'
+YOOKASSA_SHOP_ID = 435007
+YOOKASSA_RETURN_URL = 'your_return_url'
+YOOKASSA_SUCCESS_URL = 'your_success_url'
+YOOKASSA_FAIL_URL = 'your_fail_url'

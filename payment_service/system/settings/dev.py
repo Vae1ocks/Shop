@@ -10,5 +10,7 @@ DATABASES = {
         'NAME': 'payment_service',
         'USER': 'admin',
         'PASSWORD': 'admin',
+        'HOST': 'localhost',
+        'POST': 5432
     },
 }
