@@ -85,7 +85,7 @@ class PaymentSuccessView(GenericAPIView):
                    responses={
                        200: OpenApiResponse(
                            inline_serializer(
-                               'Success Payment',
+                               'Success-Payment',
                                fields={'detail': serializers.CharField()}
                            ),
                            examples=[
@@ -99,7 +99,7 @@ class PaymentSuccessView(GenericAPIView):
                        )
                    }
                    )
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         return Response({'detail': 'Оплата проведена успешно'}, HTTP_200_OK)
 
 
@@ -110,7 +110,7 @@ class PaymentCanceledView(GenericAPIView):
                    responses={
                        200: OpenApiResponse(
                            inline_serializer(
-                               'Canceled Payment',
+                               'Canceled-Payment',
                                fields={'detail': serializers.CharField()}
                            ),
                            examples=[
