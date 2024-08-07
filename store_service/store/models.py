@@ -1,3 +1,7 @@
+"""
+Модели категории, товара, отзыва к товару и истории товара
+"""
+
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.text import slugify
@@ -15,7 +19,7 @@ class Category(models.Model):
         ]
         verbose_name = 'category'
         verbose_name_plural = 'categories'
-    
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(unidecode(self.title))
@@ -57,7 +61,10 @@ class Goods(models.Model):
         return self.title
     
 
-class PriceHistory(models.Model):  # Для истории цен, создание в signals.py
+class PriceHistory(models.Model):
+    """
+    Для истории цен товара, создание происходит в signals.py
+    """
     goods = models.ForeignKey(Goods,
                               on_delete=models.CASCADE,
                               related_name='price_history')

@@ -3,29 +3,30 @@
 import datetime
 import random
 
-from rest_framework import generics
-from rest_framework.response import Response
-from rest_framework import permissions
-from rest_framework import status
+from celery import current_app
+from drf_spectacular.utils import extend_schema
 
-from django.conf import settings
 from django.contrib.auth import get_user_model
-from rest_framework.authentication import authenticate
 from django.contrib.auth.hashers import check_password, make_password
 from django.utils import timezone
 
+from rest_framework import generics
+from rest_framework import permissions
+from rest_framework import status
+from rest_framework.authentication import authenticate
+from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from drf_spectacular.utils import extend_schema
-from celery import current_app
 
 from authentication.serializers.auth.serializers import *
 from authentication.tasks import *
-
 
 User = get_user_model()
 
 
 class Registration(generics.GenericAPIView):
+    """
+    1 из 3 этапов: ввод почты и имени
+    """
     serializer_class = RegistrationSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -35,6 +36,10 @@ class Registration(generics.GenericAPIView):
                     'отправляется письмо на почту для подтверждения регистрации.'
     )
     def post(self, request, *args, **kwargs):
+        """
+        Валидируем введённые данные и отправляем код на почту.
+        Хешируем код в сессию для повышения безопасности хранения кода.
+        """
         serializer = RegistrationSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             short_code = str(random.randrange(100000, 999999))
@@ -44,7 +49,8 @@ class Registration(generics.GenericAPIView):
                 'email': serializer.validated_data.get('email'),
                 'first_name': serializer.validated_data.get('first_name'),
                 'full_code': full_code,
-                'expire_at': str(datetime.datetime.now() + timezone.timedelta(minutes=5))
+                'expire_at': str(datetime.datetime.now() +
+                                 timezone.timedelta(minutes=5))
             }
 
             send_mail_code_task.delay(
@@ -57,6 +63,10 @@ class Registration(generics.GenericAPIView):
 
 
 class ConfirmRegistration(generics.GenericAPIView):
+    """
+    Подтверждение почты: ввод кода, высланного на почту после Registration view;
+    2 этап. Валидируем код с помощью check_password
+    """
     serializer_class = SendCodeSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -70,13 +80,19 @@ class ConfirmRegistration(generics.GenericAPIView):
         full_code = request.session['reg'].get('full_code')
         if check_password(short_code, full_code):
             if request.session['reg'].get('expire_at') > str(datetime.datetime.now()):
-                return Response({'detail': f'Код введен верно'}, status=status.HTTP_200_OK)
+                return Response({'detail': f'Код введен верно'},
+                                status=status.HTTP_200_OK)
             else:
-                return Response({'detail': 'Время действия кода истекло.'}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({'detail': 'Код не совпадает'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'detail': 'Время действия кода истекло.'},
+                                status=status.HTTP_400_BAD_REQUEST)
+        return Response({'detail': 'Код не совпадает'},
+                        status=status.HTTP_400_BAD_REQUEST)
 
 
 class SetNewPassword(generics.GenericAPIView):
+    """
+    3 этап, последний: устанавливаем пароль. Реиспользуется при сбросе пароля.
+    """
     serializer_class = SetNewPasswordSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -105,6 +121,9 @@ class SetNewPassword(generics.GenericAPIView):
 
 
 class Login(generics.GenericAPIView):
+    """
+    Аутентификация по email и паролю
+    """
     serializer_class = LoginSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -159,10 +178,17 @@ class GenerateAccessToken(generics.GenericAPIView):
 
 
 class ResetPassword(generics.GenericAPIView):
+    """
+    Сброс пароля. Первый этап: ввод почты и отправка на него кода.
+    """
     serializer_class = ResetPasswordSerializer
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
+        """
+        Валидируем email, хешируем отправленный код для повышения безопасности
+        хранения кода в сессии.
+        """
         email = request.data.get('email')
         try:
             user = User.objects.get(email=email)
@@ -177,12 +203,17 @@ class ResetPassword(generics.GenericAPIView):
                 user_email=user.email,
                 first_name=user.first_name,
                 code=short_code)
-            return Response({'detail': f'Письмо отправлено. Код: {short_code}'}, status=status.HTTP_200_OK)
+            return Response({'detail': f'Письмо отправлено. Код: {short_code}'},
+                            status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
-            return Response({'detail': f'Такого пользователя не существует.'},status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': f'Такого пользователя не существует.'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
 
 class ConfirmResetPassword(generics.GenericAPIView):
+    """
+    Второй этап: ввод кода.
+    """
     serializer_class = SendCodeSerializer
     permission_classes = [permissions.AllowAny]
 

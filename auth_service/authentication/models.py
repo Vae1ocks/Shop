@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+
 from decimal import Decimal
 
 
@@ -35,6 +36,9 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    """
+    Необходимый минимум, в user_service модель расширена.
+    """
     email = models.EmailField(max_length=250, unique=True)
     first_name = models.CharField(max_length=50, blank=True, null=True)
 

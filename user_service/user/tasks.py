@@ -8,6 +8,9 @@ from django.contrib.auth import get_user_model
 
 @shared_task(name='send_data_user_create_user')
 def create_user_task(**kwargs):
+    """
+    Для создания пользователя при создании его в auth_service.
+    """
     get_user_model().objects.create_user(**kwargs, is_verified=True)
 
 

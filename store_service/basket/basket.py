@@ -1,9 +1,16 @@
+"""
+Корзина покупок
+"""
+
 from decimal import Decimal
 from django.conf import settings
 from store.models import Goods
 
 
 class Basket:
+    """
+    Корзина покупок
+    """
     def __init__(self, request):
         self.session = request.session
         basket = self.session.get(settings.SHOPPING_BASKET_KEY)
@@ -52,6 +59,9 @@ class Basket:
                    for value in self.basket.values())
 
     def get_basket_items(self):
+        """
+        Для сериализации корзины
+        """
         items = []
         for item in self:
             items.append({
