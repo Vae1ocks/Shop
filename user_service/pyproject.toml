@@ -16,6 +16,7 @@ requests = "^2.32.3"
 celery = "^5.4.0"
 djangorestframework-simplejwt = "^5.3.1"
 redis = "^5.0.8"
+djangochannelsrestframework = "^1.2.0"
 
 
 [build-system]
