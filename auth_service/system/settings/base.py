@@ -21,6 +21,7 @@ INSTALLED_APPS += [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+    'corsheaders',
 ]
 
 # apps
@@ -35,12 +36,11 @@ INSTALLED_APPS += [
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        'rest_framework.permissions.AllowAny',
     ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
     ],
 
     'DEFAULT_SCHEMA_CLASS':
@@ -50,6 +50,7 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -135,3 +136,7 @@ SIMPLE_JWT = {
 GOOGLE_CLIENT_ID = '373455764380-jt5m9uef4qnp2grkhmv2upvc9b4loml7.apps.googleusercontent.com'
 GOOGLE_SECRET = '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'
 # Я хз куда пихать secret, в гайде чел его не юзал
+
+# CORS
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
