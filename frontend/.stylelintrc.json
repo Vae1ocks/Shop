@@ -1,0 +1,28 @@
+{
+  "extends": [
+    "stylelint-config-standard-scss",
+    "stylelint-config-clean-order/error",
+    "stylelint-config-prettier-scss"
+  ],
+  "plugins": [
+    "stylelint-high-performance-animation",
+    "stylelint-no-unsupported-browser-features"
+  ],
+  "rules": {
+    "plugin/no-low-performance-animation-properties": [
+      true,
+      {
+        "ignore": "paint-properties"
+      }
+    ],
+    "plugin/no-unsupported-browser-features": [
+      true,
+      {
+        "severity": "warning"
+      }
+    ]
+  },
+  "ignoreFiles": [
+    "!**/*"
+  ]
+}

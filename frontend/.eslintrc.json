@@ -1,25 +1,39 @@
 {
   "root": true,
   "ignorePatterns": ["!**/*"],
-  "plugins": ["@nx"],
+  "plugins": ["@nx", "sonarjs"],
   "overrides": [
-    {
-      "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nx/typescript"],
-      "rules": {}
-    },
-    {
-      "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nx/javascript"],
-      "rules": {}
-    },
     {
       "files": ["*.ts"],
       "extends": [
+        "plugin:@nx/typescript",
         "plugin:@nx/angular",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "airbnb-base",
+        "airbnb-typescript/base",
+        "plugin:sonarjs/recommended-legacy",
+        "plugin:import/recommended",
+        "plugin:import/typescript",
+        "plugin:rxjs/recommended",
+        "@ngrx/all"
       ],
+      "parserOptions": {
+        "project": "./tsconfig.*?.json"
+      },
+      "settings": {
+        "import/resolver": {
+          "alwaysTryTypes": true,
+          "project": "./tsconfig.json"
+        }
+      },
       "rules": {
+        "import/no-unresolved": "error",
+        "rxjs/no-unsafe-takeuntil": [
+          "error",
+          {
+            "alias": ["takeUntilDestroyed"]
+          }
+        ],
         "@angular-eslint/directive-selector": [
           "error",
           {
@@ -37,6 +51,11 @@
           }
         ]
       }
+    },
+    {
+      "files": ["*.js"],
+      "extends": ["plugin:@nx/javascript"],
+      "rules": {}
     },
     {
       "files": ["*.html"],
