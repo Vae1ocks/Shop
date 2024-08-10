@@ -150,3 +150,21 @@ class EditUserPasswordView(GenericAPIView):
         user.save()
         return Response({'detail': f'У пользователя {user.email} изменен пароль'},
                         status=status.HTTP_200_OK)
+
+
+# История покупок
+class UserHistoryView(GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        user = get_user_model().objects.get(pk=self.request.user.pk)
+        data = {'username': 'admin', 'password': 'admin'}
+        token = {'Authorization': f'Q {str(requests.post('http://127.0.0.1:8003/payment/api/login', data).json()['access'])}'}
+        url = 'http://127.0.0.1:8003/payment/order-list/'
+        response = requests.get(url, headers=token)
+        orders = response.json()
+        return Response({'detail': {
+            'user': user.email,
+            'orders_list': orders
+        }}, status=HTTP_200_OK)
+
