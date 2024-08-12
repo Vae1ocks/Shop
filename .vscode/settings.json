@@ -5,5 +5,8 @@
         "ngrx",
         "sonarjs",
         "stylelint"
+    ],
+    "eslint.workingDirectories": [
+        "frontend"
     ]
 }

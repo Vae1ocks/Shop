@@ -119,6 +119,7 @@
       ],
       "options": {
         "lintFilePatterns": [
+          "**/*.css",
           "**/*.scss"
         ],
         "formatter": "string"

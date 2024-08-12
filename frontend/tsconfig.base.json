@@ -1,0 +1,37 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2022",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@app/pages/confirmation-code": [
+        "src/app/pages/registration/confirmation-code/src/index.ts"
+      ],
+      "@app/core": ["src/app/core/src/index.ts"],
+      "@app/pages/create-password": [
+        "src/app/pages/registration/create-password/src/index.ts"
+      ],
+      "@app/pages/login": ["src/app/pages/login/src/index.ts"],
+      "@app/pages/registration": [
+        "src/app/pages/registration/registration/src/index.ts"
+      ],
+      "@app/pages/registration-success": [
+        "src/app/pages/registration/registration-success/src/index.ts"
+      ],
+      "@app/shared/*": ["src/app/shared/*"],
+      "@env": ["src/environments/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
