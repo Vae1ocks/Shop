@@ -27,7 +27,7 @@
       "rules": {}
     },
     {
-      "files": ["*.js", "*.jsx"],
+      "files": ["*.js", "*.jsx", "*.mjs"],
       "extends": ["plugin:@nx/javascript"],
       "rules": {}
     },

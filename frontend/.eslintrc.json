@@ -86,7 +86,7 @@
         "rxjs/prefer-observer": ["error", { "allowNext": true }],
         "rxjs/no-ignored-error": "error",
         "no-secrets/no-secrets": "error",
-        "no-console": "error",
+        "no-console": ["error", { "allow": ["error"] }],
         "no-debugger": "error",
         "import/no-extraneous-dependencies": [
           "error",

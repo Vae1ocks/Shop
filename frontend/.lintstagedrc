@@ -1,14 +1,11 @@
 {
   "*.{js,ts}": [
-    "npx run eslint"
+    "npm run lint:affected"
   ],
   "*.{css,scss}": [
-    "npx stylelint:fix"
+    "npm run stylelint:affected"
   ],
-  "*.html": [
-    "npx prettier"
-  ],
-  "*.json": [
-    "npx prettier"
+  "*": [
+    "npm run format:write"
   ]
 }
