@@ -10,5 +10,7 @@ urlpatterns = [
     path('change-email/send-mail/confirm/', ConfirmEditUserEmailView.as_view()),
     path('change-email/send-mail/new-send/', SendMailNewEmailView.as_view()),
     path('change-email/send-mail/set-email/', SetNewEmailView.as_view()),
+    # order history
+    path('user/orders-history/', UserHistoryView.as_view()),
 
 ]

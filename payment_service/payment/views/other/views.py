@@ -8,6 +8,7 @@ from django.shortcuts import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from drf_spectacular.utils import extend_schema
 from decimal import Decimal
+from django.contrib.auth import get_user_model
 
 from django.conf import settings
 from yookassa import Configuration, Payment, Webhook
@@ -111,3 +112,15 @@ class PaymentStatusView(generics.GenericAPIView):
         order = Order.objects.get(pk=order_id)
         order.status = status
         return Response({'detail': f'Статус заказа {order.id} - {order.status}'})
+
+
+class UserOrderListView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        user = request.user.pk
+        orders = Order.objects.filter(user=user)
+        serializer = OrderListSerializer(orders, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+

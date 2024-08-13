@@ -181,5 +181,7 @@ services:
       - ./payment_service:/payment_service
       - ./store_service:/store_service
       - ./user_service:/user_service
+      - ./config/ssl:/shop/config/ssl
     ports:
       - "80:80"
+      - "443:443"

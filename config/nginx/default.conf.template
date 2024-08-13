@@ -16,6 +16,9 @@ upstream user_service {
 
 server {
     listen 80;
+    listen 443 ssl;
+    ssl_certificate /shop/config/ssl/shoppie.crt;
+    ssl_certificate_key /shop/config/ssl/shoppie.key;
 
     location /auth/static/ {
         alias /auth_service/static/;

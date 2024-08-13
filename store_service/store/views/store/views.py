@@ -218,7 +218,7 @@ class CommentCreateView(CreateAPIView):
 
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
+from django.urls import reverse_lazy
 class CommentUpdateDeleteView(mixins.DestroyModelMixin,
                               GenericAPIView):
     serializer_class = CommentUpdateSerializer
