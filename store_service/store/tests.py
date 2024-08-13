@@ -159,7 +159,8 @@ class StoreTest(APITestCase):
         data = {
             'body': 'Some comment body',
             'rating': 5,
-            'goods': self.goods.id
+            'goods': self.goods.id,
+            'images': [{'image': None}, {'image': None}]
         }
 
         mock_response = MagicMock()

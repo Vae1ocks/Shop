@@ -8,6 +8,14 @@ from django.utils.text import slugify
 from unidecode import unidecode
 
 
+def upload_to_author_id(instance, filename):
+    return f'comment/author/{instance.author}/{filename}'
+
+
+def upload_to_id(instance, filename):
+    return f'comment/{instance.id}/{filename}'
+
+
 class Category(models.Model):
     title = models.CharField(max_length=150, unique=True)
     slug = models.CharField(max_length=150, unique=True)
@@ -85,7 +93,8 @@ class PriceHistory(models.Model):
 class Comment(models.Model):
     author = models.PositiveIntegerField()
     author_name = models.CharField(max_length=30)
-    author_profile_picture = models.ImageField(blank=True, null=True)
+    author_profile_picture = models.ImageField(upload_to=upload_to_author_id,
+                                               blank=True, null=True)
 
     goods = models.ForeignKey(Goods,
                               on_delete=models.CASCADE,
@@ -98,3 +107,11 @@ class Comment(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+
+class ImageModel(models.Model):
+    comment = models.ForeignKey(Comment,
+                                on_delete=models.CASCADE,
+                                related_name='images')
+    image = models.ImageField(upload_to=upload_to_id,
+                              blank=True, null=True)
