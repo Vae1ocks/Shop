@@ -122,7 +122,7 @@ class SetNewPassword(generics.GenericAPIView):
 
 class Login(generics.GenericAPIView):
     """
-    Аутентификация по email и паролю
+    Аутентификация по email и паролю.
     """
     serializer_class = LoginSerializer
     permission_classes = [permissions.AllowAny]
