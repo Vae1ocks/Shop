@@ -23,7 +23,7 @@ class ChatListSerializer(ModelSerializer):
 class MessageSerializer(ModelSerializer):
     class Meta:
         model = Message
-        field = '__all__'
+        fields = '__all__'
 
 
 class ChatCreateSerializer(ModelSerializer):
@@ -63,5 +63,5 @@ class ChatDetailSerializer(ModelSerializer):
         """
         user = self.context['scope']['user']
         if obj.support != user:
-            return UserInChatSerializer(obj.support)
-        return UserInChatSerializer(obj.client)
+            return UserInChatSerializer(obj.support).data
+        return UserInChatSerializer(obj.client).data

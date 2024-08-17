@@ -20,11 +20,9 @@ def get_user(id):
 
 async def check_token(token):
     try:
-        print(token.split(' '))
         auth_header_type, token = token.split(' ')
         if auth_header_type not in settings.SIMPLE_JWT['AUTH_HEADER_TYPES']:
             return AnonymousUser()
-        print(token)
         token_decode = AccessToken(token)
         id = token_decode['user_id']
         return await get_user(id)

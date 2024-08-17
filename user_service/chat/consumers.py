@@ -1,7 +1,9 @@
+from channels.db import database_sync_to_async
 from django.contrib.auth import get_user_model
 from django.db.models import QuerySet, Q
 
 from djangochannelsrestframework.generics import GenericAsyncAPIConsumer
+from djangochannelsrestframework.observer import model_observer
 from djangochannelsrestframework.observer.generics import ObserverModelInstanceMixin
 from djangochannelsrestframework.decorators import action
 from djangochannelsrestframework.mixins import (
@@ -98,3 +100,39 @@ class SupportPersonalChats(
 #                             GenericAsyncAPIConsumer):
 #     serializer_class = serializers.MessageSerializer
 
+
+class PersonalChatConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
+    queryset = Chat.objects.all()
+    serializer_class = serializers.ChatDetailSerializer
+
+    @action()
+    async def issue_solved(self, pk, **kwargs):
+        ...
+        # Логика изменения статуса модели Chat на solved=True
+
+    @action()
+    async def create_message(self, message, pk, **kwargs):
+        chat = await self.get_chat(pk=pk)
+        await database_sync_to_async(Message.objects.create)(
+            chat=chat,
+            sender=self.scope["user"],
+            text=message
+        )
+
+    @action()
+    async def subscribe_to_messages_in_chat(self, pk, **kwargs):
+        await self.message_activity.subscribe(chat=pk)
+
+    @model_observer(Message)
+    async def message_activity(self, message,
+                               observer=None, **kwargs):
+
+        await self.send_json(message)
+
+    @message_activity.serializer
+    def message_activity(self, instance: Message, action, **kwargs):
+        return serializers.MessageSerializer(instance).data
+
+    @database_sync_to_async
+    def get_chat(self, pk) -> Chat:
+        return Chat.objects.get(pk=pk)
