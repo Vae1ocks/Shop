@@ -10,6 +10,8 @@ DATABASES = {
         'NAME': 'store_service',
         'USER': 'admin',
         'PASSWORD': 'admin',
+        'HOST': 'localhost',
+        'PORT': 5432,
     },
 }
 

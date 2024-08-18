@@ -36,6 +36,7 @@ class ChatCreateSerializer(ModelSerializer):
     message = MessageSerializer(write_only=True)
 
     class Meta:
+        model = Chat
         fields = ['issue', 'message']
 
     def create(self, validated_data):

@@ -25,7 +25,7 @@ class ChatCreateView(GenericAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        serializer = serializers.ChatCreateSerializer(request.data)
+        serializer = serializers.ChatCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=HTTP_201_CREATED)
