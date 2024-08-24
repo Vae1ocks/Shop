@@ -1,6 +1,8 @@
 """
 Для аутентификации через сторонние сервисы.
 """
+from random import random
+
 import requests
 import pkce
 import string
@@ -86,7 +88,9 @@ class YandexAuth(GenericAPIView):
         }, HTTP_200_OK)
 
 class VKSecurity(GenericAPIView):
-
+    """
+    Аутентификация по ВК.
+    """
     @extend_schema(
         description='Для аутентификации с использованием ВК. Для передачи данных требуются '
                     'code_verifier и code_challenge. state - случайный набор символов. '
@@ -95,7 +99,7 @@ class VKSecurity(GenericAPIView):
         data = {
             'code_verifier': pkce.generate_code_verifier(43),
             'code_challenge': pkce.get_code_challenge(code_verifier),
-            'state': ''.join(rangom.choice(string.ascii_lowercase) for i in range(15)),
+            'state': ''.join(random.choice(string.ascii_lowercase) for i in range(15)),
         }
 
         return Response({'data': data}, status=HTTP_200_OK)
@@ -113,7 +117,12 @@ class VkAuth(GenericAPIView):
         url = f'https://id.vk.com/oauth2/public_info?client_id={client_id}&id_token={id_token}'
         response = requests.post(url)
         user_email = response.json()['email']
-        user = User.objects.get_or_create(email=user_email, defults={'password': '', 'is_verified': True})
+        user = User.objects.get_or_create(
+            email=user_email,
+            defaults={
+                'password': '', 'is_verified': True
+            }
+        )
         tokens = create_tokens_for_user(user)
         return Response({
             'refresh': tokens['refresh'],
