@@ -12,13 +12,30 @@ from rest_framework.status import *
 from drf_spectacular.utils import extend_schema
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
+
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 from authentication.serializers.social import serializers
 from authentication.social_services.google import check_google_token
 from authentication.social_services.yandex import check_yandex_token
 from authentication.serializers.social.serializers import TokenSerializer
-from authentication.models import User
+
+User = get_user_model()
+
+
+def create_tokens_for_user(user):
+    token = RefreshToken.for_user(user)
+    token.payload.update(
+        {
+            'user_id': user.pk,
+        }
+    )
+    tokens = {
+        'refresh': str(token),
+        'access': str(token.access_token)
+    }
+    return tokens
 
 
 class GoogleAuth(GenericAPIView):
@@ -38,15 +55,10 @@ class GoogleAuth(GenericAPIView):
         serializer = serializers.GoogleAuthSerializer(data=request.data)
         if serializer.is_valid():
             user = check_google_token(serializer)
-            token = RefreshToken.for_user(user)
-            token.payload.update(
-                {
-                    'user_id': user.pk,
-                }
-            )
+            tokens = create_tokens_for_user(user)
             return Response({
-                'refresh': str(token),
-                'access': str(token.access_token)
+                'refresh': tokens['refresh'],
+                'access': tokens['access']
             }, HTTP_200_OK)
         return AuthenticationFailed(
             'Некорректные данные', HTTP_403_FORBIDDEN
@@ -67,15 +79,10 @@ class YandexAuth(GenericAPIView):
         serializer.is_valid(raise_exception=True)
 
         user = check_yandex_token(serializer)
-        token = RefreshToken.for_user(user)
-        token.payload.update(
-            {
-                'user_id': user.pk,
-            }
-        )
+        tokens = create_tokens_for_user(user)
         return Response({
-            'refresh': str(token),
-            'access': str(token.access_token)
+            'refresh': tokens['refresh'],
+            'access': tokens['access']
         }, HTTP_200_OK)
 
 class VKSecurity(GenericAPIView):
@@ -107,12 +114,9 @@ class VkAuth(GenericAPIView):
         response = requests.post(url)
         user_email = response.json()['email']
         user = User.objects.get_or_create(email=user_email, defults={'password': '', 'is_verified': True})
-        token = RefreshToken.for_user(user)
-        token.payload.update({
-            'user_id': user.pk,
-        })
+        tokens = create_tokens_for_user(user)
         return Response({
-            'refresh': str(token),
-            'access': str(token.access_token)
+            'refresh': tokens['refresh'],
+            'access': tokens['access']
         }, status=status.HTTP_200_OK)
 
