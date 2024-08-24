@@ -22,6 +22,7 @@ INSTALLED_APPS += [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
+
 ]
 
 # apps
@@ -46,6 +47,7 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS':
         'drf_spectacular.openapi.AutoSchema',
 }
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -140,3 +142,9 @@ GOOGLE_SECRET = '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'
 # CORS
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+
+SOCIAL_AUTH_VK_KEY = '52202129'
+SOCIAL_AUTH_VK_SECRET = '3nIMqWLf8xbwlU7AtrTA'
+SOCIAL_AUTH_VK_REDIRECT = 'http://localhost/callback'
+
+
