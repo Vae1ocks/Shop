@@ -95,8 +95,6 @@ class VkAuth(GenericAPIView):
         response = requests.post(url)
         user_email = response.json()['email']
         user = User.objects.get_or_create(email=user_email, defults={'password': '', 'is_verified': True})
-        user_password = user.password
-        user_login = authenticate(email=user_email, password=user_password)
         token = RefreshToken.for_user(user)
         token.payload.update({
             'user_id': user.pk,
