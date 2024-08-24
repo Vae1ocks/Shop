@@ -6,7 +6,6 @@ from django.urls import reverse
 
 from celery import current_app
 
-
 @receiver(post_save, sender=Goods)
 def add_price_history(sender, instance, created, **kwargs):
     """

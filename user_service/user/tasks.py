@@ -10,8 +10,10 @@ from django.contrib.auth import get_user_model
 def create_user_task(**kwargs):
     """
     Для создания пользователя при создании его в auth_service.
+    Получает пароль в хешированном виде, так что используется
+    create() вместе create_user().
     """
-    get_user_model().objects.create_user(**kwargs, is_verified=True)
+    get_user_model().objects.create(**kwargs, is_verified=True)
 
 
 @shared_task(name='send_mail_code')

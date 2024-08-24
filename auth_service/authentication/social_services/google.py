@@ -7,8 +7,10 @@ from ..serializers.social.serializers import GoogleAuthSerializer
 from google.oauth2 import id_token
 from google.auth.transport import requests
 
+User = get_user_model()
 
-def check_google_token(google_serializer: GoogleAuthSerializer):
+
+def check_google_token(google_serializer: GoogleAuthSerializer) -> User:
     """
     Функция валидации токена Google и проверки, существует ли пользователь с email
     или же необходимо создать пользователя. В случае отсутствия пользователя с
@@ -25,8 +27,10 @@ def check_google_token(google_serializer: GoogleAuthSerializer):
         raise AuthenticationFailed('Неверный Google токен', HTTP_403_FORBIDDEN)
 
     email = google_data['email']
-    user, _ = get_user_model().objects.get_or_create(email,
-                                                     defaults={
-                                                         'password': '',
-                                                     })
+    user, _ = User.objects.get_or_create(
+        email,
+        defaults={
+            'password': '',
+        }
+    )
     return user

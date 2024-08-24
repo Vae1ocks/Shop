@@ -1,5 +1,5 @@
 """
-Для аутентификации через сторонние сервисы
+Для аутентификации через сторонние сервисы.
 """
 from rest_framework.generics import GenericAPIView
 from rest_framework.exceptions import AuthenticationFailed
@@ -10,6 +10,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from authentication.serializers.social import serializers
 from authentication.social_services.google import check_google_token
+from authentication.serializers.social.serializers import TokenSerializer
 
 
 class GoogleAuth(GenericAPIView):
@@ -39,5 +40,21 @@ class GoogleAuth(GenericAPIView):
                 'refresh': str(token),
                 'access': str(token.access_token)
             }, HTTP_200_OK)
-        return AuthenticationFailed('Некорректные данные', HTTP_403_FORBIDDEN)
+        return AuthenticationFailed(
+            'Некорректные данные', HTTP_403_FORBIDDEN
+        )
+
+
+class YandexAuth(GenericAPIView):
+    """
+    Аутентификация с использованием Яндекс.
+    """
+    serializer_class = serializers.TokenSerializer
+
+    @extend_schema(
+        description='Для аутентификации с использованием Яндекс.'
+    )
+    def post(self, request, *args, **kwargs):
+        serializer = serializers.TokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
