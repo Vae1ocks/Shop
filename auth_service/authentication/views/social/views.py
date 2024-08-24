@@ -68,32 +68,26 @@ class YandexAuth(GenericAPIView):
 
 class VKSecurity(GenericAPIView):
 
+    @extend_schema(
+        description='Для аутентификации с использованием ВК. Для передачи данных требуются '
+                    'code_verifier и code_challenge. state - случайный набор символов. '
+    )
     def get(self, request, *args, **kwargs):
         data = {
             'code_verifier': pkce.generate_code_verifier(43),
             'code_challenge': pkce.get_code_challenge(code_verifier),
             'state': ''.join(rangom.choice(string.ascii_lowercase) for i in range(15)),
         }
-        print(data['state'])
 
         return Response({'data': data}, status=HTTP_200_OK)
 
 
-"""
-token = sdafsasdfa
-url = https://id.vk.com/oauth2/public_info/?access_token={token}
-response = requests.post(url)
-user_email = response.json()['email']
-
-user = User.objects.get_or_create(email=user_email)
-password = ''
-authetication(user)
-return Responce
-"""
-
 class VkAuth(GenericAPIView):
-    serializer_class = VkAuthSerializer
+    serializer_class = TokenSerializer
 
+    @extend_schema(
+        description='Для аутентификации с использованием ВК.'
+    )
     def post(self, request, *args, **kwargs):
         id_token = request.data['token']
         client_id = settings.SOCIAL_AUTH_VK_KEY
