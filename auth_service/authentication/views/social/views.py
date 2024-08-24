@@ -10,6 +10,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from authentication.serializers.social import serializers
 from authentication.social_services.google import check_google_token
+from authentication.social_services.yandex import check_yandex_token
 from authentication.serializers.social.serializers import TokenSerializer
 
 
@@ -58,3 +59,14 @@ class YandexAuth(GenericAPIView):
         serializer = serializers.TokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
+        user = check_yandex_token(serializer)
+        token = RefreshToken.for_user(user)
+        token.payload.update(
+            {
+                'user_id': user.pk,
+            }
+        )
+        return Response({
+            'refresh': str(token),
+            'access': str(token.access_token)
+        }, HTTP_200_OK)
