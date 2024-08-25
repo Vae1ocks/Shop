@@ -21,6 +21,7 @@ from django.contrib.auth import get_user_model
 from authentication.serializers.social import serializers
 from authentication.social_services.google import check_google_token
 from authentication.social_services.yandex import check_yandex_token
+from authentication.social_services.vk import check_vk_token
 from authentication.serializers.social.serializers import TokenSerializer
 
 User = get_user_model()
@@ -112,20 +113,14 @@ class VkAuth(GenericAPIView):
         description='Для аутентификации с использованием ВК.'
     )
     def post(self, request, *args, **kwargs):
-        id_token = request.data['token']
-        client_id = settings.SOCIAL_AUTH_VK_KEY
-        url = f'https://id.vk.com/oauth2/public_info?client_id={client_id}&id_token={id_token}'
-        response = requests.post(url)
-        user_email = response.json()['email']
-        user = User.objects.get_or_create(
-            email=user_email,
-            defaults={
-                'password': '', 'is_verified': True
-            }
-        )
-        tokens = create_tokens_for_user(user)
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = check_vk_token(serializer)
+        token = create_tokens_for_user(user)
         return Response({
-            'refresh': tokens['refresh'],
-            'access': tokens['access']
+            'refrest': token['refresh'],
+            'access': token['access']
         }, status=status.HTTP_200_OK)
+
+
 
