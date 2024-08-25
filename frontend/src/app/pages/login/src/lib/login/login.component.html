@@ -1,0 +1,51 @@
+<app-panel-wrapper>
+  <div class="auth">
+    <div>
+      <h3 class="h3 auth-heading">Вход</h3>
+      <p class="auth-text">Введите данные, чтобы войти</p>
+
+      <form class="auth-form" [formGroup]="formGroup" (ngSubmit)="submit()">
+        <input
+          type="email"
+          name="login"
+          formControlName="email"
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          name="password"
+          formControlName="password"
+          placeholder="Пароль"
+        />
+        <a
+          class="auth-link btn-sm"
+          [routerLink]="['/' + ROUTE_TOKENS.RESET_PASSWORD]"
+          >Забыли пароль?
+        </a>
+
+        <app-button
+          class="auth-button"
+          type="submit"
+          [loading]="loading$$()"
+          [disabled]="showError$$()"
+        >
+          Войти
+        </app-button>
+
+        @if (showError$$()) {
+          <p class="mt-1 form-error-text">Введенные данные не верны</p>
+        }
+      </form>
+    </div>
+
+    <div class="auth-footer">
+      Нет аккаунта?
+      <a
+        class="auth-footer-link"
+        [routerLink]="['/' + ROUTE_TOKENS.REGISTRATION.REGISTRATION]"
+      >
+        Зарегистрироваться
+      </a>
+    </div>
+  </div>
+</app-panel-wrapper>
