@@ -23,7 +23,8 @@
     "graph": "nx graph",
     "analyze": "esbuild-visualizer --metadata ./meta.json --exclude *.png",
     "source-map-explorer": "source-map-explorer *.js",
-    "clear-cache": "rimraf .angular && rimraf .nx && rimraf dist"
+    "clear-cache": "rimraf .angular && rimraf .nx && rimraf dist",
+    "swagger:dev": "ng-openapi-gen --input http://31.129.108.243/auth/api/schema --output src/app/swagger"
   },
   "private": true,
   "dependencies": {
@@ -36,6 +37,7 @@
     "@angular/platform-browser-dynamic": "~18.1.0",
     "@angular/router": "~18.1.0",
     "@nx/angular": "19.5.7",
+    "angular-code-input": "^2.0.0",
     "normalize.css": "^8.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -91,6 +93,7 @@
     "jest-environment-jsdom": "^29.4.1",
     "jest-preset-angular": "~14.1.0",
     "lint-staged": "^15.2.8",
+    "ng-openapi-gen": "^0.51.0",
     "nx": "19.5.7",
     "nx-stylelint": "^17.1.5",
     "prettier": "^3.3.3",
