@@ -1,0 +1,28 @@
+<h3 class="h3 auth-heading">Код подтверждения</h3>
+<p class="auth-text">Мы отправили код на вашу почту</p>
+
+<code-input
+  class="code-input"
+  [codeLength]="CODE_LENGTH"
+  (codeChanged)="onCodeChanged($event)"
+/>
+
+<div class="timer">
+  <span class="minutes">04</span>
+  <span>:</span>
+  <span class="seconds">55</span>
+</div>
+
+<app-button
+  [loading]="loading$$()"
+  [disabled]="isSubmitButtonDisabled$$()"
+  (click)="submit()"
+>
+  Отправить код
+</app-button>
+
+<app-button (click)="previousStep()"> Вернуться </app-button>
+
+<p class="auth-text-hint">
+  Если не приходит код, проверьте корректность введённой почты
+</p>
