@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.logo-container {
+  background-color: #f1f5f7;
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 169px;
+  height: 78px;
+
+  object-fit: contain;
+}
+
+.app-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 80px);
+}

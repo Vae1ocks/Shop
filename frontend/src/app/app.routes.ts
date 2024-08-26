@@ -1,31 +1,29 @@
 import { Route } from '@angular/router';
+import { ROUTE_TOKENS } from '@app/shared/app-config';
 
-import { ROUTE_TOKENS } from './shared/app-config/route-tokens';
+import { LayoutComponent } from './layout.component';
 
 export const appRoutes: Route[] = [
+  {
+    component: LayoutComponent,
+    path: '',
+    children: [
+      {
+        path: ROUTE_TOKENS.MAIN,
+        loadComponent: () =>
+          import('@app/pages/main').then((c) => c.MainComponent),
+      },
+    ],
+  },
   {
     path: ROUTE_TOKENS.LOGIN,
     loadComponent: () =>
       import('@app/pages/login').then((c) => c.LoginComponent),
   },
   {
-    path: ROUTE_TOKENS.REGISTRATION.REGISTRATION,
-    loadComponent: () =>
-      import('@app/pages/registration').then((c) => c.RegistrationComponent),
-  },
-  {
-    path: ROUTE_TOKENS.REGISTRATION.CONFIRMATION_CODE,
-    loadComponent: () =>
-      import('@app/pages/confirmation-code').then(
-        (c) => c.ConfirmationCodeComponent,
-      ),
-  },
-  {
-    path: ROUTE_TOKENS.REGISTRATION.CREATE_PASSWORD,
-    loadComponent: () =>
-      import('@app/pages/create-password').then(
-        (c) => c.CreatePasswordComponent,
-      ),
+    path: '',
+    loadChildren: () =>
+      import('@app/pages/registration-shell').then((c) => c.registrationRoutes),
   },
   {
     path: ROUTE_TOKENS.REGISTRATION.REGISTRATION_SUCCESS,
@@ -33,6 +31,11 @@ export const appRoutes: Route[] = [
       import('@app/pages/registration-success').then(
         (c) => c.RegistrationSuccessComponent,
       ),
+  },
+  {
+    path: ROUTE_TOKENS.RESET_PASSWORD,
+    loadComponent: () =>
+      import('@app/pages/reset-password').then((c) => c.ResetPasswordComponent),
   },
   {
     path: '**',

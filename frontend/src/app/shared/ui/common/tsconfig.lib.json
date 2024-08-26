@@ -13,8 +13,5 @@
     "jest.config.ts",
     "src/**/*.test.ts"
   ],
-  "include": [
-    "src/**/*.ts",
-    "../registration-shell/src/lib/registration-shell/registration.routes.ts"
-  ]
+  "include": ["src/**/*.ts"]
 }

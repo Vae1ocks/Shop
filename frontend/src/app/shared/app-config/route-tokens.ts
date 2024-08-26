@@ -6,4 +6,6 @@ export const ROUTE_TOKENS = {
     CREATE_PASSWORD: 'create-password',
     REGISTRATION_SUCCESS: 'registration-success',
   },
+  RESET_PASSWORD: 'reset-password',
+  MAIN: 'main',
 } as const;

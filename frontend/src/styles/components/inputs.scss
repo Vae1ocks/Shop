@@ -1,0 +1,21 @@
+@import 'style-utils';
+
+input {
+  height: 2.75rem;
+  padding: 1.125rem 1.25rem;
+
+  border: 1px solid var(--gray);
+  border-radius: 0.875rem;
+
+  transition: border-color 0.3s ease-in-out;
+
+  @include field-text;
+
+  & + & {
+    margin-top: 0.9375rem;
+  }
+
+  &.ng-touched.ng-invalid {
+    border-color: red;
+  }
+}

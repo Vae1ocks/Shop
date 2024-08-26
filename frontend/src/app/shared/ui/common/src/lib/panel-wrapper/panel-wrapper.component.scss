@@ -1,10 +1,11 @@
 @import 'style-utils';
 
 :host {
-  display: block;
+  display: flex;
 
   width: 31.25rem;
-  height: 31.25rem;
+  height: fit-content;
+  min-height: 500px;
   padding: 3.125rem 5.125rem;
 
   background-color: var(--white);

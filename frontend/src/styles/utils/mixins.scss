@@ -1,0 +1,23 @@
+@mixin media($breakpoint) {
+  @if $breakpoint == ipad {
+    @media screen and (width < 768px) {
+      @content;
+    }
+  }
+
+ @else {
+    @error "Breakpoint: #{$breakpoint} doesn't exists.";
+  }
+}
+
+@mixin hover() {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}
+
+@mixin ng-deep {
+  :host ::ng-deep {
+    @content;
+  }
+}

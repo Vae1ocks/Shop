@@ -1,0 +1,39 @@
+<h3 class="h3 auth-heading">Регистрация</h3>
+<p class="auth-text">Мы отправим код на вашу почту</p>
+
+<form class="auth-form" [formGroup]="formGroup" (ngSubmit)="submit()">
+  <input
+    type="text"
+    name="name"
+    formControlName="name"
+    placeholder="Ваше имя"
+  />
+
+  <input
+    type="email"
+    name="login"
+    formControlName="email"
+    placeholder="Email"
+    autocomplete="email"
+    required
+  />
+
+  <span class="form-field-hint">Обязательное поле для заполнения</span>
+
+  <a class="auth-link btn-sm" [routerLink]="['/' + ROUTE_TOKENS.RESET_PASSWORD]"
+    >Забыли пароль?
+  </a>
+
+  <app-button
+    class="auth-button"
+    type="submit"
+    [loading]="loading$$()"
+    [disabled]="showError$$()"
+  >
+    Получить код
+  </app-button>
+
+  @if (showError$$()) {
+    <p class="mt-1 form-error-text">Введенные данные не верны</p>
+  }
+</form>
