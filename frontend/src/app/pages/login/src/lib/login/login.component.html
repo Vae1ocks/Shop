@@ -11,12 +11,22 @@
           formControlName="email"
           placeholder="Email"
         />
-        <input
-          type="password"
-          name="password"
-          formControlName="password"
-          placeholder="Пароль"
-        />
+        <div class="input-field relative">
+          <input
+            class="w-full"
+            name="password"
+            formControlName="password"
+            placeholder="Пароль"
+            [type]="showPassword ? 'text' : 'password'"
+          />
+
+          <svg-icon
+            class="eye-icon"
+            src="/assets/icons/eye.svg"
+            [class.eye-icon_active]="showPassword"
+            (click)="showPassword = !showPassword"
+          />
+        </div>
         <a
           class="auth-link btn-sm"
           [routerLink]="['/' + ROUTE_TOKENS.RESET_PASSWORD]"
@@ -33,7 +43,7 @@
         </app-button>
 
         @if (showError$$()) {
-          <p class="mt-1 form-error-text">Введенные данные не верны</p>
+          <p class="form-error-text mt-1">Введенные данные не верны</p>
         }
       </form>
     </div>

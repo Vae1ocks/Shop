@@ -17,12 +17,19 @@
   background-color: var(--dark-purple);
   border-radius: 0.875rem;
   box-shadow: 0 0.75rem 0.875rem 0 rgb(127 35 225 / 10.2%);
+  transition: background-color 0.3s ease-in-out;
 
   @include btn-md;
 
   &[disabled] {
     background-color: rgba(196, 196, 196, 1);
     cursor: not-allowed;
+  }
+
+  @include hover {
+    &:hover {
+      background-color: darken($color: rgb(127 35 225), $amount: 10%);
+    }
   }
 }
 

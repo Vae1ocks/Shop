@@ -14,10 +14,13 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ROUTE_TOKENS } from '@app/shared/app-config';
+import { FormGroupModelNonNullable } from '@app/shared/forms';
 import { ButtonComponent } from '@app/ui/common/button';
 import { PanelWrapperComponent } from '@app/ui/common/panel-wrapper';
+import { LoginRequest } from '@swagger/models';
 import { LoginService } from '@swagger/services/login.service';
-import { debounceTime } from 'rxjs';
+import { SvgIconComponent } from 'angular-svg-icon';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +30,7 @@ import { debounceTime } from 'rxjs';
     RouterLink,
     PanelWrapperComponent,
     ButtonComponent,
+    SvgIconComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -45,12 +49,15 @@ export class LoginComponent implements OnInit {
 
   readonly loading$$ = signal<boolean>(false);
 
-  readonly formGroup = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required],
-  });
+  readonly formGroup: FormGroupModelNonNullable<LoginRequest> =
+    this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+    });
 
   readonly showError$$ = signal<boolean>(false);
+
+  showPassword = false;
 
   ngOnInit(): void {
     this.formGroup.valueChanges

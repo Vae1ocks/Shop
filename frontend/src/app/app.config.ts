@@ -5,6 +5,7 @@ import {
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideAngularSvgIcon } from 'angular-svg-icon';
 
 import { appRoutes } from './app.routes';
 import { ApiModule } from './swagger/api.module';
@@ -15,5 +16,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes),
     provideHttpClient(),
     importProvidersFrom(ApiModule.forRoot({ rootUrl: '' })),
+    provideAngularSvgIcon(),
   ],
 };
