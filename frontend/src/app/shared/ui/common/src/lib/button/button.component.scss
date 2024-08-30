@@ -27,7 +27,7 @@
   }
 
   @include hover {
-    &:hover {
+    &:hover:not([disabled]) {
       background-color: darken($color: rgb(127 35 225), $amount: 10%);
     }
   }

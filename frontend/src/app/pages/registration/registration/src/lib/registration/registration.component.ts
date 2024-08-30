@@ -3,20 +3,20 @@ import {
   Component,
   DestroyRef,
   inject,
+  OnInit,
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { ROUTE_TOKENS } from '@app/shared/app-config';
+import { FormGroupModel } from '@app/shared/forms';
 import { ButtonComponent } from '@app/ui/common/button';
 import { DotsStepperComponent } from '@app/ui/common/dots-stepper';
 import { PanelWrapperComponent } from '@app/ui/common/panel-wrapper';
+import { RegistrationRequest } from '@swagger/models';
 import { RegistrationService } from '@swagger/services/registration.service';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registration',
@@ -33,10 +33,10 @@ import { RegistrationService } from '@swagger/services/registration.service';
   styleUrl: './registration.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegistrationComponent {
+export class RegistrationComponent implements OnInit {
   readonly ROUTE_TOKENS = ROUTE_TOKENS;
 
-  readonly formBuilder = inject(NonNullableFormBuilder);
+  readonly formBuilder = inject(FormBuilder);
 
   private readonly registrationService = inject(RegistrationService);
 
@@ -48,10 +48,19 @@ export class RegistrationComponent {
 
   readonly showError$$ = signal<boolean>(false);
 
-  readonly formGroup = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-    name: [''],
-  });
+  readonly formGroup: FormGroupModel<Required<RegistrationRequest>> =
+    this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      first_name: ['', Validators.minLength(2)],
+    });
+
+  ngOnInit(): void {
+    this.formGroup.valueChanges
+      .pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => this.showError$$.set(false),
+      });
+  }
 
   submit(): void {
     this.formGroup.markAllAsTouched();
@@ -61,10 +70,7 @@ export class RegistrationComponent {
 
     this.registrationService
       .registrationCreate$Json({
-        body: {
-          email: this.formGroup.get('email')?.value ?? '',
-          first_name: this.formGroup.get('name')?.value ?? '',
-        },
+        body: <RegistrationRequest>this.formGroup.value,
       })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({

@@ -5,7 +5,7 @@
   <input
     type="text"
     name="name"
-    formControlName="name"
+    formControlName="first_name"
     placeholder="Ваше имя"
   />
 
@@ -34,6 +34,6 @@
   </app-button>
 
   @if (showError$$()) {
-    <p class="mt-1 form-error-text">Введенные данные не верны</p>
+    <p class="form-error-text mt-1">Введенные данные не верны</p>
   }
 </form>
