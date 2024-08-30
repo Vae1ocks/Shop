@@ -1,16 +1,31 @@
 <h3 class="h3 auth-heading">Код подтверждения</h3>
 <p class="auth-text">Мы отправили код на вашу почту</p>
 
-<code-input
-  class="code-input"
-  [codeLength]="CODE_LENGTH"
-  (codeChanged)="onCodeChanged($event)"
-/>
+<div class="relative">
+  <code-input
+    class="code-input"
+    [class.code-input_error]="showError$$()"
+    [codeLength]="CODE_LENGTH"
+    (codeChanged)="onCodeChanged($event)"
+  />
 
-<div class="timer">
-  <span class="minutes">04</span>
-  <span>:</span>
-  <span class="seconds">55</span>
+  @if (showError$$()) {
+    <p class="code-error">Неверный код</p>
+  }
+</div>
+
+<div class="timer flex justify-center">
+  @if (isTimerFinished$$()) {
+    <button type="button" class="resend-button" (click)="resendCode()">
+      Повторно отправить код
+    </button>
+  } @else {
+    <app-countdown
+      [seconds]="30"
+      [start]="startTimer$$()"
+      (isFinished)="timerFinished()"
+    />
+  }
 </div>
 
 <app-button

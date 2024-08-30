@@ -1,4 +1,3 @@
-import { Location } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -10,22 +9,20 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { ROUTE_TOKENS } from '@app/shared/app-config';
 import { ButtonComponent } from '@app/ui/common/button';
+import { CountdownComponent } from '@app/ui/common/countdown';
 import { ConfirmRegistrationService } from '@swagger/services/confirm-registration.service';
 import { CodeInputModule } from 'angular-code-input';
-import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-confirmation-code',
   standalone: true,
-  imports: [CodeInputModule, ButtonComponent],
+  imports: [CodeInputModule, ButtonComponent, CountdownComponent],
   templateUrl: './confirmation-code.component.html',
   styleUrl: './confirmation-code.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmationCodeComponent {
   private readonly ROUTE_TOKENS = ROUTE_TOKENS;
-
-  private readonly location = inject(Location);
 
   private readonly confirmRegistrationService = inject(
     ConfirmRegistrationService,
@@ -41,18 +38,27 @@ export class ConfirmationCodeComponent {
 
   readonly loading$$ = signal<boolean>(false);
 
+  readonly showError$$ = signal<boolean>(false);
+
+  readonly isSubmitButtonDisabled$$ = signal<boolean>(true);
+
+  readonly startTimer$$ = signal<boolean>(true);
+
+  readonly isTimerFinished$$ = signal<boolean>(false);
+
   onCodeChanged(value: string): void {
+    this.showError$$.set(false);
     const isDisabled = value.length !== this.CODE_LENGTH;
     this.isSubmitButtonDisabled$$.set(isDisabled);
     this.shortCode = value;
   }
 
-  readonly isSubmitButtonDisabled$$ = signal<boolean>(true);
-
-  readonly timer$ = timer(0, 1000);
-
   previousStep(): void {
-    this.location.back();
+    this.router.navigate([this.ROUTE_TOKENS.REGISTRATION.REGISTRATION]);
+  }
+
+  timerFinished(): void {
+    this.isTimerFinished$$.set(true);
   }
 
   submit(): void {
@@ -68,7 +74,17 @@ export class ConfirmationCodeComponent {
           this.router.navigate([
             this.ROUTE_TOKENS.REGISTRATION.CREATE_PASSWORD,
           ]),
+        error: (error: unknown) => {
+          this.showError$$.set(true);
+          this.loading$$.set(false);
+          console.error(error);
+        },
         complete: () => this.loading$$.set(false),
       });
+  }
+
+  resendCode(): void {
+    this.isTimerFinished$$.set(false);
+    this.startTimer$$.set(true);
   }
 }

@@ -4,6 +4,10 @@
   padding: 7px 43px;
   margin-top: 30px;
 
+  &_error {
+    border: 1px solid var(--red);
+  }
+
   ::ng-deep {
     --item-spacing: 11px;
     --item-height: 30px;
@@ -30,13 +34,24 @@
   }
 }
 
+.code-error {
+  position: absolute;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13px;
+  color: var(--red);
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -22px;
+}
+
 .timer {
   margin: 30px 0;
+}
+
+.resend-button {
   font-size: 16px;
   font-weight: 300;
   line-height: 24px;
-  text-align: left;
-  color: rgba(9, 15, 71, 0.45);
-  display: flex;
-  justify-content: center;
+  color: var(--dark-purple);
 }
