@@ -8,30 +8,21 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ROUTE_TOKENS } from '@app/shared/app-config';
 import { FormGroupModel } from '@app/shared/forms';
 import { ButtonComponent } from '@app/ui/common/button';
-import { DotsStepperComponent } from '@app/ui/common/dots-stepper';
-import { PanelWrapperComponent } from '@app/ui/common/panel-wrapper';
 import { RegistrationRequest } from '@swagger/models';
 import { RegistrationService } from '@swagger/services/registration.service';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-registration',
   standalone: true,
-  imports: [
-    RouterOutlet,
-    RouterLink,
-    ReactiveFormsModule,
-    PanelWrapperComponent,
-    ButtonComponent,
-    DotsStepperComponent,
-  ],
+  imports: [RouterLink, ReactiveFormsModule, ButtonComponent],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationComponent implements OnInit {
   readonly ROUTE_TOKENS = ROUTE_TOKENS;

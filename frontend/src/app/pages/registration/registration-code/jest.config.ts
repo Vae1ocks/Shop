@@ -1,10 +1,10 @@
 /* eslint-disable */
 export default {
-  displayName: 'confirmation-code',
+  displayName: 'registration-code',
   preset: '../../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   coverageDirectory:
-    '../../../../../coverage/src/app/pages/registration/confirmation-code',
+    '../../../../../coverage/src/app/pages/registration/registration-code',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

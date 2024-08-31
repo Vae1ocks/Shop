@@ -1,10 +1,10 @@
 /* eslint-disable */
 export default {
-  displayName: 'create-password',
+  displayName: 'registration-new-password',
   preset: '../../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   coverageDirectory:
-    '../../../../../coverage/src/app/pages/registration/create-password',
+    '../../../../../coverage/src/app/pages/registration/registration-new-password',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

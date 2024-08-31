@@ -29,18 +29,16 @@ export class RegistrationShellComponent {
       filter((event): event is NavigationEnd => event instanceof NavigationEnd),
       map((event) => event.url.replace('/', '')),
     ),
+    { initialValue: '' },
   );
 
   readonly activeStep$$ = computed(() => {
-    switch (this.routerUrl$$()) {
-      case this.ROUTE_TOKENS.REGISTRATION.REGISTRATION:
-        return 0;
-      case this.ROUTE_TOKENS.REGISTRATION.CONFIRMATION_CODE:
-        return 1;
-      case this.ROUTE_TOKENS.REGISTRATION.CREATE_PASSWORD:
-        return 2;
-      default:
-        return 0;
-    }
+    const route = {
+      [this.ROUTE_TOKENS.REGISTRATION.REGISTRATION]: 0,
+      [this.ROUTE_TOKENS.REGISTRATION.CONFIRMATION_CODE]: 1,
+      [this.ROUTE_TOKENS.REGISTRATION.CREATE_PASSWORD]: 2,
+    };
+
+    return route[<keyof typeof route>this.routerUrl$$()];
   });
 }

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { CountdownComponent } from './countdown.component';
 
 describe('CountdownComponent', () => {

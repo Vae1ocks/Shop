@@ -1,7 +1,7 @@
 {
-  "name": "confirmation-code",
+  "name": "registration-new-password",
   "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "src/app/pages/registration/confirmation-code/src",
+  "sourceRoot": "src/app/pages/registration/registration-new-password/src",
   "prefix": "app",
   "projectType": "library",
   "tags": [],
@@ -12,7 +12,7 @@
         "{workspaceRoot}/coverage/{projectRoot}"
       ],
       "options": {
-        "jestConfig": "src/app/pages/registration/confirmation-code/jest.config.ts"
+        "jestConfig": "src/app/pages/registration/registration-new-password/jest.config.ts"
       }
     },
     "lint": {

@@ -1,7 +1,7 @@
 import { Route } from '@angular/router';
 import { ROUTE_TOKENS } from '@app/shared/app-config';
 
-import { RegistrationShellComponent } from './registration-shell.component';
+import { RegistrationShellComponent } from './registration-shell';
 
 export const registrationRoutes: Route[] = [
   {
@@ -23,17 +23,24 @@ export const registrationRoutes: Route[] = [
       {
         path: ROUTE_TOKENS.REGISTRATION.CONFIRMATION_CODE,
         loadComponent: () =>
-          import('@app/pages/confirmation-code').then(
-            (c) => c.ConfirmationCodeComponent,
+          import('@app/pages/registration-code').then(
+            (c) => c.RegistrationCodeComponent,
           ),
       },
       {
         path: ROUTE_TOKENS.REGISTRATION.CREATE_PASSWORD,
         loadComponent: () =>
-          import('@app/pages/create-password').then(
-            (c) => c.CreatePasswordComponent,
+          import('@app/pages/registration-new-password').then(
+            (c) => c.RegistrationNewPasswordComponent,
           ),
       },
     ],
+  },
+  {
+    path: ROUTE_TOKENS.REGISTRATION.REGISTRATION_SUCCESS,
+    loadComponent: () =>
+      import('@app/pages/registration-success').then(
+        (c) => c.RegistrationSuccessComponent,
+      ),
   },
 ];

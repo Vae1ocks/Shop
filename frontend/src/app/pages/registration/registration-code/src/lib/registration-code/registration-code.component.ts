@@ -14,14 +14,14 @@ import { ConfirmRegistrationService } from '@swagger/services/confirm-registrati
 import { CodeInputModule } from 'angular-code-input';
 
 @Component({
-  selector: 'app-confirmation-code',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-registration-code',
   standalone: true,
   imports: [CodeInputModule, ButtonComponent, CountdownComponent],
-  templateUrl: './confirmation-code.component.html',
-  styleUrl: './confirmation-code.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './registration-code.component.html',
+  styleUrl: './registration-code.component.scss',
 })
-export class ConfirmationCodeComponent {
+export class RegistrationCodeComponent {
   private readonly ROUTE_TOKENS = ROUTE_TOKENS;
 
   private readonly confirmRegistrationService = inject(

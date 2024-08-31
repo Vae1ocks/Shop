@@ -1,7 +1,8 @@
 <h3 class="h3 auth-heading">Регистрация</h3>
+
 <p class="auth-text">Мы отправим код на вашу почту</p>
 
-<form class="auth-form" [formGroup]="formGroup" (ngSubmit)="submit()">
+<form class="flex flex-col" [formGroup]="formGroup" (ngSubmit)="submit()">
   <input
     type="text"
     name="name"
@@ -19,10 +20,6 @@
   />
 
   <span class="form-field-hint">Обязательное поле для заполнения</span>
-
-  <a class="auth-link btn-sm" [routerLink]="['/' + ROUTE_TOKENS.RESET_PASSWORD]"
-    >Забыли пароль?
-  </a>
 
   <app-button
     class="auth-button"

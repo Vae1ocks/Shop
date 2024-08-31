@@ -1,24 +1,36 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonComponent } from '@app/ui/common/button';
-import { fieldsMustMatch } from '@app/shared/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  signal,
+} from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { distinctUntilChanged, map } from 'rxjs/operators';
-import { SetNewPasswordService } from '@swagger/services/set-new-password.service';
+import {
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ROUTE_TOKENS } from '@app/shared/app-config';
+import { fieldsMustMatch, FormGroupModelNonNullable } from '@app/shared/forms';
+import { ButtonComponent } from '@app/ui/common/button';
+import { SetNewPasswordRequest } from '@swagger/models';
+import { SetNewPasswordService } from '@swagger/services/set-new-password.service';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-create-password',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-registration-new-password',
   standalone: true,
   imports: [ReactiveFormsModule, ButtonComponent],
-  templateUrl: './create-password.component.html',
-  styleUrl: './create-password.component.scss',
+  templateUrl: './registration-new-password.component.html',
+  styleUrl: './registration-new-password.component.scss',
 })
-export class CreatePasswordComponent {
+export class RegistrationNewPasswordComponent {
   private readonly ROUTE_TOKENS = ROUTE_TOKENS;
 
-  private readonly formBuilder = inject(FormBuilder);
+  private readonly formBuilder = inject(NonNullableFormBuilder);
 
   private readonly createPasswordService = inject(SetNewPasswordService);
 
@@ -26,13 +38,14 @@ export class CreatePasswordComponent {
 
   private readonly router = inject(Router);
 
-  readonly formGroup = this.formBuilder.group(
-    {
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', Validators.required],
-    },
-    { validators: fieldsMustMatch('password', 'confirmPassword') },
-  );
+  readonly formGroup: FormGroupModelNonNullable<SetNewPasswordRequest> =
+    this.formBuilder.group(
+      {
+        password: ['', [Validators.required, Validators.minLength(8)]],
+        password2: ['', Validators.required],
+      },
+      { validators: fieldsMustMatch('password', 'password2') },
+    );
 
   readonly loading$$ = signal<boolean>(false);
 
@@ -49,19 +62,13 @@ export class CreatePasswordComponent {
   );
 
   submit(): void {
-    const password = this.formGroup.get('password')?.value;
-    const confirmPassword = this.formGroup.get('confirmPassword')?.value;
-
-    if (!password || !confirmPassword) return;
+    if (this.formGroup.invalid) return;
 
     this.loading$$.set(true);
 
     this.createPasswordService
       .setNewPasswordCreate$Json({
-        body: {
-          password,
-          password2: confirmPassword,
-        },
+        body: <SetNewPasswordRequest>this.formGroup.value,
       })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({

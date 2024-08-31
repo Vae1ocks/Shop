@@ -8,22 +8,15 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, timer } from 'rxjs';
-import {
-  filter,
-  finalize,
-  map,
-  switchMap,
-  takeWhile,
-  tap,
-} from 'rxjs/operators';
+import { filter, map, switchMap, takeWhile, tap } from 'rxjs/operators';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-countdown',
   standalone: true,
   imports: [DatePipe],
   templateUrl: './countdown.component.html',
   styleUrl: './countdown.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'block w-full text-center',
   },

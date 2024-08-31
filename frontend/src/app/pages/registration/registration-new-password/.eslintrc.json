@@ -1,5 +1,8 @@
 {
-  "extends": ["../../../../../.eslintrc.base.json"],
+  "extends": [
+    "../../../../../.eslintrc.base.json",
+    "../../../../../.eslintrc.json"
+  ],
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {

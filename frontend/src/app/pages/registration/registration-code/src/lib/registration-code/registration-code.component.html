@@ -1,4 +1,5 @@
 <h3 class="h3 auth-heading">Код подтверждения</h3>
+
 <p class="auth-text">Мы отправили код на вашу почту</p>
 
 <div class="relative">
@@ -21,7 +22,7 @@
     </button>
   } @else {
     <app-countdown
-      [seconds]="30"
+      [seconds]="300"
       [start]="startTimer$$()"
       (isFinished)="timerFinished()"
     />

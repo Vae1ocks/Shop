@@ -26,16 +26,11 @@ export const appRoutes: Route[] = [
       import('@app/pages/registration-shell').then((c) => c.registrationRoutes),
   },
   {
-    path: ROUTE_TOKENS.REGISTRATION.REGISTRATION_SUCCESS,
-    loadComponent: () =>
-      import('@app/pages/registration-success').then(
-        (c) => c.RegistrationSuccessComponent,
+    path: '',
+    loadChildren: () =>
+      import('@app/pages/reset-password-shell').then(
+        (c) => c.resetPasswordRoutes,
       ),
-  },
-  {
-    path: ROUTE_TOKENS.RESET_PASSWORD,
-    loadComponent: () =>
-      import('@app/pages/reset-password').then((c) => c.ResetPasswordComponent),
   },
   {
     path: '**',
