@@ -7,5 +7,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './panel-wrapper.component.html',
   styleUrl: './panel-wrapper.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'flex flex-col justify-between',
+  },
 })
 export class PanelWrapperComponent {}
