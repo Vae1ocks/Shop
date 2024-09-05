@@ -18,6 +18,7 @@ requests = "^2.32.3"
 google-auth = "^2.32.0"
 redis = "^5.0.8"
 django-cors-headers = "^4.4.0"
+pkce = "^1.0.3"
 
 
 
