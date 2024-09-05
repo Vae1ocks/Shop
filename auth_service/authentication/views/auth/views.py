@@ -77,23 +77,26 @@ class ConfirmRegistration(generics.GenericAPIView):
     )
     def post(self, request, *args, **kwargs):
         short_code = request.data.get('short_code')
-        full_code = request.session['reg'].get('full_code')
-        if check_password(short_code, full_code):
-            reg_info = request.session.get('reg')
-            if reg_info:
-                if reg_info.get('expire_at') > \
-                        str(datetime.datetime.now()):
-                    return Response({'detail': f'Код введен верно'},
-                                    status=status.HTTP_200_OK)
-                else:
-                    return Response({'detail': 'Время действия кода истекло.'},
-                                    status=status.HTTP_400_BAD_REQUEST)
-            return Response(
-                {'detail': 'Данные для регистрации не предоставлены'},
-                status.HTTP_400_BAD_REQUEST
-            )
-        return Response({'detail': 'Код не совпадает'},
-                        status=status.HTTP_400_BAD_REQUEST)
+        reg_info = request.session.get('reg')
+        if reg_info:
+            full_code = reg_info.get('full_code')
+            if check_password(short_code, full_code):
+                    if reg_info.get('expire_at') > \
+                            str(timezone.now()):
+                        return Response({'detail': f'Код введен верно'},
+                                        status=status.HTTP_200_OK)
+                    else:
+                        return Response(
+                            {'detail': 'Время действия кода истекло.'},
+                            status=status.HTTP_400_BAD_REQUEST
+                        )
+            return Response({'detail': 'Код не совпадает'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {'detail': 'Данные для регистрации не предоставлены'},
+            status.HTTP_400_BAD_REQUEST
+        )
+
 
 
 class SetNewPassword(generics.GenericAPIView):

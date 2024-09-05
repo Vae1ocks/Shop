@@ -1,3 +1,4 @@
+import datetime
 import random
 import json
 
@@ -6,6 +7,10 @@ from rest_framework import status
 
 from django.core import mail
 from django.contrib.auth.hashers import make_password
+from django.urls import reverse
+from django.utils import timezone
+
+from unittest.mock import patch
 
 from authentication.models import User
 
@@ -18,12 +23,12 @@ class AuthAPITest(APITestCase):
 
     @classmethod
     def setUpTestData(cls):
-        user = User.objects.create_user(
+        cls.user = User.objects.create_user(
             email='admin@admin.com',
             first_name='Admin',
             password='adminadmin'
         )
-        user.save()
+        cls.user.save()
 
     def setUp(self):
         session = self.client.session
@@ -38,32 +43,36 @@ class AuthAPITest(APITestCase):
             'email': 'test@test.com',
             'first_name': 'Test'
         }
+        url = reverse('authentication:registration')
 
-        response = self.client.post(self.registration_url, data)
+        response = self.client.post(url, data)
 
         # Проверка введенных данных
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_confirm_registration(self, mock_send_task):
-        data = {
-            'password': 'a1234567',
-            'password2': 'a1234567'
-        }
+    def test_confirm_registration(self):
         session = self.client.session
 
-        full_code = make_password(str(
-            random.randrange(100000, 999999
-        )).encode('utf-8'))
-        if full_code[-7] == '/':
-            full_code[-7] = 'a'
+        short_code = str(random.randrange(100000, 999999))
+        full_code = make_password(short_code)
 
-        session['reg']['code'] = full_code
+        data = {
+            'short_code': short_code
+        }
+
+        session['reg']['full_code'] = full_code
+
+        session['reg']['email'] = self.user.email
+        session['reg']['first_name'] = self.user.first_name
+        session['reg']['password'] = 'adminadmin'
+        session['reg']['expire_at'] = str(
+            timezone.now() + datetime.timedelta(minutes=5)
+        )
+
         session.save()
 
-        short_code = full_code[len(full_code)-7:]
-
-        confirm_url = f'/api/auth/confirm-registration/{short_code}/'
-        response = self.client.post(confirm_url, data)
+        url = reverse('authentication:confirm-registration')
+        response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_login(self):
@@ -71,8 +80,9 @@ class AuthAPITest(APITestCase):
             'email': 'admin@admin.com',
             'password': 'adminadmin'
         }
+        url = reverse('authentication:login')
 
-        response = self.client.post(self.login_url, data)
+        response = self.client.post(url, data)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('access', json.loads(response.content))
