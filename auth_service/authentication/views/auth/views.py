@@ -135,7 +135,7 @@ class SetNewPassword(generics.GenericAPIView):
             )
         return Response(
             {'detail': 'Данные для регистрации не предоставлены'},
-            status.HTTP_200_OK
+            status.HTTP_400_BAD_REQUEST
         )
 
 
