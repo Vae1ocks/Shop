@@ -21,6 +21,12 @@ media
 .idea/**/dictionaries
 .idea/**/shelf
 
+# Databases data
+db_auth_data/
+db_store_data/
+db_payment_data/
+db_user_data/
+
 # Dima
 requirements.txt
 zametki.txt
