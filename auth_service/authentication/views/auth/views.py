@@ -109,7 +109,7 @@ class SetNewPassword(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = SetNewPasswordSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        session_reg = request.session.pop('reg')
+        session_reg = request.session.pop('reg', None)
         if session_reg:
             user = User.objects.create_user(
                 email=session_reg['email'],
