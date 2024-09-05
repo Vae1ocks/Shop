@@ -79,12 +79,19 @@ class ConfirmRegistration(generics.GenericAPIView):
         short_code = request.data.get('short_code')
         full_code = request.session['reg'].get('full_code')
         if check_password(short_code, full_code):
-            if request.session['reg'].get('expire_at') > str(datetime.datetime.now()):
-                return Response({'detail': f'Код введен верно'},
-                                status=status.HTTP_200_OK)
-            else:
-                return Response({'detail': 'Время действия кода истекло.'},
-                                status=status.HTTP_400_BAD_REQUEST)
+            reg_info = request.session.get('reg')
+            if reg_info:
+                if reg_info.get('expire_at') > \
+                        str(datetime.datetime.now()):
+                    return Response({'detail': f'Код введен верно'},
+                                    status=status.HTTP_200_OK)
+                else:
+                    return Response({'detail': 'Время действия кода истекло.'},
+                                    status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {'detail': 'Данные для регистрации не предоставлены'},
+                status.HTTP_400_BAD_REQUEST
+            )
         return Response({'detail': 'Код не совпадает'},
                         status=status.HTTP_400_BAD_REQUEST)
 
@@ -100,24 +107,33 @@ class SetNewPassword(generics.GenericAPIView):
         serializer = SetNewPasswordSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         session_reg = request.session.pop('reg')
-        user = User.objects.create_user(
-            email=session_reg['email'],
-            first_name=session_reg['first_name'],
-            password=serializer.validated_data['password'],
-            is_verified=True,
+        if session_reg:
+            user = User.objects.create_user(
+                email=session_reg['email'],
+                first_name=session_reg['first_name'],
+                password=serializer.validated_data['password'],
+                is_verified=True,
+            )
+            user.save()
+            # Создать task с отправкой в user_service данные пользователя.
+            # current_app.send_task(
+            #     'send_data_user_create_user',
+            #     kwargs={
+            #         'email': request.session['reg'].get('email'),
+            #         'first_name': request.session['reg'].get('first_name'),
+            #         'password': serializer.validated_data['password']
+            #     },
+            #     queue='user_system_queue'
+            # )
+
+            return Response(
+                {'detail': f'Пользователь {user.email} создан.'},
+                status=status.HTTP_200_OK
+            )
+        return Response(
+            {'detail': 'Данные для регистрации не предоставлены'},
+            status.HTTP_200_OK
         )
-        user.save()
-        # Создать task с отправкой в user_service данные пользователя.
-        # current_app.send_task(
-        #     'send_data_user_create_user',
-        #     kwargs={
-        #         'email': request.session['reg'].get('email'),
-        #         'first_name': request.session['reg'].get('first_name'),
-        #         'password': serializer.validated_data['password']
-        #     },
-        #     queue='user_system_queue'
-        # )
-        return Response({'detail': f'Пользователь {user.email} создан.'}, status=status.HTTP_200_OK)
 
 
 class Login(generics.GenericAPIView):

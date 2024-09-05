@@ -3,6 +3,7 @@ import json
 
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
+
 from django.core import mail
 from django.contrib.auth.hashers import make_password
 
@@ -43,14 +44,16 @@ class AuthAPITest(APITestCase):
         # Проверка введенных данных
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_confirm_registration(self):
+    def test_confirm_registration(self, mock_send_task):
         data = {
             'password': 'a1234567',
             'password2': 'a1234567'
         }
         session = self.client.session
 
-        full_code = make_password(str(random.randrange(100000, 999999)).encode('utf-8'))
+        full_code = make_password(str(
+            random.randrange(100000, 999999
+        )).encode('utf-8'))
         if full_code[-7] == '/':
             full_code[-7] = 'a'
 
