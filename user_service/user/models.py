@@ -47,7 +47,14 @@ class User(AbstractBaseUser, PermissionsMixin):
                                          default=Decimal('0.00'))
     categories_bought = models.JSONField(default=dict, blank=True)
     expected_prices = models.JSONField(default=dict, blank=True)
-    # exp_price = {'id':{'title': ..., 'price': ...}, 'id': {...}}
+    # exp_price = {id:{'title': ..., 'price': ...}, id: {...}}
+
+    show_data_in_comments = models.BooleanField(
+        default=True,
+        help_text='Регулирует, скрывать ли пользователиские '
+                  'данные, такие как имя и аватар в комментариях '
+                  'или нет.'
+    )
 
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

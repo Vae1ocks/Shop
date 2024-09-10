@@ -118,17 +118,6 @@ class SetNewPassword(generics.GenericAPIView):
                 is_verified=True,
             )
             user.save()
-            # Создать task с отправкой в user_service данные пользователя.
-            # current_app.send_task(
-            #     'send_data_user_create_user',
-            #     kwargs={
-            #         'email': request.session['reg'].get('email'),
-            #         'first_name': request.session['reg'].get('first_name'),
-            #         'password': serializer.validated_data['password']
-            #     },
-            #     queue='user_system_queue'
-            # )
-
             return Response(
                 {'detail': f'Пользователь {user.email} создан.'},
                 status=status.HTTP_200_OK
