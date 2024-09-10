@@ -7,6 +7,8 @@ from drf_spectacular.utils import extend_schema, OpenApiExample
 
 from user.serializers.another.serializers import *
 
+from user.serializers.another.serializers import UserRepresentationalInfo
+
 
 class CategoriesBoughByUserView(RetrieveAPIView):
     """
@@ -15,24 +17,40 @@ class CategoriesBoughByUserView(RetrieveAPIView):
     serializer_class = CategoriesBoughtByUserSerializer
     queryset = get_user_model().objects.all()
 
-    @extend_schema(description='Для межсервисного бэкенд взаимодействия, '
-                               'не для фронтенд части.')
+    @extend_schema(
+        description='Для межсервисного бэкенд взаимодействия, '
+                    'не для фронтенд части.'
+    )
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
 
 
-class UserRepresentationalView(RetrieveAPIView):
-    """
-    View для межсервисного взаимодействия, используется в
-    store_service в CommentCreateView
-    """
+# class UserRepresentationalView(RetrieveAPIView):
+#     """
+#     View для межсервисного взаимодействия, используется в
+#     store_service в CommentCreateView.
+#     """
+#     serializer_class = UserRepresentationalInfo
+#     queryset = get_user_model().objects.all()
+#
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
+
+
+class UserRepresentationalView(GenericAPIView):
     serializer_class = UserRepresentationalInfo
-    queryset = get_user_model().objects.all()
 
-    @extend_schema(description='Для межсервисного бэкенд взаимодействия, '
-                               'не для фронтенд части.')
+    @extend_schema(
+        description='Для межсервисного бэкенд взаимодействия, '
+                    'не для фронтенд части.'
+    )
     def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
+        user = self.get_object()
+        if user.show_data_in_comments:
+            serializer = self.get_serializer(user)
+            return Response(serializer.data, HTTP_200_OK)
+        return Response({}, HTTP_200_OK)
 
 
 class AddPriceExpectation(GenericAPIView):
