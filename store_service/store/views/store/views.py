@@ -180,6 +180,7 @@ class CommentCreateView(CreateAPIView):
     """
     Для создания комментариев.
     """
+
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticated,
                           permissions.IsGoodsBoughtByUser]
@@ -198,7 +199,6 @@ class CommentCreateView(CreateAPIView):
         достаточно редкое явление со стороны 1 конкретного пользователя, нет смысла
         кешировать на несколько дней т.к из user_service берём динамические данные:
         имя и аватар.
-        :return:
         """
         data = request.data
 
@@ -219,11 +219,14 @@ class CommentCreateView(CreateAPIView):
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            return Response(
+                serializer.data, status=status.HTTP_201_CREATED,
+                headers=headers
+            )
 
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-from django.urls import reverse_lazy
+
 class CommentUpdateDeleteView(mixins.DestroyModelMixin,
                               GenericAPIView):
     serializer_class = CommentUpdateSerializer

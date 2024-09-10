@@ -165,7 +165,9 @@ class StoreTest(APITestCase):
 
         mock_response = MagicMock()
         mock_response.status_code = 200
-        mock_response.json.return_value = {'first_name': 'Username', 'profile_picture': None}
+        mock_response.json.return_value = {
+            'first_name': 'Username', 'profile_picture': None
+        }
         mock_get.return_value = mock_response
 
         self.goods.users_bought.append(self.user.id)
@@ -175,9 +177,44 @@ class StoreTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.goods.refresh_from_db()
         self.assertEqual(self.goods.rating, 5)
-        comment = Comment.objects.filter(goods=self.goods.id, body=data['body']).first()
+        comment = Comment.objects.filter(
+            goods=self.goods.id, body=data['body']
+        ).first()
         self.assertEqual(comment.author, self.user.id)
         self.assertEqual(comment.author_name, 'Username')
+        self.assertFalse(comment.author_profile_picture)
+
+    @patch('store.views.store.views.requests.get')
+    def test_comment_create_with_no_user_personal_data(
+            self, mock_get
+    ):
+        self.setup()
+        url = reverse('store:comment_create', args=[self.goods.id])
+        data = {
+            'body': 'Some comment body',
+            'rating': 5,
+            'goods': self.goods.id,
+            'images': [{'image': None}, {'image': None}]
+        }
+
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {}
+        mock_get.return_value = mock_response
+
+        self.goods.users_bought.append(self.user.id)
+        self.goods.save()
+
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.goods.refresh_from_db()
+        self.assertEqual(self.goods.rating, 5)
+        comment = Comment.objects.filter(
+            goods=self.goods.id, body=data['body']
+        ).first()
+
+        self.assertEqual(comment.author, self.user.id)
+        self.assertFalse(comment.author_name)
         self.assertFalse(comment.author_profile_picture)
 
     def test_comment_partial_update(self):
