@@ -201,14 +201,19 @@ class CommentCreateView(CreateAPIView):
         :return:
         """
         data = request.data
+
         base_uri = self.request.build_absolute_uri('/')
         relative_url = f'users/{request.user.id}/representational-data/'
         url = f'{base_uri}{relative_url}'
+
         response = requests.get(url, timeout=8)
         if response.status_code == status.HTTP_200_OK:
             response_data = response.json()  # {'first_name': 'str', 'profile_picture': 'img'}
-            user_data = {'author_name': response_data['first_name'],
-                         'author_profile_picture': response_data['profile_picture']}
+            user_data = {
+                'author_name': response_data.get('first_name'),
+                'author_profile_picture':
+                    response_data.get('profile_picture')
+            }
             full_data = {**data, **user_data}
             serializer = self.get_serializer(data=full_data)
             serializer.is_valid(raise_exception=True)

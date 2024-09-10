@@ -92,15 +92,19 @@ class PriceHistory(models.Model):
 
 class Comment(models.Model):
     author = models.PositiveIntegerField()
-    author_name = models.CharField(max_length=30, null=True)
+    author_name = models.CharField(
+        max_length=30, blank=True, null=True
+    )
     author_profile_picture = models.ImageField(
         upload_to=upload_to_author_id,
         blank=True, null=True
     )
 
-    goods = models.ForeignKey(Goods,
-                              on_delete=models.CASCADE,
-                              related_name='comments')
+    goods = models.ForeignKey(
+        Goods,
+        on_delete=models.CASCADE,
+        related_name='comments'
+    )
     
     body = models.TextField(blank=True, null=True)
     rating = models.IntegerField(
