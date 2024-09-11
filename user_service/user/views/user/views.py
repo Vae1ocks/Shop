@@ -24,7 +24,6 @@ class GetUserInfoView(RetrieveAPIView):
     def get(self, request, *args, **kwargs):
         user = get_user_model().objects.get(pk=self.request.user.id)
         serializer = GetUserInfoSerializer(user)
-        serializer.is_valid(raise_exception=True)
         return Response({'user': serializer.data}, status=status.HTTP_200_OK)
 
 

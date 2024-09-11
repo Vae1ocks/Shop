@@ -13,7 +13,7 @@ class GetUserInfoSerializer(ModelSerializer):
         fields = [
             'pk', 'email', 'first_name',
             'profile_picture', 'categories_bought',
-            'coupon_balance'
+            'coupon_balance', 'date_of_birth'
         ]
 
 
