@@ -28,8 +28,8 @@ class GetUserInfoView(RetrieveAPIView):
         return Response({'user': serializer.data}, status=status.HTTP_200_OK)
 
 
-class EditUserNamePictureView(UpdateAPIView):
-    serializer_class = UserEditNamePictureSerializer
+class EditUserNamePictureDateView(UpdateAPIView):
+    serializer_class = UserEditNamePictureDateSerializer
     permission_classes = [permissions.IsAuthenticated]
     queryset = get_user_model().objects.all()
     http_method_names = ['patch']

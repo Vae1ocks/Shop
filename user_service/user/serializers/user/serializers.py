@@ -10,13 +10,17 @@ class GetLoginTokenSerializer(Serializer):
 class GetUserInfoSerializer(ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ['pk', 'email', 'first_name', 'profile_picture', 'categories_bought', 'coupon_balance']
+        fields = [
+            'pk', 'email', 'first_name',
+            'profile_picture', 'categories_bought',
+            'coupon_balance'
+        ]
 
 
-class UserEditNamePictureSerializer(ModelSerializer):
+class UserEditNamePictureDateSerializer(ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ['first_name', 'profile_picture']
+        fields = ['first_name', 'profile_picture', 'date_of_birth']
 
 
 class EditUserSendEmailSerializer(Serializer):
