@@ -43,6 +43,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=50, blank=True, null=True)
     profile_picture = models.ImageField(upload_to=upload_to_username,
                                         blank=True, null=True)
+    date_of_birth = models.DateTimeField()
+
     coupon_balance = models.DecimalField(max_digits=10, decimal_places=2,
                                          default=Decimal('0.00'))
     categories_bought = models.JSONField(default=dict, blank=True)
