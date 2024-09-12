@@ -8,7 +8,8 @@ urlpatterns = [
     path('confirm-registration/', ConfirmRegistration.as_view(),
          name='confirm-registration'),
 
-    path('set-new-password/', SetNewPassword.as_view()),
+    path('set-new-password/', SetNewPassword.as_view(),
+         name='set_new_password'),
     path('reset-password/send-mail/', ResetPassword.as_view()),
     path('reset-password/', ConfirmResetPassword.as_view()),
 

@@ -120,7 +120,7 @@ class SetNewPassword(generics.GenericAPIView):
             user.save()
             return Response(
                 {'detail': f'Пользователь {user.email} создан.'},
-                status=status.HTTP_200_OK
+                status=status.HTTP_201_CREATED
             )
         return Response(
             {'detail': 'Данные для регистрации не предоставлены'},

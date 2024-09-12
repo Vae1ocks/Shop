@@ -75,6 +75,41 @@ class AuthAPITest(APITestCase):
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    @patch('authentication.signals.current_app.send_task')
+    def test_registration_set_password(self, mock_send_task):
+        session = self.client.session
+        session['reg']['email'] = 'test@test.com'
+        session['reg']['first_name'] = 'test_name'
+        session.save()
+
+        url = reverse('authentication:set_new_password')
+        data = {
+            'password': 'testpassword123',
+            'password2': 'testpassword123'
+        }
+
+        response = self.client.post(url, data)
+        self.assertEqual(
+            response.status_code, status.HTTP_201_CREATED
+        )
+
+        user = User.objects.filter(email='test@test.com').first()
+        self.assertIsNotNone(user)
+        self.assertEqual(user.first_name, session['reg']['first_name'])
+
+        mock_send_task.assert_called_with(
+            'send_data_user_create_user',
+            kwargs={
+                'email': session['reg']['email'],
+                'first_name': session['reg']['first_name'],
+                'password': user.password
+            },
+            queue='user_system_queue'
+        )
+
+
+
+
     def test_login(self):
         data = {
             'email': 'admin@admin.com',
