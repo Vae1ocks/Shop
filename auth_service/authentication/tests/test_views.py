@@ -1,3 +1,9 @@
+"""
+Тесты для вьюшек регистрации/аутентификации.
+Запускать с запущенным контейнером Redis
+docker run -it --rm --name redis -p 6379:6379 redis
+"""
+
 import datetime
 import random
 import json
@@ -106,8 +112,6 @@ class AuthAPITest(APITestCase):
             },
             queue='user_system_queue'
         )
-
-
 
 
     def test_login(self):
