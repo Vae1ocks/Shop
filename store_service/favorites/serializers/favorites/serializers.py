@@ -13,5 +13,9 @@ class FavoriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Favorite
-        fields = ['user_id', 'goods_id']
+        fields = ['goods_id', 'goods']
 
+    def create(self, validated_data):
+        user_id = self.context['request'].user.id
+        validated_data['user_id'] = user_id
+        return super().create(validated_data)
