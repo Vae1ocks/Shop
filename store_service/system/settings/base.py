@@ -30,7 +30,8 @@ INSTALLED_APPS += [
 # Django apps
 INSTALLED_APPS += [
     'store',
-    'basket'
+    'basket',
+    'favorites'
 ]
 
 INSTALLED_APPS += [
