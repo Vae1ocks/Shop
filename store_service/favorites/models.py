@@ -1,3 +1,10 @@
 from django.db import models
 
-# Create your models here.
+from store.models import Goods
+
+
+class Favorite(models.Model):
+    user_id = models.PositiveIntegerField()
+    goods = models.ForeignKey(
+        Goods, related_name='users_favorites', on_delete=models.CASCADE
+    )
