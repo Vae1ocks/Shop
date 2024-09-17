@@ -6,7 +6,7 @@ from store.serializers.store.serializers import GoodsListSerializer
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
-    goods = GoodsListSerializer(many=True, read_only=True)
+    goods = GoodsListSerializer(read_only=True)
     goods_id = serializers.PrimaryKeyRelatedField(
         queryset=Goods.objects.all(), source='goods', write_only=True
     )
