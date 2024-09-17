@@ -15,6 +15,16 @@ class FavoriteSerializer(serializers.ModelSerializer):
         model = Favorite
         fields = ['goods_id', 'goods']
 
+    def validate_goods_id(self, value):
+        user_id = self.context['request'].user.id
+        if Favorite.objects.filter(
+            user_id=user_id, goods_id=value
+        ).exists():
+            raise serializers.ValidationError(
+                'Нарушение уникальности: данная модель уже существует.'
+            )
+        return value
+
     def create(self, validated_data):
         user_id = self.context['request'].user.id
         validated_data['user_id'] = user_id
