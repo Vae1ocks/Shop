@@ -91,6 +91,12 @@ class UserAPIViewsTestCase(APITestCase):
         response = client.post(url, data=serializer_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+        # user history test
+        url = '/user/api/user/orders-history/'
+        response = client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
 
 
 
