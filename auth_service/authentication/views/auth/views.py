@@ -210,7 +210,9 @@ class ResetPassword(generics.GenericAPIView):
             send_mail_code_task.delay(
                 user_email=user.email,
                 first_name=user.first_name,
-                code=short_code)
+                code=short_code,
+                message=f'Для сброса пароля введите: {short_code}'
+            )
             return Response({'detail': f'Письмо отправлено. Код: {short_code}'},
                             status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
