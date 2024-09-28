@@ -9,7 +9,7 @@ from chat.serializers.other.serializers import UserInChatSerializer
 class ChatClientListSerializer(ModelSerializer):
     class Meta:
         model = Chat
-        exclude = ['client']
+        exclude = ["client"]
 
 
 class ChatListSerializer(ModelSerializer):
@@ -17,13 +17,13 @@ class ChatListSerializer(ModelSerializer):
 
     class Meta:
         model = Chat
-        exclude = ['support']
+        exclude = ["support"]
 
 
 class MessageSerializer(ModelSerializer):
     class Meta:
         model = Message
-        fields = '__all__'
+        fields = "__all__"
 
 
 class ChatCreateSerializer(ModelSerializer):
@@ -33,16 +33,17 @@ class ChatCreateSerializer(ModelSerializer):
     атрибут Chat.issue и более подробную информацию о ней - message.
     Т.е у любого чата минимум 1 связанный объект модели Message.
     """
+
     message = MessageSerializer(write_only=True)
 
     class Meta:
         model = Chat
-        fields = ['issue', 'message']
+        fields = ["issue", "message"]
 
     def create(self, validated_data):
-        user_id = self.context['request'].user.id
+        user_id = self.context["request"].user.id
         user = get_user_model().objects.get(id=user_id)
-        message_data = validated_data.pop('message')
+        message_data = validated_data.pop("message")
         chat = Chat.objects.create(client=user, **validated_data)
         Message.objects.create(**message_data, chat=chat)
         return chat
@@ -54,7 +55,7 @@ class ChatDetailSerializer(ModelSerializer):
 
     class Meta:
         model = Chat
-        exclude = ['client', 'support']
+        exclude = ["client", "support"]
 
     def get_user(self, obj):
         """
@@ -62,7 +63,7 @@ class ChatDetailSerializer(ModelSerializer):
         является текущий пользователь, и в зависимости от этого сериализуем
         нужного пользователя.
         """
-        user = self.context['scope']['user']
+        user = self.context["scope"]["user"]
         if obj.support != user:
             return UserInChatSerializer(obj.support).data
         return UserInChatSerializer(obj.client).data

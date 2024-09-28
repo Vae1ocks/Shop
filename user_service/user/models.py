@@ -1,28 +1,29 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 from decimal import Decimal
 
 
 def upload_to_username(instance, filename):
-    return f'profile_picture/{instance.email}/{filename}'
+    return f"profile_picture/{instance.email}/{filename}"
 
 
 class UserManager(BaseUserManager):
     def _create_user(self, email, password, **extra_fields):
         if not email:
-            raise ValueError('You must write your email')
+            raise ValueError("You must write your email")
         if not password:
-            raise ValueError('Password must be provided')
+            raise ValueError("Password must be provided")
 
-        user = self.model(
-            email=self.normalize_email(email),
-            **extra_fields
-        )
+        user = self.model(email=self.normalize_email(email), **extra_fields)
 
         user.set_password(password)
         if not user.first_name:
-            user.first_name = f'Пользователь {user.id}'
+            user.first_name = f"Пользователь {user.id}"
         user.save()
         return user
 
@@ -41,21 +42,23 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=150, unique=True)
     first_name = models.CharField(max_length=50, blank=True, null=True)
-    profile_picture = models.ImageField(upload_to=upload_to_username,
-                                        blank=True, null=True)
+    profile_picture = models.ImageField(
+        upload_to=upload_to_username, blank=True, null=True
+    )
     date_of_birth = models.DateTimeField(blank=True, null=True)
 
-    coupon_balance = models.DecimalField(max_digits=10, decimal_places=2,
-                                         default=Decimal('0.00'))
+    coupon_balance = models.DecimalField(
+        max_digits=10, decimal_places=2, default=Decimal("0.00")
+    )
     categories_bought = models.JSONField(default=dict, blank=True)
     expected_prices = models.JSONField(default=dict, blank=True)
     # exp_price = {id:{'title': ..., 'price': ...}, id: {...}}
 
     show_data_in_comments = models.BooleanField(
         default=True,
-        help_text='Регулирует, скрывать ли пользователиские '
-                  'данные, такие как имя и аватар в комментариях '
-                  'или нет.'
+        help_text="Регулирует, скрывать ли пользователиские "
+        "данные, такие как имя и аватар в комментариях "
+        "или нет.",
     )
 
     is_staff = models.BooleanField(default=False)
@@ -66,9 +69,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     class Meta:
-        verbose_name = 'User'
-        verbose_name_plural = 'Users'
+        verbose_name = "User"
+        verbose_name_plural = "Users"

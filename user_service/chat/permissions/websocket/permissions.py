@@ -14,13 +14,13 @@ def get_user(id):
 
 class IsStaff(BasePermission):
     async def has_permission(self, scope, consumer, action, **kwargs) -> bool:
-        user = await get_user(id=scope['user'].id)
+        user = await get_user(id=scope["user"].id)
         return True if user.is_staff else False
 
 
 class IsClient(BasePermission):
     async def has_permission(self, scope, consumer, action, **kwargs) -> bool:
-        user = await get_user(id=scope['user'].id)
+        user = await get_user(id=scope["user"].id)
         return True if not user.is_staff else False
 
 

@@ -11,16 +11,24 @@ class GetUserInfoSerializer(ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = [
-            'pk', 'email', 'first_name',
-            'profile_picture', 'categories_bought',
-            'coupon_balance', 'date_of_birth'
+            "pk",
+            "email",
+            "first_name",
+            "profile_picture",
+            "categories_bought",
+            "coupon_balance",
+            "date_of_birth",
         ]
 
 
 class UserEditNamePictureDateSerializer(ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ['first_name', 'profile_picture', 'date_of_birth']
+        fields = [
+            "first_name",
+            "profile_picture",
+            "date_of_birth",
+        ]
 
 
 class EditUserSendEmailSerializer(Serializer):
@@ -34,7 +42,7 @@ class ConfirmEditUserEmailSerializer(Serializer):
 class EditUserEmailSerializer(ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ['email']
+        fields = ["email"]
 
 
 class EditUserPasswordSerializer(Serializer):
@@ -43,11 +51,12 @@ class EditUserPasswordSerializer(Serializer):
     repeat_password = CharField(write_only=True, required=True)
 
     def validate(self, attrs):
-        if attrs['old_password'] == attrs['new_password']:
-            raise ValidationError('Неверно введен новый пароль.')
-        if attrs['new_password'] != attrs['repeat_password']:
-            raise ValidationError('Новые пароли не совпадают.')
-        if attrs['new_password'].isdigit() or len(attrs['new_password']) < 8:
-            raise ValidationError('Новый пароль состоит только из цифр или меньше 8 символов.')
+        if attrs["old_password"] == attrs["new_password"]:
+            raise ValidationError("Неверно введен новый пароль.")
+        if attrs["new_password"] != attrs["repeat_password"]:
+            raise ValidationError("Новые пароли не совпадают.")
+        if attrs["new_password"].isdigit() or len(attrs["new_password"]) < 8:
+            raise ValidationError(
+                "Новый пароль состоит только из цифр или меньше 8 символов."
+            )
         return attrs
-

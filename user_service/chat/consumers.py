@@ -9,7 +9,7 @@ from djangochannelsrestframework.decorators import action
 from djangochannelsrestframework.mixins import (
     ListModelMixin,
     RetrieveModelMixin,
-    CreateModelMixin
+    CreateModelMixin,
 )
 
 from rest_framework.utils.serializer_helpers import ReturnDict
@@ -23,15 +23,13 @@ from chat.permissions.websocket.permissions import IsStaff, IsClient
 
 
 class ChatSupportConsumer(
-    ListModelMixin,
-    ObserverModelInstanceMixin,
-    GenericAsyncAPIConsumer
+    ListModelMixin, ObserverModelInstanceMixin, GenericAsyncAPIConsumer
 ):
     queryset = Chat.objects.filter(support=None)
     serializer_class = serializers.ChatListSerializer
 
     async def get_permissions(self, action: str, **kwargs):
-        if action == 'list' or action == 'connect':
+        if action == "list" or action == "connect":
             # список всех вопросов могут просматривать только сотрудники
             return [IsStaff()]
         # if action == 'retrieve':
@@ -43,15 +41,13 @@ class ChatSupportConsumer(
 
 
 class SupportPersonalChats(
-    ListModelMixin,
-    ObserverModelInstanceMixin,
-    GenericAsyncAPIConsumer
+    ListModelMixin, ObserverModelInstanceMixin, GenericAsyncAPIConsumer
 ):
     permission_classes = [IsStaff]
 
     def get_queryset(self, **kwargs) -> QuerySet:
-        user = self.scope['user']
-        if self.action == 'list':
+        user = self.scope["user"]
+        if self.action == "list":
             return Chat.objects.filter(support=user)
         return Chat.objects.filter(support=None)
 
@@ -114,9 +110,7 @@ class PersonalChatConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
     async def create_message(self, message, pk, **kwargs):
         chat = await self.get_chat(pk=pk)
         await database_sync_to_async(Message.objects.create)(
-            chat=chat,
-            sender=self.scope["user"],
-            text=message
+            chat=chat, sender=self.scope["user"], text=message
         )
 
     @action()
@@ -124,8 +118,7 @@ class PersonalChatConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
         await self.message_activity.subscribe(chat=pk)
 
     @model_observer(Message)
-    async def message_activity(self, message,
-                               observer=None, **kwargs):
+    async def message_activity(self, message, observer=None, **kwargs):
 
         await self.send_json(message)
 

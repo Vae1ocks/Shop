@@ -20,11 +20,11 @@ def get_user(id):
 
 async def check_token(token):
     try:
-        auth_header_type, token = token.split(' ')
-        if auth_header_type not in settings.SIMPLE_JWT['AUTH_HEADER_TYPES']:
+        auth_header_type, token = token.split(" ")
+        if auth_header_type not in settings.SIMPLE_JWT["AUTH_HEADER_TYPES"]:
             return AnonymousUser()
         token_decode = AccessToken(token)
-        id = token_decode['user_id']
+        id = token_decode["user_id"]
         return await get_user(id)
     except (InvalidToken, TokenError):
         return AnonymousUser()
@@ -36,11 +36,11 @@ class TokenOrSessionAuthMiddleware:
 
     async def __call__(self, scope, receive, send):
         close_old_connections()
-        headers = dict(scope['headers'])
-        token = headers.get(b'authorization')
+        headers = dict(scope["headers"])
+        token = headers.get(b"authorization")
         if token:
-            token = token.decode('utf-8')
-            scope['user'] = await check_token(token)
+            token = token.decode("utf-8")
+            scope["user"] = await check_token(token)
         else:
             inner = AuthMiddlewareStack(self.inner)
             return await inner(scope, receive, send)
