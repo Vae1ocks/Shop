@@ -5,11 +5,13 @@ from authentication.models import User
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    first_name = serializers.CharField(
+        required=False, allow_blank=True, allow_null=True
+    )
 
     class Meta:
         model = User
-        fields = ['email', 'first_name']
+        fields = ["email", "first_name"]
 
 
 class SendCodeSerializer(serializers.Serializer):
@@ -21,12 +23,12 @@ class SetNewPasswordSerializer(serializers.Serializer):
     password2 = serializers.CharField(write_only=True, required=True)
 
     def validate(self, attrs):
-        if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError('Пароли не совпадают.')
-        if len(attrs['password']) < 8:
-            raise serializers.ValidationError('Пароль слишком короткий.')
-        if attrs['password'].isdigit():
-            raise serializers.ValidationError('Неверно заполнен пароль.')
+        if attrs["password"] != attrs["password2"]:
+            raise serializers.ValidationError("Пароли не совпадают.")
+        if len(attrs["password"]) < 8:
+            raise serializers.ValidationError("Пароль слишком короткий.")
+        if attrs["password"].isdigit():
+            raise serializers.ValidationError("Неверно заполнен пароль.")
         return attrs
 
 
@@ -41,5 +43,3 @@ class RefreshSerializer(serializers.Serializer):
 
 class ResetPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField(write_only=True, required=True)
-
-
