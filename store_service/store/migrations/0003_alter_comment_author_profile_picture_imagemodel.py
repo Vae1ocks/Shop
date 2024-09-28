@@ -8,21 +8,43 @@ import store.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('store', '0002_alter_comment_author_profile_picture'),
+        ("store", "0002_alter_comment_author_profile_picture"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='comment',
-            name='author_profile_picture',
-            field=models.ImageField(blank=True, null=True, upload_to=store.models.upload_to_author_id),
+            model_name="comment",
+            name="author_profile_picture",
+            field=models.ImageField(
+                blank=True, null=True, upload_to=store.models.upload_to_author_id
+            ),
         ),
         migrations.CreateModel(
-            name='ImageModel',
+            name="ImageModel",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(blank=True, null=True, upload_to=store.models.upload_to_id)),
-                ('comment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='images', to='store.comment')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "image",
+                    models.ImageField(
+                        blank=True, null=True, upload_to=store.models.upload_to_id
+                    ),
+                ),
+                (
+                    "comment",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="images",
+                        to="store.comment",
+                    ),
+                ),
             ],
         ),
     ]

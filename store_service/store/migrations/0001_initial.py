@@ -9,86 +9,151 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=150, unique=True)),
-                ('slug', models.CharField(max_length=150, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=150, unique=True)),
+                ("slug", models.CharField(max_length=150, unique=True)),
             ],
             options={
-                'verbose_name': 'category',
-                'verbose_name_plural': 'categories',
-                'ordering': ['title'],
+                "verbose_name": "category",
+                "verbose_name_plural": "categories",
+                "ordering": ["title"],
             },
         ),
         migrations.CreateModel(
-            name='Goods',
+            name="Goods",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=150)),
-                ('slug', models.CharField(blank=True, max_length=150)),
-                ('image', models.ImageField(blank=True, upload_to='goods/')),
-                ('price', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('rating', models.DecimalField(decimal_places=1, default=0, max_digits=2)),
-                ('times_bought', models.PositiveIntegerField(default=0)),
-                ('users_bought', models.JSONField(default=list)),
-                ('description', models.TextField()),
-                ('amount', models.PositiveIntegerField()),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='goods', to='store.category')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=150)),
+                ("slug", models.CharField(blank=True, max_length=150)),
+                ("image", models.ImageField(blank=True, upload_to="goods/")),
+                ("price", models.DecimalField(decimal_places=2, max_digits=10)),
+                (
+                    "rating",
+                    models.DecimalField(decimal_places=1, default=0, max_digits=2),
+                ),
+                ("times_bought", models.PositiveIntegerField(default=0)),
+                ("users_bought", models.JSONField(default=list)),
+                ("description", models.TextField()),
+                ("amount", models.PositiveIntegerField()),
+                (
+                    "category",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="goods",
+                        to="store.category",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['title'],
+                "ordering": ["title"],
             },
         ),
         migrations.CreateModel(
-            name='PriceHistory',
+            name="PriceHistory",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('price', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('date', models.DateTimeField(auto_now_add=True)),
-                ('goods', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='price_history', to='store.goods')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("price", models.DecimalField(decimal_places=2, max_digits=10)),
+                ("date", models.DateTimeField(auto_now_add=True)),
+                (
+                    "goods",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="price_history",
+                        to="store.goods",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-date'],
+                "ordering": ["-date"],
             },
         ),
         migrations.CreateModel(
-            name='Comment',
+            name="Comment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('author', models.PositiveIntegerField()),
-                ('author_name', models.CharField(max_length=30)),
-                ('author_profile_picture', models.ImageField(upload_to='')),
-                ('body', models.TextField(blank=True, null=True)),
-                ('rating', models.IntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(5)])),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('updated', models.DateTimeField(auto_now=True)),
-                ('goods', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='store.goods')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("author", models.PositiveIntegerField()),
+                ("author_name", models.CharField(max_length=30)),
+                ("author_profile_picture", models.ImageField(upload_to="")),
+                ("body", models.TextField(blank=True, null=True)),
+                (
+                    "rating",
+                    models.IntegerField(
+                        validators=[
+                            django.core.validators.MinValueValidator(1),
+                            django.core.validators.MaxValueValidator(5),
+                        ]
+                    ),
+                ),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("updated", models.DateTimeField(auto_now=True)),
+                (
+                    "goods",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="comments",
+                        to="store.goods",
+                    ),
+                ),
             ],
         ),
         migrations.AddIndex(
-            model_name='category',
-            index=models.Index(fields=['title'], name='store_categ_title_e79325_idx'),
+            model_name="category",
+            index=models.Index(fields=["title"], name="store_categ_title_e79325_idx"),
         ),
         migrations.AddIndex(
-            model_name='pricehistory',
-            index=models.Index(fields=['goods'], name='store_price_goods_i_36b25a_idx'),
+            model_name="pricehistory",
+            index=models.Index(fields=["goods"], name="store_price_goods_i_36b25a_idx"),
         ),
         migrations.AddIndex(
-            model_name='pricehistory',
-            index=models.Index(fields=['date'], name='store_price_date_48d979_idx'),
+            model_name="pricehistory",
+            index=models.Index(fields=["date"], name="store_price_date_48d979_idx"),
         ),
         migrations.AddIndex(
-            model_name='goods',
-            index=models.Index(fields=['title'], name='store_goods_title_57e43a_idx'),
+            model_name="goods",
+            index=models.Index(fields=["title"], name="store_goods_title_57e43a_idx"),
         ),
         migrations.AddIndex(
-            model_name='goods',
-            index=models.Index(fields=['category'], name='store_goods_categor_5b4944_idx'),
+            model_name="goods",
+            index=models.Index(
+                fields=["category"], name="store_goods_categor_5b4944_idx"
+            ),
         ),
     ]

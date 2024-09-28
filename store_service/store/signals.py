@@ -6,6 +6,7 @@ from django.urls import reverse
 
 from celery import current_app
 
+
 @receiver(post_save, sender=Goods)
 def add_price_history(sender, instance, created, **kwargs):
     """
@@ -14,26 +15,37 @@ def add_price_history(sender, instance, created, **kwargs):
     которые добавили данный товар в ожидаемые, указав определённую цену.
     """
     if created:
-        PriceHistory.objects.create(goods=instance, price=instance.price)
+        PriceHistory.objects.create(
+            goods=instance,
+            price=instance.price,
+        )
     else:
         # Если цена товара последнего по дате объекта PriceHistory не совпадает с
         # ценой только что сохранённого объекта Goods - instance --> цена изменилась
         # и следует создать новый объект PriceHistory
-        previous_price = PriceHistory.objects.filter(goods=instance).order_by(
-            '-date'
-        ).first().price
+        previous_price = (
+            PriceHistory.objects.filter(
+                goods=instance,
+            )
+            .order_by("-date")
+            .first()
+            .price
+        )
         if previous_price != instance.price:
-            relative_url = reverse('store:goods_detail', args=[instance.id])
+            relative_url = reverse(
+                "store:goods_detail",
+                args=[instance.id],
+            )
             PriceHistory.objects.create(goods=instance, price=instance.price)
             current_app.send_task(
-                'user_service.send_notification',
+                "user_service.send_notification",
                 kwargs={
-                    'goods_id': instance.id,
-                    'goods_title': instance.title,
-                    'price': instance.price,
-                    'relative_url': relative_url
+                    "goods_id": instance.id,
+                    "goods_title": instance.title,
+                    "price": instance.price,
+                    "relative_url": relative_url,
                 },
-                queue='user_system_queue'
+                queue="user_system_queue",
             )
 
 
@@ -45,7 +57,7 @@ def update_goods_rating_if_comment_save(sender, instance, **kwargs):
     goods = instance.goods
     comments = goods.comments.all()
     if comments.exists():
-        goods.rating = comments.aggregate(Avg('rating'))['rating__avg']
+        goods.rating = comments.aggregate(Avg("rating"))["rating__avg"]
     else:
         goods.rating = 0
     goods.save()
@@ -59,7 +71,7 @@ def update_goods_rating_if_comment_delete(sender, instance, **kwargs):
     goods = instance.goods
     comments = goods.comments.exclude(id=instance.id)
     if comments.exists():
-        goods.rating = comments.aggregate(Avg('rating'))['rating__avg']
+        goods.rating = comments.aggregate(Avg("rating"))["rating__avg"]
     else:
         goods.rating = 0
     goods.save()

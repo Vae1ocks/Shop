@@ -11,6 +11,7 @@ class Basket:
     """
     Корзина покупок
     """
+
     def __init__(self, request):
         self.session = request.session
         basket = self.session.get(settings.SHOPPING_BASKET_KEY)
@@ -24,12 +25,11 @@ class Basket:
     def add(self, goods, amount=1, override_amount=False):
         goods_id = str(goods.id)
         if goods_id not in self.basket:
-            self.basket[goods_id] = {'amount': amount,
-                                     'price': str(goods.price)}
+            self.basket[goods_id] = {"amount": amount, "price": str(goods.price)}
         if override_amount:
-            self.basket[goods_id]['amount'] = amount
+            self.basket[goods_id]["amount"] = amount
         else:
-            self.basket[goods_id]['amount'] += amount
+            self.basket[goods_id]["amount"] += amount
         self.save()
 
     def remove(self, goods):
@@ -44,19 +44,20 @@ class Basket:
         goods_query = Goods.objects.filter(id__in=goods_ids)
 
         for goods in goods_query:
-            basket[str(goods.id)]['goods'] = goods
+            basket[str(goods.id)]["goods"] = goods
 
         for value in basket.values():
-            value['price'] = Decimal(value['price'])
-            value['total_price'] = value['price'] * value['amount']
+            value["price"] = Decimal(value["price"])
+            value["total_price"] = value["price"] * value["amount"]
             yield value
 
     def __len__(self):
-        return sum(value['amount'] for value in self.basket.values())
+        return sum(value["amount"] for value in self.basket.values())
 
     def get_total_price(self):
-        return sum(Decimal(value['price']) * value['amount']
-                   for value in self.basket.values())
+        return sum(
+            Decimal(value["price"]) * value["amount"] for value in self.basket.values(),
+        )
 
     def get_basket_items(self):
         """
@@ -64,12 +65,14 @@ class Basket:
         """
         items = []
         for item in self:
-            items.append({
-                'goods': {'id': item['goods'].id, 'title': item['goods'].title},
-                'amount': item['amount'],
-                'price': item['price'],
-                'total_price': item['total_price']
-            })
+            items.append(
+                {
+                    "goods": {"id": item["goods"].id, "title": item["goods"].title},
+                    "amount": item["amount"],
+                    "price": item["price"],
+                    "total_price": item["total_price"],
+                }
+            )
             return items
 
     def clear(self):

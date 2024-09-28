@@ -4,7 +4,7 @@ from .models import Goods
 
 class IsGoodsBoughtByUser(BasePermission):
     def has_permission(self, request, view):
-        goods_id = request.data.get('goods')
+        goods_id = request.data.get("goods")
         if not goods_id:
             return False
 

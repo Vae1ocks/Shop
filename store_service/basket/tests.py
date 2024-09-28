@@ -7,51 +7,68 @@ from store.models import Category, Goods
 
 
 def user_create(username, password):
-    return get_user_model().objects.create_user(username=username, password=password)
+    return get_user_model().objects.create_user(
+        username=username,
+        password=password,
+    )
 
 
 def category_create(title):
     return Category.objects.create(title=title)
 
 
-def goods_create(category, title, times_bought=1,
-                 description='Some description', price=10,
-                 amount=1):
+def goods_create(
+    category,
+    title,
+    times_bought=1,
+    description="Some description",
+    price=10,
+    amount=1,
+):
     return Goods.objects.create(
-        category=category, title=title,
-        times_bought=times_bought, description=description,
-        price=price, amount=amount
+        category=category,
+        title=title,
+        times_bought=times_bought,
+        description=description,
+        price=price,
+        amount=amount,
     )
 
 
 class BasketTest(APITestCase):
     def setup(self, auth_required=True):
-        self.username = 'Test'
-        self.password = 'testpassword123'
-        self.user = user_create(username=self.username, password=self.password)
-        self.category = category_create(title='First category')
-        self.goods = goods_create(category=self.category, title='First goods')
+        self.username = "Test"
+        self.password = "testpassword123"
+        self.user = user_create(
+            username=self.username,
+            password=self.password,
+        )
+        self.category = category_create(title="First category")
+        self.goods = goods_create(category=self.category, title="First goods")
 
         if auth_required:
-            is_authenticated = self.client.login(username=self.username, password=self.password)
+            is_authenticated = self.client.login(
+                username=self.username,
+                password=self.password,
+            )
             self.assertTrue(is_authenticated)
 
         self.session = self.client.session
 
     def test_basket_add_goods(self):
         self.setup()
-        url = reverse('basket:basket_add_goods')
-        data = {
-            'goods': self.goods.id,
-            'amount': 1
-        }
+        url = reverse("basket:basket_add_goods")
+        data = {"goods": self.goods.id, "amount": 1}
 
-        response = self.client.post(url, data, format='json')
+        response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn(settings.SHOPPING_BASKET_KEY, self.session)
-        self.assertIn(str(self.goods.id), self.session[settings.SHOPPING_BASKET_KEY])
+        self.assertIn(
+            str(self.goods.id),
+            self.session[settings.SHOPPING_BASKET_KEY],
+        )
 
-    '''
+    """
     def test_basket_remove_goods(self):
         self.setup()
         self.session[settings.SHOPPING_BASKET_KEY] = {}
@@ -76,18 +93,18 @@ class BasketTest(APITestCase):
         корректно. Тут если я print(self.session) в классе shopping_basket в момент
         удаления товара, то сессия будет пустой, однако после этого в этом тесте
         она почему-то как-то "восстанавливается" и снова не пустая, а с товаром.
-        '''
+        """
 
     def test_basket_detail(self):
         self.setup()
         self.session[settings.SHOPPING_BASKET_KEY] = {}
         self.session[settings.SHOPPING_BASKET_KEY][str(self.goods.id)] = {
-            'amount': 1,
-            'price': str(self.goods.price)
+            "amount": 1,
+            "price": str(self.goods.price),
         }
         self.session.save()
 
-        url = reverse('basket:basket_detail')
+        url = reverse("basket:basket_detail")
 
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
