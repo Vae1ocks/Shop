@@ -1,1 +1,29 @@
-<p>header works!</p>
+<div class="flex items-center">
+  <img
+    loading="lazy"
+    class="logo"
+    src="/assets/icons/everyfind-logo.svg"
+    alt="Everyfind Logo"
+  />
+
+  <app-button class="category-btn" size="large"> Категории </app-button>
+</div>
+
+<input
+  class="border-light-purple flex-1 rounded-full"
+  type="search"
+  name="search"
+  placeholder="найти товар"
+/>
+
+<div class="flex items-center">
+  <div class="buttons-group flex items-center">
+    <app-header-button text="Избранное" icon="heart" />
+
+    <app-header-button text="Корзина" icon="cart" />
+
+    <app-header-button text="Мои заказы" icon="box" />
+  </div>
+
+  <app-button class="sign-in-btn" size="small"> Войти </app-button>
+</div>

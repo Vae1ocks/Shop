@@ -1,4 +1,8 @@
-<button class="button" [type]="type()" [disabled]="disabled()">
+<button
+  class="button button_{{ size() }}"
+  [type]="type()"
+  [disabled]="disabled()"
+>
   @if (loading()) {
     <div class="loader"></div>
   } @else {

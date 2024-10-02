@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-import { ButtonType } from './model';
+import { ButtonSize, ButtonType } from './model';
 
 @Component({
   selector: 'app-button',
@@ -16,4 +16,6 @@ export class ButtonComponent {
   loading = input<boolean>(false);
 
   disabled = input<boolean>(false);
+
+  size = input<ButtonSize>('medium');
 }
