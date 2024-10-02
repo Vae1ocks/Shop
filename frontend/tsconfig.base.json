@@ -18,16 +18,17 @@
       "@app/core": ["src/app/core/src/index.ts"],
       "@app/layout": ["src/app/layout/src/index.ts"],
       "@app/layout/*": ["src/app/layout/src/lib/*"],
+      "@app/shared/libs/*": ["src/app/shared/libs/src/lib/*"],
+      "@app/pages/login": ["src/app/pages/login/src/index.ts"],
+      "@app/pages/main": ["src/app/pages/main/src/index.ts"],
+      "@app/pages/registration": [
+        "src/app/pages/registration/registration/src/index.ts"
+      ],
       "@app/pages/registration-code": [
         "src/app/pages/registration/registration-code/src/index.ts"
       ],
       "@app/pages/registration-new-password": [
         "src/app/pages/registration/registration-new-password/src/index.ts"
-      ],
-      "@app/pages/login": ["src/app/pages/login/src/index.ts"],
-      "@app/pages/main": ["src/app/pages/main/src/index.ts"],
-      "@app/pages/registration": [
-        "src/app/pages/registration/registration/src/index.ts"
       ],
       "@app/pages/registration-shell": [
         "src/app/pages/registration/registration-shell/src/index.ts"
@@ -51,6 +52,7 @@
         "src/app/pages/reset-password/reset-password-success/src/index.ts"
       ],
       "@app/shared/*": ["src/app/shared/*"],
+      "@app/shared/api": ["src/app/shared/api/src/index.ts"],
       "@app/ui/common/*": ["src/app/shared/ui/common/src/lib/*"],
       "@env": ["src/environments/index.ts"],
       "@swagger/models": ["src/app/swagger/models.ts"],
