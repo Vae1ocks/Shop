@@ -9,6 +9,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { SessionStorageService } from '@app/shared/api';
 import { ROUTE_TOKENS } from '@app/shared/app-config';
 import { FormGroupModel } from '@app/shared/forms';
 import { ButtonComponent } from '@app/ui/common/button';
@@ -35,6 +36,8 @@ export class RegistrationComponent implements OnInit {
 
   private readonly router = inject(Router);
 
+  private readonly sessionStorage = inject(SessionStorageService);
+
   readonly loading$$ = signal<boolean>(false);
 
   readonly showError$$ = signal<boolean>(false);
@@ -58,6 +61,11 @@ export class RegistrationComponent implements OnInit {
     if (this.formGroup.invalid) return;
 
     this.loading$$.set(true);
+    // TODO: вынести ключ для storage в конфиг
+    this.sessionStorage.setItem(
+      'registration',
+      JSON.stringify(this.formGroup.value),
+    );
 
     this.registrationService
       .registrationCreate$Json({
