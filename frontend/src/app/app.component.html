@@ -1,27 +1,7 @@
-<div class="top-header flex justify-between">
-  <div class="flex items-center">
-    <svg-icon src="/assets/icons/map-pin.svg" />
-    <span>Москва</span>
-  </div>
+<app-header-info />
 
-  <div>
-    <ul class="flex items-center">
-      <li>О нас</li>
-      <li>Контакты</li>
-      <li>Помощь</li>
-    </ul>
-  </div>
-</div>
+<app-header />
 
-<div class="logo-container">
-  <img
-    loading="lazy"
-    class="logo"
-    src="/assets/icons/everyfind-logo.svg"
-    alt="Everyfind Logo"
-  />
-</div>
-
-<div class="app-content">
+<div class="app-content flex items-center justify-center">
   <router-outlet />
 </div>
