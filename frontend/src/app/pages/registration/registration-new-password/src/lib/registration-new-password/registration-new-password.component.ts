@@ -17,13 +17,14 @@ import { fieldsMustMatch, FormGroupModelNonNullable } from '@app/shared/forms';
 import { ButtonComponent } from '@app/ui/common/button';
 import { SetNewPasswordRequest } from '@swagger/models';
 import { SetNewPasswordService } from '@swagger/services/set-new-password.service';
+import { SvgIconComponent } from 'angular-svg-icon';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-registration-new-password',
   standalone: true,
-  imports: [ReactiveFormsModule, ButtonComponent],
+  imports: [ReactiveFormsModule, ButtonComponent, SvgIconComponent],
   templateUrl: './registration-new-password.component.html',
   styleUrl: './registration-new-password.component.scss',
 })
@@ -60,6 +61,10 @@ export class RegistrationNewPasswordComponent {
       initialValue: true,
     },
   );
+
+  showPassword = false;
+
+  showConfirmPassword = false;
 
   submit(): void {
     if (this.formGroup.invalid) return;

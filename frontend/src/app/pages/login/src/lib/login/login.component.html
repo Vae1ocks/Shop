@@ -10,6 +10,7 @@
         formControlName="email"
         placeholder="Email"
       />
+
       <div class="input-field relative">
         <input
           class="w-full"
@@ -26,6 +27,7 @@
           (click)="showPassword = !showPassword"
         />
       </div>
+
       <a
         class="auth-link btn-sm"
         [routerLink]="['/' + ROUTE_TOKENS.RESET_PASSWORD.RESET_PASSWORD]"
