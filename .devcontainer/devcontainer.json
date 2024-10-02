@@ -65,7 +65,14 @@
 				"jock.svg",
 				"Gruntfuggly.todo-tree",
 				"pflannery.vscode-versionlens",
-				"webhint.vscode-webhint"
+				"webhint.vscode-webhint",
+				"naumovs.color-highlight",
+				"YoavBls.pretty-ts-errors",
+				"austenc.tailwind-docs",
+				"stivo.tailwind-fold",
+				"bourhaouta.tailwindshades",
+				"ChakrounAnas.turbo-console-log",
+				"bradlc.vscode-tailwindcss"
 			]
 		}
 	},
