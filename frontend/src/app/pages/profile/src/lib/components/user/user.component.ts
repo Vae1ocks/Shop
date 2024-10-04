@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { UserAddressType } from '../../../types/user-address.type';
 
 @Component({
-  selector: 'user-layout',
+  selector: 'app-user',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './user.component.html',

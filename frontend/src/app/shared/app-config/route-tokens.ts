@@ -1,6 +1,14 @@
 export const ROUTE_TOKENS = {
   LOGIN: 'login',
-  PROFILE: 'profile',
+  PROFILE: {
+    PROFILE: 'profile',
+    USER: 'user',
+    ORDER: 'order',
+    HISTORY: 'history',
+    PROMO: 'promo',
+    REVIEWS: 'reviews',
+    SETTING: 'setting',
+  },
   REGISTRATION: {
     REGISTRATION: 'registration',
     CONFIRMATION_CODE: 'registration-code',

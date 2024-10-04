@@ -21,7 +21,7 @@ export const appRoutes: Route[] = [
       import('@app/pages/login').then((c) => c.LoginComponent),
   },
   {
-    path: ROUTE_TOKENS.PROFILE,
+    path: ROUTE_TOKENS.PROFILE.PROFILE,
     loadChildren: () =>
       import('@app/pages/profile').then((c) => c.profileRoutes),
   },
