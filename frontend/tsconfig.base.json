@@ -18,9 +18,10 @@
       "@app/core": ["src/app/core/src/index.ts"],
       "@app/layout": ["src/app/layout/src/index.ts"],
       "@app/layout/*": ["src/app/layout/src/lib/*"],
-      "@app/shared/libs/*": ["src/app/shared/libs/src/lib/*"],
+      "@app/my-ui-lib": ["my-ui-lib/src/index.ts"],
       "@app/pages/login": ["src/app/pages/login/src/index.ts"],
       "@app/pages/main": ["src/app/pages/main/src/index.ts"],
+      "@app/pages/profile": ["src/app/pages/profile/src/index.ts"],
       "@app/pages/registration": [
         "src/app/pages/registration/registration/src/index.ts"
       ],
@@ -51,6 +52,7 @@
       "@app/pages/reset-password-success": [
         "src/app/pages/reset-password/reset-password-success/src/index.ts"
       ],
+      "@app/profile": ["src/app/pages/profile/src/index.ts"],
       "@app/shared/*": ["src/app/shared/*"],
       "@app/shared/api": ["src/app/shared/api/src/index.ts"],
       "@app/ui/common/*": ["src/app/shared/ui/common/src/lib/*"],

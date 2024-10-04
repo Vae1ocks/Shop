@@ -21,16 +21,14 @@ export const appRoutes: Route[] = [
       import('@app/pages/login').then((c) => c.LoginComponent),
   },
   {
-    path: '',
+    path: ROUTE_TOKENS.PROFILE,
     loadChildren: () =>
-      import('@app/pages/registration-shell').then((c) => c.registrationRoutes),
+      import('@app/pages/profile').then((c) => c.profileRoutes),
   },
   {
     path: '',
     loadChildren: () =>
-      import('@app/pages/reset-password-shell').then(
-        (c) => c.resetPasswordRoutes,
-      ),
+      import('@app/pages/registration-shell').then((c) => c.registrationRoutes),
   },
   {
     path: '**',

@@ -15,9 +15,9 @@ import { Router } from '@angular/router';
 import { ROUTE_TOKENS } from '@app/shared/app-config';
 import { fieldsMustMatch, FormGroupModelNonNullable } from '@app/shared/forms';
 import { ButtonComponent } from '@app/ui/common/button';
-import { SetNewPasswordRequest } from '@swagger/models';
 import { SetNewPasswordService } from '@swagger/services/set-new-password.service';
 import { distinctUntilChanged, map } from 'rxjs/operators';
+import { SetNewPasswordRequest } from '@swagger/models';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

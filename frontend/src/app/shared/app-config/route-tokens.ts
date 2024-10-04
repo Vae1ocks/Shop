@@ -1,5 +1,6 @@
 export const ROUTE_TOKENS = {
   LOGIN: 'login',
+  PROFILE: 'profile',
   REGISTRATION: {
     REGISTRATION: 'registration',
     CONFIRMATION_CODE: 'registration-code',
@@ -13,4 +14,5 @@ export const ROUTE_TOKENS = {
     RESET_PASSWORD_SUCCESS: 'reset-password-success',
   },
   MAIN: 'main',
+
 } as const;

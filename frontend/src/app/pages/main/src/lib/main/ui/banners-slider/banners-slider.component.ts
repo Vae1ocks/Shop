@@ -3,8 +3,8 @@ import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
-import { SwiperDirective } from '@app/shared/libs/directives/swiper.directive';
 import { SwiperOptions } from 'swiper/types';
+import { SwiperDirective } from '@app/shared/libs/src/lib/directives/swiper.directive';
 
 @Component({
   selector: 'app-banners-slider',
