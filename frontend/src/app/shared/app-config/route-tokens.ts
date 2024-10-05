@@ -22,5 +22,4 @@ export const ROUTE_TOKENS = {
     RESET_PASSWORD_SUCCESS: 'reset-password-success',
   },
   MAIN: 'main',
-
 } as const;
