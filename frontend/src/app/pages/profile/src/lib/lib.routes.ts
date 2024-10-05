@@ -34,8 +34,5 @@ export const profileRoutes: Route[] = [
         loadChildren: () => import('./components/setting/setting.component').then(m => m.SettingComponent),
       },
     ],
-
   },
-
-
 ];

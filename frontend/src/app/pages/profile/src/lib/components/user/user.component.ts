@@ -19,16 +19,13 @@ export class UserComponent implements OnInit {
     { id: 3, name: 'г. Москва,ул. Октябрьская 1', checked: false},
   ];
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   checkedInput(id: number) {
     this.addressArray.forEach(item => {
       item.checked = (item.id === id)
     })
   }
-
 }
