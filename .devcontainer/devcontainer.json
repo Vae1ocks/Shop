@@ -1,0 +1,87 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
+{
+	"name": "Node.js & TypeScript",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	"features": {
+		"node": {
+			"version": "22.5.1"
+	  	},
+		"ghcr.io/devcontainers-contrib/features/typescript:2": {
+			"version": "5.5.2"
+		},
+		"ghcr.io/devcontainers-contrib/features/angular-cli:2": {
+			"version": "18.1.0"
+		},
+		"ghcr.io/devcontainers-contrib/features/nx-npm:1": {
+			"version": "19.5.7"
+		},
+		"ghcr.io/devcontainers/features/common-utils:2": {},
+		"ghcr.io/devcontainers/features/git:1": {}
+	},
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"johnpapa.Angular2",
+				"alefragnani.Bookmarks",
+				"usernamehw.errorlens",
+				"xabikos.JavaScriptSnippets",
+				"wayou.vscode-todo-highlight",
+				"Atishay-Jain.All-Autocomplete",
+				"Angular.ng-template",
+				"cyrilletuzi.angular-schematics",
+				"streetsidesoftware.code-spell-checker",
+				"Codium.codium",
+				"WallabyJs.console-ninja",
+				"kisstkondoros.csstriggers",
+				"diz.ecsstractor-port",
+				"EditorConfig.EditorConfig",
+				"dbaeumer.vscode-eslint",
+				"mhutchie.git-graph",
+				"donjayamanne.githistory",
+				"eamodio.gitlens",
+				"wix.vscode-import-cost",
+				"oderwat.indent-rainbow",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"VisualStudioExptTeam.intellicode-api-usage-examples",
+				"Zignd.html-css-class-completion",
+				"ZainChen.json",
+				"eriklynd.json-tools",
+				"DavidAnson.vscode-markdownlint",
+				"fivepointseven.node-version",
+				"christian-kohler.npm-intellisense",
+				"nrwl.angular-console",
+				"christian-kohler.path-intellisense",
+				"Postman.postman-for-vscode",
+				"esbenp.prettier-vscode",
+				"mutantdino.resourcemonitor",
+				"streetsidesoftware.code-spell-checker-russian",
+				"mrmlnc.vscode-scss",
+				"SonarSource.sonarlint-vscode",
+				"stylelint.vscode-stylelint",
+				"jock.svg",
+				"Gruntfuggly.todo-tree",
+				"pflannery.vscode-versionlens",
+				"webhint.vscode-webhint",
+				"naumovs.color-highlight",
+				"YoavBls.pretty-ts-errors",
+				"austenc.tailwind-docs",
+				"stivo.tailwind-fold",
+				"bourhaouta.tailwindshades",
+				"ChakrounAnas.turbo-console-log",
+				"bradlc.vscode-tailwindcss"
+			]
+		}
+	},
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	"remoteUser": "node"
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "yarn install",
+}

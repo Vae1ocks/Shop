@@ -1,0 +1,54 @@
+{
+  "extends": [
+    "stylelint-config-standard-scss",
+    "stylelint-config-clean-order/error"
+  ],
+  "plugins": [
+    "stylelint-high-performance-animation",
+    "stylelint-no-unsupported-browser-features",
+    "stylelint-plugin-defensive-css",
+    "stylelint-color-format",
+    "stylelint-rem-over-px",
+    "stylelint-group-selectors",
+    "stylelint-use-nesting",
+    "stylelint-z-index-value-constraint"
+  ],
+  "rules": {
+    "plugin/no-low-performance-animation-properties": [
+      true,
+      {
+        "ignore": "paint-properties"
+      }
+    ],
+    "plugin/no-unsupported-browser-features": [
+      true,
+      {
+        "severity": "warning"
+      }
+    ],
+    "plugin/use-defensive-css": [
+      true,
+      {
+        "severity": "warning"
+      }
+    ],
+    "color-format/format": {
+      "format": "rgba"
+    },
+    "rem-over-px/rem-over-px": true,
+    "plugin/stylelint-group-selectors": true,
+    "csstools/use-nesting": [
+      "always",
+      {
+        "syntax": "scss"
+      }
+    ],
+    "plugin/z-index-value-constraint": {
+      "min": 1,
+      "max": 999
+    }
+  },
+  "ignoreFiles": [
+    "!**/*"
+  ]
+}

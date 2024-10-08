@@ -1,0 +1,15 @@
+.top-header {
+  padding: 8px 30px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 100%;
+  color: rgba(43, 43, 43, 1);
+
+  svg-icon {
+    margin-right: 5px;
+  }
+
+  li + li {
+    margin-left: 31px;
+  }
+}

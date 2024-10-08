@@ -1,0 +1,39 @@
+.h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 2rem;
+}
+
+.h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2rem;
+}
+
+.h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 2rem;
+}
+
+.btn-sm {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+
+.btn-md {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+}
+
+.field-text {
+  @include field-text;
+}
+
+.field-description {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+}

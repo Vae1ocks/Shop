@@ -1,0 +1,73 @@
+.profile {
+  padding-top: 25px;
+  padding-bottom: 314px;
+
+  .profile-nav-list {
+    nav ul {
+      margin: 0;
+      padding: 0;
+      display: flex;
+
+      li {
+        list-style: none;
+
+        a {
+          font: 400 16px "Poppins", sans-serif;
+          color: #a7a7a7;
+          cursor: pointer;
+          text-decoration: none;
+
+          &.active {
+            color: black;
+          }
+        }
+      }
+    }
+  }
+
+  .container {
+    margin-top: 60px;
+    display: flex;
+    justify-content: space-between;
+
+    .profile-head {
+      width: 264px;
+      height: 299px;
+      margin-right: 50px;
+      box-shadow: 8px 8px 40px 0 rgba(0, 0, 0, 0.08);
+      background: #fff;
+      border: 1px solid #e4e7e9;
+      border-radius: 14px;
+
+      .profile-head-list {
+        margin: 17px 0 0 0;
+        padding: 0;
+
+        a {
+          width: 264px;
+          height: 35px;
+          display: flex;
+          align-items: center;
+          font: 400 14px / 1.42857 "Poppins", sans-serif;
+          color: #000;
+          cursor: pointer;
+          text-decoration: none;
+
+          svg {
+            margin-left: 30px;
+            margin-right: 10px;
+          }
+
+          &.active {
+            background: #e5d3f9;
+          }
+        }
+      }
+    }
+
+    .profile-layout {
+
+
+    }
+  }
+}

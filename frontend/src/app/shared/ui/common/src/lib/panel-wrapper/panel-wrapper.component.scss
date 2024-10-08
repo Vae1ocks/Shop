@@ -1,0 +1,19 @@
+@import 'style-utils';
+
+:host {
+  width: 31.25rem;
+  height: fit-content;
+  min-height: 500px;
+  padding: 3.125rem 5.125rem;
+
+  background-color: var(--white);
+  border-radius: 0.875rem;
+  border: 1px solid var(--light-purple);
+  box-shadow: 0px 4px 4px 0px #00000040;
+
+  @include media(ipad) {
+    width: 90%;
+    padding: 1rem 2rem;
+    margin: 0 auto;
+  }
+}
