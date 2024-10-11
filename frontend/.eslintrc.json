@@ -1,0 +1,157 @@
+{
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": "./tsconfig.*?.json",
+        "sourceType": "module",
+        "ecmaVersion": "latest"
+      },
+      "plugins": [
+        "sonarjs",
+        "simple-import-sort",
+        "import",
+        "compat",
+        "no-secrets",
+        "xss"
+      ],
+      "extends": [
+        "plugin:@nx/angular",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "airbnb-base",
+        "airbnb-typescript/base",
+        "plugin:sonarjs/recommended-legacy",
+        "plugin:import/recommended",
+        "plugin:import/typescript",
+        "plugin:rxjs/recommended",
+        "plugin:compat/recommended",
+        "plugin:xss/recommended",
+        "plugin:prettier/recommended"
+      ],
+      "settings": {
+        "import/resolver": {
+          "typescript": {
+            "alwaysTryTypes": true,
+            "project": "./tsconfig.json"
+          }
+        }
+      },
+      "rules": {
+        "import/no-unresolved": "error",
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error",
+        "import/first": "error",
+        "import/newline-after-import": "error",
+        "import/no-duplicates": "error",
+        "import/prefer-default-export": "off",
+        "rxjs/no-unsafe-takeuntil": [
+          "error",
+          {
+            "alias": ["takeUntilDestroyed"]
+          }
+        ],
+        "rxjs/no-exposed-subjects": ["error", { "allowProtected": true }],
+        "rxjs/finnish": [
+          "error",
+          {
+            "functions": true,
+            "methods": true,
+            "names": {
+              "^(canActivate|canActivateChild|canDeactivate|canLoad|intercept|resolve|validate)$": false
+            },
+            "parameters": true,
+            "properties": true,
+            "strict": false,
+            "types": {
+              "^EventEmitter$": false
+            },
+            "variables": true
+          }
+        ],
+        "rxjs/throw-error": "error",
+        "rxjs/suffix-subjects": [
+          "error",
+          {
+            "parameters": true,
+            "properties": true,
+            "suffix": "Subject",
+            "types": {
+              "^EventEmitter$": false
+            },
+            "variables": true
+          }
+        ],
+        "rxjs/prefer-observer": ["error", { "allowNext": true }],
+        "rxjs/no-ignored-error": "error",
+        "no-secrets/no-secrets": "error",
+        "no-console": ["error", { "allow": ["error"] }],
+        "no-debugger": "error",
+        "import/no-extraneous-dependencies": [
+          "error",
+          { "devDependencies": true }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/contextual-decorator": "error",
+        "@angular-eslint/no-async-lifecycle-method": "error",
+        "@angular-eslint/no-conflicting-lifecycle": "error",
+        "@angular-eslint/no-duplicates-in-metadata-arrays": "error",
+        "@angular-eslint/no-lifecycle-call": "error",
+        "@angular-eslint/no-pipe-impure": "error",
+        "@angular-eslint/no-queries-metadata-property": "error",
+        "@angular-eslint/prefer-on-push-component-change-detection": "error",
+        "@angular-eslint/prefer-output-readonly": "error",
+        "@angular-eslint/prefer-standalone": "error",
+        "@angular-eslint/relative-url-prefix": "error",
+        "@angular-eslint/sort-lifecycle-methods": "error",
+        "@angular-eslint/sort-ngmodule-metadata-arrays": "error",
+        "@angular-eslint/use-component-selector": "error",
+        "@angular-eslint/use-component-view-encapsulation": "error",
+        "@angular-eslint/use-injectable-provided-in": "error",
+        "@angular-eslint/use-lifecycle-interface": "error"
+      },
+      "env": {
+        "browser": true
+      }
+    },
+    {
+      "files": ["*.html"],
+      "extends": ["plugin:@nx/angular-template"],
+      "rules": {
+        "@angular-eslint/template/alt-text": "warn",
+        "@angular-eslint/template/attributes-order": "error",
+        "@angular-eslint/template/button-has-type": "error",
+        "@angular-eslint/template/conditional-complexity": "error",
+        "@angular-eslint/template/cyclomatic-complexity": "error",
+        "@angular-eslint/template/no-any": "warn",
+        "@angular-eslint/template/no-call-expression": "off",
+        "@angular-eslint/template/no-distracting-elements": "error",
+        "@angular-eslint/template/no-duplicate-attributes": "error",
+        "@angular-eslint/template/no-inline-styles": "error",
+        "@angular-eslint/template/no-interpolation-in-attributes": "warn",
+        "@angular-eslint/template/prefer-control-flow": "error",
+        "@angular-eslint/template/prefer-ngsrc": "warn",
+        "@angular-eslint/template/prefer-self-closing-tags": "error",
+        "@angular-eslint/template/table-scope": "warn",
+        "@angular-eslint/template/use-track-by-function": "error"
+      }
+    }
+  ],
+  "extends": ["./.eslintrc.base.json"]
+}

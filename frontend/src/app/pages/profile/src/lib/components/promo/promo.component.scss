@@ -1,0 +1,175 @@
+.promo {
+  .promo-title {
+    font: 700 24px / 1 "Poppins", sans-serif;
+    letter-spacing: 0.01em;
+    color: #130a1d;
+    margin-bottom: 30px;
+  }
+
+  .promo-content {
+    .promo-activate {
+      border: 1px solid #c9a5ed;
+      border-radius: 14px;
+      width: 500px;
+      height: 187px;
+      padding: 20px 30px;
+      margin-bottom: 18px;
+
+      .promo-activate-title {
+        font: 400 18px / 1.33333 "Poppins", sans-serif;
+        letter-spacing: 0.01em;
+        color: #130a1d;
+        margin-bottom: 20px;
+      }
+
+      .promo-activate-input input {
+        padding: 16px 20px;
+        font: 400 18px "Poppins", sans-serif;
+        color: #000000;
+        border: 1px solid #878787;
+        background: #fff;
+        border-radius: 14px;
+        outline: none;
+        width: 450px;
+        height: 44px;
+
+        &.input::placeholder {
+          color: #c9c9c9;
+        }
+      }
+
+      .button-activate-promo {
+        font: 700 15px "Poppins", sans-serif;
+        text-transform: uppercase;
+        text-align: center;
+        color: #fff;
+        margin-top: 20px;
+        border-radius: 14px;
+        width: 450px;
+        height: 40px;
+        box-shadow: 0 12px 14px 0 rgba(127, 35, 225, 0.1);
+        background: #c4c4c4;
+        cursor: pointer;
+
+
+        &.active {
+          background: #7f23e1;
+        }
+      }
+    }
+
+    .promo-my-codes {
+      display: flex;
+      align-items: center;
+      border: 1px solid #c9a5ed;
+      border-radius: 14px;
+      width: 408px;
+      height: 115px;
+      padding: 30px 18px;
+      box-shadow: 0 12px 14px 0 rgba(127, 35, 225, 0.1);
+      background: #fff;
+      margin-bottom: 47px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .promo-my-codes-counts {
+        margin-left: 20px;
+
+        .promo-my-codes-count {
+          font: 700 24px / 1 "Poppins", sans-serif;
+          letter-spacing: 0.01em;
+          color: #130a1d;
+          display: flex;
+          align-items: center;
+        }
+
+        .promo-my-codes-title {
+          margin-top: 10px;
+          font: 500 18px "Poppins", sans-serif;
+          color: #000;
+        }
+      }
+    }
+
+    .promo-generate-code {
+      display: flex;
+      align-items: center;
+      border: 1px solid #c9a5ed;
+      border-radius: 14px;
+      padding: 20px 30px;
+      width: 850px;
+      height: 291px;
+      box-shadow: 0 12px 14px 0 rgba(127, 35, 225, 0.1);
+      background: #fff;
+
+      .promo-generate-code-item {
+        .promo-generate-code-title {
+          font: 700 24px / 1 "Poppins", sans-serif;
+          letter-spacing: 0.01em;
+          color: #130a1d;
+          margin-bottom: 20px;
+        }
+
+        .promo-generate-code-text {
+          .promo-generate-code-text {
+            font: 500 18px / 1.33333 "Poppins", sans-serif;
+            letter-spacing: 0.01em;
+            color: #130a1d;
+            margin-bottom: 15px;
+          }
+
+          .promo-generate-description-text {
+            width: 447px;
+            font: 300 14px / 1.71429 "Poppins", sans-serif;
+            color: rgba(9, 15, 71, 0.45);
+            margin-bottom: 15px;
+          }
+
+          .promo-generate-input input {
+            border: 1px solid #878787;
+            border-radius: 14px;
+            width: 200px;
+            color: #000000;
+            height: 40px;
+            outline: none;
+            background: #fff;
+            margin-bottom: 20px;
+
+            &.input::placeholder {
+              color: #c9c9c9;
+            }
+          }
+
+          .button-generate-promo {
+            border-radius: 14px;
+            width: 385px;
+            height: 40px;
+            box-shadow: 0 12px 14px 0 rgba(127, 35, 225, 0.1);
+            background: #c4c4c4;
+            font: 700 16px "Poppins", sans-serif;
+            text-transform: uppercase;
+            text-align: center;
+            color: #fff;
+            cursor: pointer;
+
+
+            &.active {
+              background: #7f23e1;
+            }
+          }
+        }
+      }
+
+      .promo-generate-code-images {
+        background-image: url('../../../../src/assets/images/generate-promo.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 534.56px;
+        height: 326.18px;
+      }
+    }
+  }
+}

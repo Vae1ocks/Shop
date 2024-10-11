@@ -1,0 +1,65 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2022",
+    "module": "esnext",
+    "lib": ["es2022", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@app/core": ["src/app/core/src/index.ts"],
+      "@app/layout": ["src/app/layout/src/index.ts"],
+      "@app/layout/*": ["src/app/layout/src/lib/*"],
+      "@app/my-ui-lib": ["my-ui-lib/src/index.ts"],
+      "@app/pages/login": ["src/app/pages/login/src/index.ts"],
+      "@app/pages/main": ["src/app/pages/main/src/index.ts"],
+      "@app/pages/profile": ["src/app/pages/profile/src/index.ts"],
+      "@app/pages/registration": [
+        "src/app/pages/registration/registration/src/index.ts"
+      ],
+      "@app/pages/registration-code": [
+        "src/app/pages/registration/registration-code/src/index.ts"
+      ],
+      "@app/pages/registration-new-password": [
+        "src/app/pages/registration/registration-new-password/src/index.ts"
+      ],
+      "@app/pages/registration-shell": [
+        "src/app/pages/registration/registration-shell/src/index.ts"
+      ],
+      "@app/pages/registration-success": [
+        "src/app/pages/registration/registration-success/src/index.ts"
+      ],
+      "@app/pages/reset-password": [
+        "src/app/pages/reset-password/reset-password/src/index.ts"
+      ],
+      "@app/pages/reset-password-code": [
+        "src/app/pages/reset-password/reset-password-code/src/index.ts"
+      ],
+      "@app/pages/reset-password-new-password": [
+        "src/app/pages/reset-password/reset-password-new-password/src/index.ts"
+      ],
+      "@app/pages/reset-password-shell": [
+        "src/app/pages/reset-password/reset-password-shell/src/index.ts"
+      ],
+      "@app/pages/reset-password-success": [
+        "src/app/pages/reset-password/reset-password-success/src/index.ts"
+      ],
+      "@app/profile": ["src/app/pages/profile/src/index.ts"],
+      "@app/shared/*": ["src/app/shared/*"],
+      "@app/shared/api": ["src/app/shared/api/src/index.ts"],
+      "@app/ui/common/*": ["src/app/shared/ui/common/src/lib/*"],
+      "@env": ["src/environments/index.ts"],
+      "@swagger/models": ["src/app/swagger/models.ts"],
+      "@swagger/services/*": ["src/app/swagger/services/*"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

@@ -1,0 +1,61 @@
+<app-panel-wrapper>
+  <div>
+    <h3 class="h3 auth-heading">Вход</h3>
+    <p class="auth-text">Введите данные, чтобы войти</p>
+
+    <form class="flex flex-col" [formGroup]="formGroup" (ngSubmit)="submit()">
+      <input
+        type="email"
+        name="login"
+        formControlName="email"
+        placeholder="Email"
+      />
+
+      <div class="input-field relative">
+        <input
+          class="w-full"
+          name="password"
+          formControlName="password"
+          placeholder="Пароль"
+          [type]="showPassword ? 'text' : 'password'"
+        />
+
+        <svg-icon
+          class="eye-icon"
+          src="/assets/icons/eye.svg"
+          [class.eye-icon_active]="showPassword"
+          (click)="showPassword = !showPassword"
+        />
+      </div>
+
+      <a
+        class="auth-link btn-sm"
+        [routerLink]="['/' + ROUTE_TOKENS.RESET_PASSWORD.RESET_PASSWORD]"
+        >Забыли пароль?
+      </a>
+
+      <app-button
+        class="auth-button"
+        type="submit"
+        [loading]="loading$$()"
+        [disabled]="showError$$()"
+      >
+        Войти
+      </app-button>
+
+      @if (showError$$()) {
+        <p class="form-error-text mt-1">Введенные данные не верны</p>
+      }
+    </form>
+  </div>
+
+  <div class="auth-footer">
+    Нет аккаунта?
+    <a
+      class="auth-footer-link"
+      [routerLink]="['/' + ROUTE_TOKENS.REGISTRATION.REGISTRATION]"
+    >
+      Зарегистрироваться
+    </a>
+  </div>
+</app-panel-wrapper>

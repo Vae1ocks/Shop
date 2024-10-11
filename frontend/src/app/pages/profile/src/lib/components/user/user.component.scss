@@ -1,0 +1,224 @@
+.profile-layout-info {
+  display: flex;
+  justify-content: space-between;
+
+  .profile-layout-info-user {
+    margin-right: 50px;
+    padding: 20px 30px;
+    border: 1px solid #c9a5ed;
+    border-radius: 14px;
+    width: 444px;
+    height: 267px;
+    box-shadow: 0 12px 14px 0 rgba(127, 35, 225, 0.1);
+    background: #fff;
+
+    .profile-info-title {
+      font: 500 18px "Poppins", sans-serif;
+      color: #000;
+      margin-bottom: 30px;
+    }
+
+    .profile-info-user {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+
+      .profile-user-data {
+        display: flex;
+        align-items: center;
+
+        .profile-user-image {
+          background-position: center;
+          background-size: cover;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+        }
+
+        .profile-user-names {
+          font: 700 16px "Poppins", sans-serif;
+          color: #130a1d;
+          margin-left: 15px;
+          margin-right: 10px;
+        }
+      }
+
+      .profile-user-mail {
+        margin-top: 25px;
+        font: 400 13px "Poppins", sans-serif;
+
+        span {
+          margin-right: 5px;
+          font: 600 13px "Poppins", sans-serif;
+          letter-spacing: 0.01em;
+          color: #130a1d;
+        }
+      }
+
+      .profile-info-address-delivery {
+        margin-top: 30px;
+
+        .profile-delivery-title {
+          font: 500 18px "Poppins", sans-serif;
+          color: #000;
+        }
+
+        .profile-delivery-address {
+          margin-top: 32px;
+
+          .delivery-address {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+
+            input[type="checkbox"] {
+              appearance: none;
+              -webkit-appearance: none;
+              -moz-appearance: none;
+              width: 20px;
+              height: 20px;
+              border-radius: 100%;
+              background-color: #dfdfdf;
+              border: 3px solid #ccc;
+              cursor: pointer;
+              position: relative;
+            }
+
+            input[type="checkbox"]:checked {
+              background-color: #7f23e1;
+              border-color: #7f23e1;
+            }
+
+            input[type="checkbox"]:checked::before {
+              content: '';
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              width: 8px;
+              height: 8px;
+              background-color: white;
+              border-radius: 50%;
+              transform: translate(-50%, -50%);
+            }
+
+            label {
+              width: 326px;
+              margin-left: 10px;
+              margin-right: 15px;
+              font: 400 16px / 1.5 "Poppins", sans-serif;
+              color: #000;
+
+              &.active {
+                font: 600 16px / 1.5 "Poppins", sans-serif;
+                color: #000;
+              }
+            }
+
+            svg {
+              cursor: pointer;
+            }
+          }
+        }
+
+
+      }
+
+      .button-setting {
+        margin-top: 36px;
+        border: 1px solid #7f23e1;
+        border-radius: 14px;
+        width: 153px;
+        height: 29px;
+        font: 700 13px "Poppins", sans-serif;
+        text-transform: uppercase;
+        text-align: center;
+        color: #7f23e1;
+        cursor: pointer;
+
+      }
+    }
+  }
+
+  .profile-layout-info-order {
+    .profile-info-orders {
+      display: flex;
+      align-items: center;
+      border: 1px solid #c9a5ed;
+      border-radius: 14px;
+      width: 408px;
+      height: 115px;
+      padding: 30px 18px;
+      box-shadow: 0 12px 14px 0 rgba(127, 35, 225, 0.1);
+      background: #fff;
+      margin-bottom: 52px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .profile-info-orders-counts {
+        margin-left: 20px;
+
+        .profile-info-orders-count {
+          font: 700 24px / 1 "Poppins", sans-serif;
+          letter-spacing: 0.01em;
+          color: #130a1d;
+          display: flex;
+          align-items: center;
+
+          .icon-wrapper {
+            margin-left: 10px;
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+
+            .tooltip {
+              visibility: hidden;
+              opacity: 0;
+              border: 1px solid #e4e7e9;
+              width: 297px;
+              height: 130px;
+              text-align: left;
+              box-shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.12);
+              background: #ececec;
+              padding: 10px;
+              border-radius: 5px;
+              position: absolute;
+              top: 23px;
+              left: 165px;
+              font: 500 14px "Poppins", sans-serif;
+              color: #000;
+              transform: translateX(-50%);
+              z-index: 1;
+              transition: opacity 0.3s ease;
+
+              .tooltip-title {
+                font: 500 16px "Poppins", sans-serif;
+                color: #000;
+                margin-bottom: 20px;
+              }
+
+              a {
+                text-decoration: none;
+                font: 500 14px "Poppins", sans-serif;
+                color: #7f23e1;
+                cursor: pointer;
+              }
+            }
+
+            &:hover .tooltip {
+              visibility: visible;
+              opacity: 1;
+            }
+          }
+        }
+
+        .profile-info-orders-title {
+          margin-top: 10px;
+          font: 500 18px "Poppins", sans-serif;
+          color: #000;
+        }
+      }
+    }
+  }
+}
