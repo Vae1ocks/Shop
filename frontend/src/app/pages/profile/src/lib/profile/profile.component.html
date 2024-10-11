@@ -3,70 +3,126 @@
     <nav>
       <ul>
         <li><a routerLink="/">Главная /</a></li>
-        <li><a> &nbsp;Профиль</a></li>
-        <li *ngIf="link.length > 0"><a> &nbsp;/&nbsp;{{ link }}</a></li>
+        <li>
+          <a> &nbsp;{{ activeUrl$$() }}</a>
+        </li>
       </ul>
     </nav>
   </div>
   <div class="container">
     <div class="profile-head">
       <div class="profile-head-list">
-        <a [routerLink]="'user'">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <a routerLinkActive="active" [routerLink]="'user'">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
-              stroke="#7F23E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="#7F23E1"
-                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          <span>Профиль</span></a>
-        <a [routerLink]="'order'">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              stroke="#7F23E1"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
             <path
-              d="M12 8V12L15 15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
-              stroke="#7F23E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z"
+              stroke="#7F23E1"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
-          <span>История заказов</span></a>
-        <a [routerLink]="'history'">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <span>Профиль</span></a
+        >
+        <a routerLinkActive="active" [routerLink]="'reviews'">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
-              stroke="#7F23E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="#7F23E1"
-                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              stroke="#7F23E1"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z"
+              stroke="#7F23E1"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
-          <span>Мои отзывы</span></a>
-        <a [routerLink]="'reviews'">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <span>Мои отзывы</span></a
+        >
+        <a routerLinkActive="active" [routerLink]="'promo'">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M7 8H17M7 12H11M12 20L8 16H5C3.89543 16 3 15.1046 3 14V6C3 4.89543 3.89543 4 5 4H19C20.1046 4 21 4.89543 21 6V14C21 15.1046 20.1046 16 19 16H16L12 20Z"
-              stroke="#7F23E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              stroke="#7F23E1"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
-          <span>Промокоды</span></a>
-        <a [routerLink]="'history'">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M15 5V7M15 11V13M15 17V19M5 5C3.89543 5 3 5.89543 3 7V10C4.10457 10 5 10.8954 5 12C5 13.1046 4.10457 14 3 14V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V14C19.8954 14 19 13.1046 19 12C19 10.8954 19.8954 10 21 10V7C21 5.89543 20.1046 5 19 5H5Z"
-              stroke="#7F23E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          <span>История операций</span></a>
-        <a [routerLink]="'setting'">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <span>Промокоды</span></a
+        >
+        <a routerLinkActive="active" [routerLink]="'setting'">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M10.3246 4.31731C10.751 2.5609 13.249 2.5609 13.6754 4.31731C13.9508 5.45193 15.2507 5.99038 16.2478 5.38285C17.7913 4.44239 19.5576 6.2087 18.6172 7.75218C18.0096 8.74925 18.5481 10.0492 19.6827 10.3246C21.4391 10.751 21.4391 13.249 19.6827 13.6754C18.5481 13.9508 18.0096 15.2507 18.6172 16.2478C19.5576 17.7913 17.7913 19.5576 16.2478 18.6172C15.2507 18.0096 13.9508 18.5481 13.6754 19.6827C13.249 21.4391 10.751 21.4391 10.3246 19.6827C10.0492 18.5481 8.74926 18.0096 7.75219 18.6172C6.2087 19.5576 4.44239 17.7913 5.38285 16.2478C5.99038 15.2507 5.45193 13.9508 4.31731 13.6754C2.5609 13.249 2.5609 10.751 4.31731 10.3246C5.45193 10.0492 5.99037 8.74926 5.38285 7.75218C4.44239 6.2087 6.2087 4.44239 7.75219 5.38285C8.74926 5.99037 10.0492 5.45193 10.3246 4.31731Z"
-              stroke="#7F23E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              stroke="#7F23E1"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
             <path
               d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z"
-              stroke="#7F23E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              stroke="#7F23E1"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
-          <span>Настройки</span></a>
-        <a>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <span>Настройки</span></a
+        >
+        <a (click)="openPopup()">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M13 8L17 12M17 12L13 16M17 12L3 12M8 8V7C8 5.34315 9.34315 4 11 4H18C19.6569 4 21 5.34315 21 7V17C21 18.6569 19.6569 20 18 20H11C9.34315 20 8 18.6569 8 17V16"
-              stroke="#7F23E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              stroke="#7F23E1"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
-          <span>Выйти</span></a>
+          <span>Выйти</span></a
+        >
       </div>
     </div>
     <div class="profile-layout">
@@ -74,3 +130,14 @@
     </div>
   </div>
 </section>
+<ng-template #popup>
+  <div class="popup">
+    <div class="popup-content">
+      <div class="popup-title">Вы действительно хотите выйти из своего аккаунта?</div>
+      <div class="popup-button">
+        <div class="button-close" (click)="closePopup()">Отмена</div>
+        <div class="button-exit">выйти</div>
+      </div>
+    </div>
+  </div>
+</ng-template>

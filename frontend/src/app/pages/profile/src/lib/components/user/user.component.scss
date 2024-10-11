@@ -8,6 +8,7 @@
     border: 1px solid #c9a5ed;
     border-radius: 14px;
     width: 444px;
+    height: 267px;
     box-shadow: 0 12px 14px 0 rgba(127, 35, 225, 0.1);
     background: #fff;
 
@@ -119,10 +120,21 @@
           }
         }
 
-        .button-add-address {
-          font: 500 13px "Poppins", sans-serif;
-          color: #7f23e1;
-        }
+
+      }
+
+      .button-setting {
+        margin-top: 36px;
+        border: 1px solid #7f23e1;
+        border-radius: 14px;
+        width: 153px;
+        height: 29px;
+        font: 700 13px "Poppins", sans-serif;
+        text-transform: uppercase;
+        text-align: center;
+        color: #7f23e1;
+        cursor: pointer;
+
       }
     }
   }

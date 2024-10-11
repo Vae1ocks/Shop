@@ -1,1 +1,46 @@
-<p>setting works!</p>
+<div class="setting">
+  <div class="setting-title">Настройки</div>
+  <div class="setting-content">
+    <div class="setting-personal-data">
+      <div class="setting-personal-title">Личные данные</div>
+      <div class="setting-personal-content">
+        <div class="setting-personal-images"></div>
+        <div class="setting-personal-inputs">
+          <label for="first-name">Имя</label>
+          <input type="text" id="first-name" class="setting-input" placeholder="Имя">
+          <label for="last-name">Фамилия</label>
+          <input type="text" id="last-name" class="setting-input" placeholder="Фамилия">
+          <div class="setting-personal-checkbox">
+            <input type="checkbox" id="checkbox">
+            <label for="checkbox">Скрывать данные в комментариях</label>
+          </div>
+        </div>
+        <div class="setting-personal-inputs">
+          <div class="brith-day-input">
+            <label for="brith-day">Дата рождения</label>
+            <input type="text" id="brith-day" class="setting-input" placeholder="13.03.2000">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 7V3M16 7V3M7 11H17M5 21H19C20.1046 21 21 20.1046 21 19V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V19C3 20.1046 3.89543 21 5 21Z" stroke="#7F23E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <label for="email">Email</label>
+          <input type="text" id="email" class="setting-input" placeholder="YourPochta@gmail.com">
+        </div>
+      </div>
+      <div class="button-save">Сохранить</div>
+    </div>
+
+    <div class="setting-password">
+      <div class="setting-password-title">Изменить пароль</div>
+      <div class="setting-personal-inputs">
+        <label for="password">Текущий пароль</label>
+        <input type="password" id="password" class="input-password">
+        <label for="new-password">Новый пароль</label>
+        <input type="password" id="new-password" class="input-password" placeholder="от 8 символов">
+        <label for="repeat-password">Повторите новый пароль</label>
+        <input type="password" id="repeat-password" class="input-password">
+      </div>
+      <div class="button-save-password">Изменить</div>
+    </div>
+  </div>
+</div>

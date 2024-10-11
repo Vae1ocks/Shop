@@ -3,8 +3,6 @@ export const ROUTE_TOKENS = {
   PROFILE: {
     PROFILE: 'profile',
     USER: 'user',
-    ORDER: 'order',
-    HISTORY: 'history',
     PROMO: 'promo',
     REVIEWS: 'reviews',
     SETTING: 'setting',
@@ -22,5 +20,4 @@ export const ROUTE_TOKENS = {
     RESET_PASSWORD_SUCCESS: 'reset-password-success',
   },
   MAIN: 'main',
-
 } as const;

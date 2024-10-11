@@ -1,6 +1,6 @@
 .profile {
   padding-top: 25px;
-  padding-bottom: 314px;
+  padding-bottom: 154px;
 
   .profile-nav-list {
     nav ul {
@@ -32,7 +32,7 @@
 
     .profile-head {
       width: 264px;
-      height: 299px;
+      height: 210px;
       margin-right: 50px;
       box-shadow: 8px 8px 40px 0 rgba(0, 0, 0, 0.08);
       background: #fff;
@@ -71,3 +71,77 @@
     }
   }
 }
+
+
+.popup {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+
+
+  .popup-content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    outline: none;
+    margin: 240px auto;
+    width: 674px;
+    height: 175px;
+    padding: 63px 20px;
+    color: #130a1d;
+    font-size: 19px;
+    background-color: #f1f5f7;
+    text-align: center;
+    z-index: 10;
+    position: relative;
+
+
+    .popup-title {
+      font: 400 24px / 1 "Poppins", sans-serif;
+      letter-spacing: 0.01em;
+      color: #130a1d;
+      margin-bottom: 20px;
+    }
+
+    .popup-button {
+      display: flex;
+      font: 700 16px "Poppins", sans-serif;
+      text-transform: uppercase;
+      text-align: center;
+      color: #fff;
+
+
+      .button-close {
+        border-radius: 14px;
+        padding: 9px;
+        width: 109px;
+        height: 41px;
+        box-shadow: 0 12px 14px 0 rgba(127, 35, 225, 0.1);
+        background: #b380ff;
+        margin-right: 50px;
+        cursor: pointer;
+      }
+
+      .button-exit {
+        border-radius: 14px;
+        padding: 9px;
+        width: 109px;
+        height: 41px;
+        box-shadow: 0 12px 14px 0 rgba(127, 35, 225, 0.1);
+        background: #7f23e1;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+
