@@ -11,6 +11,7 @@ class Basket:
     """
     Корзина покупок
     """
+
     def __init__(self, request):
         self.session = request.session
         basket = self.session.get(settings.SHOPPING_BASKET_KEY)
@@ -55,8 +56,9 @@ class Basket:
         return sum(value['amount'] for value in self.basket.values())
 
     def get_total_price(self):
-        return sum(Decimal(value['price']) * value['amount']
-                   for value in self.basket.values())
+        return sum(Decimal(
+            value["price"]) * value["amount"] for value in self.basket.values()
+        )
 
     def get_basket_items(self):
         """
