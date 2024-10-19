@@ -5,13 +5,13 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'store_service',
-        'USER': 'admin',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
-        'PORT': 5432,
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "store_service",
+        "USER": "admin",
+        "PASSWORD": "admin",
+        "HOST": "localhost",
+        "PORT": 5432,
     },
 }
 

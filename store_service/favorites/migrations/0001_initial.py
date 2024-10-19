@@ -9,16 +9,31 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('store', '0004_alter_comment_author_name'),
+        ("store", "0004_alter_comment_author_name"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Favorite',
+            name="Favorite",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('user_id', models.PositiveIntegerField()),
-                ('goods', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='users_favorites', to='store.goods')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("user_id", models.PositiveIntegerField()),
+                (
+                    "goods",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="users_favorites",
+                        to="store.goods",
+                    ),
+                ),
             ],
         ),
     ]

@@ -1,7 +1,7 @@
 from payment.views.payment.urls import urlpatterns as payment_views
 from payment.views.other.urls import urlpatterns as other_views
 
-app_name = 'payment'
+app_name = "payment"
 
 urlpatterns = []
 

@@ -6,7 +6,7 @@ from celery import shared_task
 from django.contrib.auth import get_user_model
 
 
-@shared_task(name='send_data_user_create_user')
+@shared_task(name="send_data_user_create_user")
 def create_user_task(**kwargs):
     """
     Для создания пользователя при создании его в auth_service.
@@ -16,13 +16,18 @@ def create_user_task(**kwargs):
     get_user_model().objects.create(**kwargs, is_verified=True)
 
 
-@shared_task(name='send_mail_code')
+@shared_task(name="send_mail_code")
 def send_mail_task(user_email, message, subject):
-    send_mail(subject, message, settings.EMAIL_HOST_USER, [user_email],
-              fail_silently=False)
+    send_mail(
+        subject,
+        message,
+        settings.EMAIL_HOST_USER,
+        [user_email],
+        fail_silently=False,
+    )
 
 
-@shared_task(name='user_service.send_notification')
+@shared_task(name="user_service.send_notification")
 def send_notification(goods_id, goods_title, price, relative_url):
     """
     Из словаря expected_price выберет ту пару ключ-значение, у которых ключ
@@ -32,23 +37,29 @@ def send_notification(goods_id, goods_title, price, relative_url):
     """
     price_lookup = RawSQL(
         f"CAST(expected_prices->%s->>'price' AS DECIMAL)",
-        (str(goods_id),)
+        (str(goods_id),),
     )
-    users = get_user_model().objects.annotate(
-        expected_price=price_lookup
-    ).filter(
-        expected_prices__has_key=str(goods_id),
-        expected_price__gte=price
-    ).only('email', 'expected_prices')
+    users = (
+        get_user_model()
+        .objects.annotate(expected_price=price_lookup)
+        .filter(
+            expected_prices__has_key=str(goods_id),
+            expected_price__gte=price,
+        )
+        .only("email", "expected_prices")
+    )
 
-    url = (f'{settings.DEFAULT_PROTOCOL}://{settings.DEFAULT_HOST}'
-           f'{settings.DEFAULT_PORT}{relative_url}')
+    url = (
+        f"{settings.DEFAULT_PROTOCOL}://{settings.DEFAULT_HOST}"
+        f"{settings.DEFAULT_PORT}{relative_url}"
+    )
 
     for user in users:
         email = user.email
         send_mail_task(
             user_email=email,
-            subject='Товар, добавленный вами в "Желаемые" доступен по указанной вами цене!',
-            message=f'Товар {goods_title} доступен за {price}р. Вы можете купить его,'
-                    f'перейдя по ссылке: {url}'
+            subject='Товар, добавленный вами в "Желаемые"'
+            "доступен по указаннойвами цене!",
+            message=f"Товар {goods_title} доступен за {price}р. Вы можете купить его,"
+            f"перейдя по ссылке: {url}",
         )

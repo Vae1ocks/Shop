@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('store', '0003_alter_comment_author_profile_picture_imagemodel'),
+        ("store", "0003_alter_comment_author_profile_picture_imagemodel"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='comment',
-            name='author_name',
+            model_name="comment",
+            name="author_name",
             field=models.CharField(blank=True, max_length=30, null=True),
         ),
     ]

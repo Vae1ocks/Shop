@@ -11,11 +11,11 @@ User = get_user_model()
 def notify_other_service_user_created(sender, instance, created, **kwargs):
     if created:
         current_app.send_task(
-            'send_data_user_create_user',
+            "send_data_user_create_user",
             kwargs={
-                'email': instance.email,
-                'first_name': instance.first_name,
-                'password': instance.password
+                "email": instance.email,
+                "first_name": instance.first_name,
+                "password": instance.password,
             },
-            queue='user_system_queue'
+            queue="user_system_queue",
         )

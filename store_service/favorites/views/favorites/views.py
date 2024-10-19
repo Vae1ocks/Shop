@@ -30,5 +30,3 @@ class FavoriteDeleteView(DestroyAPIView):
 
     def get_queryset(self):
         return Favorite.objects.filter(user_id=self.request.user.id)
-
-

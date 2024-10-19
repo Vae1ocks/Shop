@@ -13,22 +13,22 @@ class GoodsInBasketSerializer(Serializer):
 class OrderItemSerializer(ModelSerializer):
     class Meta:
         model = OrderItem
-        fields = ['goods_id', 'goods_title', 'amount', 'price']
+        fields = ["goods_id", "goods_title", "amount", "price"]
 
 
 class OrderListSerializer(ModelSerializer):
-    user_id = IntegerField(source='user')
+    user_id = IntegerField(source="user")
     items = OrderItemSerializer(many=True)
 
     class Meta:
         model = Order
-        fields = ['id', 'user_id', 'status', 'created', 'items']
+        fields = ["id", "user_id", "status", "created", "items"]
 
 
 class OrderCreateSerializer(ModelSerializer):
     goods = OrderItemSerializer(many=True)
-    user_id = IntegerField(source='user.id')
+    user_id = IntegerField(source="user.id")
 
     class Meta:
         model = Order
-        fields = ['user_id', 'goods']
+        fields = ["user_id", "goods"]

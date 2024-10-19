@@ -32,4 +32,9 @@ from .models import User
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['email', 'first_name', 'coupon_balance', 'is_verified']
+    list_display = [
+        "email",
+        "first_name",
+        "coupon_balance",
+        "is_verified",
+    ]
