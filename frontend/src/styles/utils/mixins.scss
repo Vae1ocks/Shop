@@ -3,9 +3,7 @@
     @media screen and (width < 768px) {
       @content;
     }
-  }
-
- @else {
+  } @else {
     @error "Breakpoint: #{$breakpoint} doesn't exists.";
   }
 }

@@ -9,7 +9,8 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ROUTE_TOKENS } from '@app/shared/app-config';
+import { SessionStorageService } from '@app/shared/api';
+import { APP_CONFIG, ROUTES_TOKEN } from '@app/shared/app-config';
 import { FormGroupModel } from '@app/shared/forms';
 import { ButtonComponent } from '@app/ui/common/button';
 import { ResetPasswordRequest } from '@swagger/models';
@@ -25,7 +26,9 @@ import { debounceTime } from 'rxjs/operators';
   styleUrl: './reset-password.component.scss',
 })
 export class ResetPasswordComponent implements OnInit {
-  readonly ROUTE_TOKENS = ROUTE_TOKENS;
+  private readonly APP_CONFIG = inject(APP_CONFIG);
+
+  readonly ROUTES_TOKEN = inject(ROUTES_TOKEN);
 
   readonly formBuilder = inject(FormBuilder);
 
@@ -39,12 +42,18 @@ export class ResetPasswordComponent implements OnInit {
 
   private readonly resetPasswordService = inject(ResetPasswordService);
 
+  private readonly sessionStorage = inject(SessionStorageService);
+
   readonly formGroup: FormGroupModel<ResetPasswordRequest> =
     this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
     });
 
   ngOnInit(): void {
+    this.hideErrorOnFormChange();
+  }
+
+  private hideErrorOnFormChange(): void {
     this.formGroup.valueChanges
       .pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef))
       .subscribe({
@@ -58,16 +67,22 @@ export class ResetPasswordComponent implements OnInit {
 
     this.loading$$.set(true);
 
+    this.sessionStorage.setItem(
+      this.APP_CONFIG.RESET_PASSWORD_FORM_STORAGE_KEY,
+      JSON.stringify(this.formGroup.value),
+    );
+
     this.resetPasswordService
       .resetPasswordSendMailCreate$Json({
         body: <ResetPasswordRequest>this.formGroup.value,
       })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () =>
+        next: () => {
           this.router.navigate([
-            this.ROUTE_TOKENS.RESET_PASSWORD.CONFIRMATION_CODE,
-          ]),
+            this.ROUTES_TOKEN.RESET_PASSWORD.CONFIRMATION_CODE,
+          ]);
+        },
         error: (error: unknown) => {
           this.showError$$.set(true);
           this.loading$$.set(false);

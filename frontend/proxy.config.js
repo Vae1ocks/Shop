@@ -1,4 +1,4 @@
-const target = 'http://31.129.108.243'
+const target = 'http://31.129.108.243';
 
 const PROXY_CONFIG = [
   {
@@ -8,10 +8,10 @@ const PROXY_CONFIG = [
     changeOrigin: true,
     logLevel: 'debug',
     configure: (proxy) => {
-      proxy.on("error", (err) => {
-        console.log("proxy error", err);
+      proxy.on('error', (err) => {
+        console.log('proxy error', err);
       });
-      proxy.on("proxyReq", (proxyReq, req) => {
+      proxy.on('proxyReq', (proxyReq, req) => {
         const headers = proxyReq.getHeaders();
         console.log(
           req.method,
@@ -20,16 +20,16 @@ const PROXY_CONFIG = [
           // `${headers.host}${proxyReq.path}`,
         );
       });
-      proxy.on("proxyRes", (proxyRes, req) => {
+      proxy.on('proxyRes', (proxyRes, req) => {
         console.log(
           req.method,
-          "Target Response",
+          'Target Response',
           proxyRes.statusCode,
-          ":",
+          ':',
           req.url,
         );
       });
-    }
+    },
   },
 ];
 

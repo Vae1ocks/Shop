@@ -1,4 +1,4 @@
-export const ROUTE_TOKENS = {
+export const ROUTES_TOKEN_CONFIG = {
   LOGIN: 'login',
   REGISTRATION: {
     REGISTRATION: 'registration',

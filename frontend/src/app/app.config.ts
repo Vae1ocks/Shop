@@ -4,7 +4,7 @@ import {
   importProvidersFrom,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withViewTransitions } from '@angular/router';
 import { authInterceptor } from '@app/core';
 import { provideAngularSvgIcon } from 'angular-svg-icon';
 import { register as registerSwiper } from 'swiper/element';
@@ -17,7 +17,7 @@ registerSwiper();
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(appRoutes),
+    provideRouter(appRoutes, withViewTransitions()),
     provideHttpClient(withInterceptors([authInterceptor])),
     importProvidersFrom(ApiModule.forRoot({ rootUrl: '' })),
     provideAngularSvgIcon(),

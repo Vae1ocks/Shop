@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ROUTE_TOKENS } from '@app/shared/app-config';
+import { ROUTES_TOKEN } from '@app/shared/app-config';
 import { ButtonComponent } from '@app/ui/common/button';
 import { PanelWrapperComponent } from '@app/ui/common/panel-wrapper';
 import { SvgIconComponent } from 'angular-svg-icon';
@@ -19,5 +19,5 @@ import { SvgIconComponent } from 'angular-svg-icon';
   styleUrl: './reset-password-success.component.scss',
 })
 export class ResetPasswordSuccessComponent {
-  readonly ROUTE_TOKENS = ROUTE_TOKENS;
+  readonly ROUTES_TOKEN = inject(ROUTES_TOKEN);
 }

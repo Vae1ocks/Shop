@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  input,
+} from '@angular/core';
 import { ButtonComponent } from '@app/ui/common/button';
 
 import { HeaderButtonComponent } from './ui/header-button';
@@ -11,4 +16,8 @@ import { HeaderButtonComponent } from './ui/header-button';
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  readonly baseHeader = input(false, {
+    transform: booleanAttribute,
+  });
+}

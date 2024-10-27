@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { ROUTE_TOKENS } from '@app/shared/app-config';
+import { ROUTES_TOKEN } from '@app/shared/app-config';
 import { DotsStepperComponent } from '@app/ui/common/dots-stepper';
 import { PanelWrapperComponent } from '@app/ui/common/panel-wrapper';
 import { filter, map } from 'rxjs/operators';
@@ -20,7 +20,7 @@ import { filter, map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationShellComponent {
-  private readonly ROUTE_TOKENS = ROUTE_TOKENS;
+  private readonly ROUTES_TOKEN = inject(ROUTES_TOKEN);
 
   private readonly router = inject(Router);
 
@@ -34,9 +34,9 @@ export class RegistrationShellComponent {
 
   readonly activeStep$$ = computed(() => {
     const route = {
-      [this.ROUTE_TOKENS.REGISTRATION.REGISTRATION]: 0,
-      [this.ROUTE_TOKENS.REGISTRATION.CONFIRMATION_CODE]: 1,
-      [this.ROUTE_TOKENS.REGISTRATION.CREATE_PASSWORD]: 2,
+      [this.ROUTES_TOKEN.REGISTRATION.REGISTRATION]: 0,
+      [this.ROUTES_TOKEN.REGISTRATION.CONFIRMATION_CODE]: 1,
+      [this.ROUTES_TOKEN.REGISTRATION.CREATE_PASSWORD]: 2,
     };
 
     return route[<keyof typeof route>this.routerUrl$$()];

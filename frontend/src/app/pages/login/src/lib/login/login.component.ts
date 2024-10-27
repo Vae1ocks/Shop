@@ -6,15 +6,16 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { ROUTE_TOKENS } from '@app/shared/app-config';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ROUTES_TOKEN } from '@app/shared/app-config';
 import { FormGroupModelNonNullable } from '@app/shared/forms';
+import { debug } from '@app/shared/rxjs-custom-operators';
 import { ButtonComponent } from '@app/ui/common/button';
 import { PanelWrapperComponent } from '@app/ui/common/panel-wrapper';
 import { LoginRequest } from '@swagger/models';
@@ -37,7 +38,7 @@ import { debounceTime } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
-  readonly ROUTE_TOKENS = ROUTE_TOKENS;
+  readonly ROUTES_TOKEN = inject(ROUTES_TOKEN);
 
   readonly formBuilder = inject(NonNullableFormBuilder);
 
@@ -48,6 +49,10 @@ export class LoginComponent implements OnInit {
   private readonly router = inject(Router);
 
   readonly loading$$ = signal<boolean>(false);
+
+  readonly route = inject(ActivatedRoute);
+
+  readonly data = toSignal(this.route.data.pipe(debug('data')));
 
   readonly formGroup: FormGroupModelNonNullable<LoginRequest> =
     this.formBuilder.group({
@@ -83,7 +88,9 @@ export class LoginComponent implements OnInit {
       })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () => this.router.navigate([this.ROUTE_TOKENS.MAIN]),
+        next: () => {
+          this.router.navigate([this.ROUTES_TOKEN.MAIN]);
+        },
         error: (error: unknown) => {
           this.showError$$.set(true);
           this.loading$$.set(false);

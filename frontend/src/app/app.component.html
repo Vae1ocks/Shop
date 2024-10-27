@@ -1,6 +1,6 @@
 <app-header-info />
 
-<app-header />
+<app-header [baseHeader]="isBaseHeader$$()" />
 
 <div class="app-content flex items-center justify-center">
   <router-outlet />

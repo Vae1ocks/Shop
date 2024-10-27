@@ -21,12 +21,7 @@
 
   <span class="form-field-hint">Обязательное поле для заполнения</span>
 
-  <app-button
-    class="auth-button"
-    type="submit"
-    [loading]="loading$$()"
-    [disabled]="showError$$()"
-  >
+  <app-button class="auth-button" type="submit" [loading]="loading$$()">
     Получить код
   </app-button>
 

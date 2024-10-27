@@ -18,7 +18,6 @@
       "@app/core": ["src/app/core/src/index.ts"],
       "@app/layout": ["src/app/layout/src/index.ts"],
       "@app/layout/*": ["src/app/layout/src/lib/*"],
-      "@app/shared/libs/*": ["src/app/shared/libs/src/lib/*"],
       "@app/pages/login": ["src/app/pages/login/src/index.ts"],
       "@app/pages/main": ["src/app/pages/main/src/index.ts"],
       "@app/pages/registration": [
@@ -53,6 +52,7 @@
       ],
       "@app/shared/*": ["src/app/shared/*"],
       "@app/shared/api": ["src/app/shared/api/src/index.ts"],
+      "@app/shared/libs/*": ["src/app/shared/libs/src/lib/*"],
       "@app/ui/common/*": ["src/app/shared/ui/common/src/lib/*"],
       "@env": ["src/environments/index.ts"],
       "@swagger/models": ["src/app/swagger/models.ts"],

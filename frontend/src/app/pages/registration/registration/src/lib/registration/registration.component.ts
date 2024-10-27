@@ -10,7 +10,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { SessionStorageService } from '@app/shared/api';
-import { ROUTE_TOKENS } from '@app/shared/app-config';
+import { APP_CONFIG, ROUTES_TOKEN } from '@app/shared/app-config';
 import { FormGroupModel } from '@app/shared/forms';
 import { ButtonComponent } from '@app/ui/common/button';
 import { RegistrationRequest } from '@swagger/models';
@@ -23,10 +23,11 @@ import { debounceTime } from 'rxjs/operators';
   standalone: true,
   imports: [RouterLink, ReactiveFormsModule, ButtonComponent],
   templateUrl: './registration.component.html',
-  styleUrl: './registration.component.scss',
 })
 export class RegistrationComponent implements OnInit {
-  readonly ROUTE_TOKENS = ROUTE_TOKENS;
+  readonly ROUTES_TOKEN = inject(ROUTES_TOKEN);
+
+  private readonly APP_CONFIG = inject(APP_CONFIG);
 
   readonly formBuilder = inject(FormBuilder);
 
@@ -49,6 +50,10 @@ export class RegistrationComponent implements OnInit {
     });
 
   ngOnInit(): void {
+    this.hideErrorOnFormChange();
+  }
+
+  private hideErrorOnFormChange(): void {
     this.formGroup.valueChanges
       .pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef))
       .subscribe({
@@ -61,9 +66,8 @@ export class RegistrationComponent implements OnInit {
     if (this.formGroup.invalid) return;
 
     this.loading$$.set(true);
-    // TODO: вынести ключ для storage в конфиг
     this.sessionStorage.setItem(
-      'registration',
+      this.APP_CONFIG.REGISTRATION_FORM_STORAGE_KEY,
       JSON.stringify(this.formGroup.value),
     );
 
@@ -73,10 +77,11 @@ export class RegistrationComponent implements OnInit {
       })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () =>
+        next: () => {
           this.router.navigate([
-            this.ROUTE_TOKENS.REGISTRATION.CONFIRMATION_CODE,
-          ]),
+            this.ROUTES_TOKEN.REGISTRATION.CONFIRMATION_CODE,
+          ]);
+        },
         error: (error: unknown) => {
           this.showError$$.set(true);
           this.loading$$.set(false);

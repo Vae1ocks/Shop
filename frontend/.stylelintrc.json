@@ -48,7 +48,5 @@
       "max": 999
     }
   },
-  "ignoreFiles": [
-    "!**/*"
-  ]
+  "ignoreFiles": ["!**/*"]
 }

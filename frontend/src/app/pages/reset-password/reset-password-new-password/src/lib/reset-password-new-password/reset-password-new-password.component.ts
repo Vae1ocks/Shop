@@ -12,7 +12,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ROUTE_TOKENS } from '@app/shared/app-config';
+import { ROUTES_TOKEN } from '@app/shared/app-config';
 import { fieldsMustMatch, FormGroupModelNonNullable } from '@app/shared/forms';
 import { ButtonComponent } from '@app/ui/common/button';
 import { SetNewPasswordRequest } from '@swagger/models';
@@ -28,7 +28,7 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
   styleUrl: './reset-password-new-password.component.scss',
 })
 export class ResetPasswordNewPasswordComponent {
-  private readonly ROUTE_TOKENS = ROUTE_TOKENS;
+  private readonly ROUTES_TOKEN = inject(ROUTES_TOKEN);
 
   private readonly formBuilder = inject(NonNullableFormBuilder);
 
@@ -72,10 +72,11 @@ export class ResetPasswordNewPasswordComponent {
       })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () =>
+        next: () => {
           this.router.navigate([
-            this.ROUTE_TOKENS.REGISTRATION.REGISTRATION_SUCCESS,
-          ]),
+            this.ROUTES_TOKEN.REGISTRATION.REGISTRATION_SUCCESS,
+          ]);
+        },
         error: (error: unknown) => {
           this.loading$$.set(false);
           this.showError$$.set(true);

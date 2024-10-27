@@ -8,16 +8,12 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/app",
         "index": "./src/index.html",
         "browser": "./src/main.ts",
-        "polyfills": [
-          "zone.js"
-        ],
+        "polyfills": ["zone.js"],
         "tsConfig": "tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -36,13 +32,9 @@
             "output": "./assets"
           }
         ],
-        "styles": [
-          "./src/styles.scss"
-        ],
+        "styles": ["./src/styles.scss"],
         "stylePreprocessorOptions": {
-          "includePaths": [
-            "src/styles/utils"
-          ]
+          "includePaths": ["src/styles/utils"]
         },
         "scripts": []
       },
@@ -71,13 +63,7 @@
         "development": {
           "optimization": false,
           "extractLicenses": false,
-          "sourceMap": true,
-          "fileReplacements": [
-            {
-              "replace": "src/environments/environment.ts",
-              "with": "src/environments/environment.development.ts"
-            }
-          ]
+          "sourceMap": true
         }
       },
       "defaultConfiguration": "production"
@@ -106,30 +92,21 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": [
-          "./src"
-        ]
+        "lintFilePatterns": ["./src"]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectName}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectName}"],
       "options": {
         "jestConfig": "jest.config.app.ts"
       }
     },
     "stylelint": {
       "executor": "nx-stylelint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "**/*.css",
-          "**/*.scss"
-        ],
+        "lintFilePatterns": ["**/*.css", "**/*.scss"],
         "formatter": "string"
       }
     }

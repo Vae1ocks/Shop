@@ -9,15 +9,15 @@ module.exports = {
   ],
   theme: {
     colors: {
-      'purple': '#7F23E1',
+      purple: '#7F23E1',
       'light-purple': '#C9A5ED',
-      'gray': 'rgb(135 135 135)',
-      'red': 'rgb(255 32 32)',
+      gray: 'rgb(135 135 135)',
+      red: 'rgb(255 32 32)',
     },
     extend: {
       borderRadius: {
-        'DEFAULT': '0.875rem',
-      }
+        DEFAULT: '0.875rem',
+      },
     },
   },
   plugins: [],
