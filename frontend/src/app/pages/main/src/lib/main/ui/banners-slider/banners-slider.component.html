@@ -1,23 +1,35 @@
 <swiper-container appSwiper init="false" [config]="config">
-  <swiper-slide>
+  <swiper-slide class="h-[230px] overflow-hidden rounded-2xl">
     <img
-      class="mx-auto"
+      class="mx-auto h-full w-full object-cover"
       src="/assets/images/recommendations-banner.jpg"
-      alt=""
-    />
+      alt="" />
   </swiper-slide>
-  <swiper-slide>
+  <swiper-slide class="h-[230px] overflow-hidden rounded-2xl">
     <img
-      class="mx-auto"
+      class="mx-auto h-full w-full object-cover"
       src="/assets/images/recommendations-banner.jpg"
-      alt=""
-    />
+      alt="" />
   </swiper-slide>
-  <swiper-slide>
+  <swiper-slide class="h-[230px] overflow-hidden rounded-2xl">
     <img
-      class="mx-auto"
+      class="mx-auto h-full w-full object-cover"
       src="/assets/images/recommendations-banner.jpg"
-      alt=""
-    />
+      alt="" />
   </swiper-slide>
 </swiper-container>
+
+<button
+  class="nav-prev bg-white nav-arrow_prev absolute left-2.5 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full">
+  <svg-icon
+    class="block h-[24px] w-[24px]"
+    src="/assets/icons/chevron-left.svg"
+    [applyClass]="true" />
+</button>
+<button
+  class="nav-next bg-white nav-arrow_next absolute right-2.5 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full">
+  <svg-icon
+    class="block h-[24px] w-[24px] -rotate-90"
+    src="/assets/icons/chevron-left.svg"
+    [applyClass]="true" />
+</button>

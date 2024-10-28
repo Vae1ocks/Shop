@@ -1,5 +1,9 @@
 export const ROUTES_TOKEN_CONFIG = {
   LOGIN: 'login',
+  MAIN: 'main',
+  CATEGORIES: 'categories',
+  SEARCH: 'search',
+  FAVOURITES: 'favourites',
   REGISTRATION: {
     REGISTRATION: 'registration',
     CONFIRMATION_CODE: 'registration-code',
@@ -12,5 +16,4 @@ export const ROUTES_TOKEN_CONFIG = {
     CREATE_PASSWORD: 'reset-password-new-password',
     RESET_PASSWORD_SUCCESS: 'reset-password-success',
   },
-  MAIN: 'main',
 } as const;

@@ -25,8 +25,7 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
   standalone: true,
   imports: [ReactiveFormsModule, ButtonComponent],
   templateUrl: './reset-password-new-password.component.html',
-  styleUrl: './reset-password-new-password.component.scss',
-})
+ })
 export class ResetPasswordNewPasswordComponent {
   private readonly ROUTES_TOKEN = inject(ROUTES_TOKEN);
 

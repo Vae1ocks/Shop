@@ -1,13 +1,19 @@
 <div class="flex items-center">
-  <img
-    loading="lazy"
-    class="logo"
-    src="/assets/icons/everyfind-logo.svg"
-    alt="Everyfind Logo"
-  />
+  <a [routerLink]="['/' + ROUTES_TOKEN.MAIN]">
+    <img
+      loading="lazy"
+      class="logo"
+      src="/assets/icons/everyfind-logo.svg"
+      alt="Everyfind Logo" />
+  </a>
 
   @if (!baseHeader()) {
-    <app-button class="category-btn" size="large"> Категории </app-button>
+    <app-button
+      class="category-btn"
+      size="large"
+      [routerLink]="['/' + ROUTES_TOKEN.CATEGORIES]">
+      Категории
+    </app-button>
   }
 </div>
 
@@ -16,12 +22,14 @@
     class="flex-1 rounded-full border-light-purple"
     type="search"
     name="search"
-    placeholder="найти товар"
-  />
+    placeholder="найти товар" />
 
   <div class="flex items-center">
     <div class="buttons-group flex items-center">
-      <app-header-button text="Избранное" icon="heart" />
+      <app-header-button
+        text="Избранное"
+        icon="heart"
+        [routerLink]="['/' + ROUTES_TOKEN.FAVOURITES]" />
 
       <app-header-button text="Корзина" icon="cart" />
 

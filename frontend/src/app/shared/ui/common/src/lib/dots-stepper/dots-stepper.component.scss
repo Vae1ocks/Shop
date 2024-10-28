@@ -5,16 +5,16 @@
 }
 
 .step {
-  width: 13px;
-  height: 13px;
+  width: 0.8125rem;
+  height: 0.8125rem;
+  background-color: rgb(196 196 196);
   border-radius: 50%;
-  background-color: #c4c4c4;
 
   &_active {
     background-color: var(--dark-purple);
   }
 
   & + & {
-    margin-left: 26px;
+    margin-left: 1.625rem;
   }
 }

@@ -38,6 +38,21 @@ export const appRoutes: Route[] = [
         loadComponent: () =>
           import('@app/pages/main').then((c) => c.MainComponent),
       },
+      {
+        path: ROUTES_TOKEN_CONFIG.CATEGORIES,
+        loadComponent: () =>
+          import('@app/pages/categories').then((c) => c.CategoriesComponent),
+      },
+      {
+        path: ROUTES_TOKEN_CONFIG.SEARCH,
+        loadComponent: () =>
+          import('@app/pages/search').then((c) => c.SearchComponent),
+      },
+      {
+        path: ROUTES_TOKEN_CONFIG.FAVOURITES,
+        loadComponent: () =>
+          import('@app/pages/favourites').then((c) => c.FavouritesComponent),
+      },
     ],
   },
   {

@@ -13,6 +13,8 @@ module.exports = {
       'light-purple': '#C9A5ED',
       gray: 'rgb(135 135 135)',
       red: 'rgb(255 32 32)',
+      white: 'rgb(255 255 255)',
+      black: 'rgb(0 0 0)',
     },
     extend: {
       borderRadius: {

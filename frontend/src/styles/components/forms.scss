@@ -4,14 +4,15 @@
 }
 
 .form-field-hint {
-  font-size: 11px;
+  margin: 0.3125rem 0 0.625rem;
+  padding: 0 1.25rem;
+
+  font-size: 0.6875rem;
   font-weight: 400;
-  line-height: 16.5px;
-  color: #bbb7b7;
-  padding: 0 20px;
-  margin: 5px 0 10px;
+  line-height: 1rem;
+  color: rgb(187 183 183);
 }
 
 app-button + app-button {
-  margin-top: 15px;
+  margin-top: 0.9375rem;
 }

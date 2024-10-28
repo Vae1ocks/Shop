@@ -17,7 +17,6 @@ import { filter, map } from 'rxjs/operators';
   standalone: true,
   imports: [RouterOutlet, PanelWrapperComponent, DotsStepperComponent],
   templateUrl: './reset-password-shell.component.html',
-  styleUrl: './reset-password-shell.component.scss',
 })
 export class ResetPasswordShellComponent {
   private readonly ROUTES_TOKEN = inject(ROUTES_TOKEN);

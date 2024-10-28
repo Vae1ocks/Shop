@@ -10,12 +10,13 @@
 }
 
 .auth-text-hint {
-  margin: 15px 0 45px;
-  font-size: 14px;
+  margin: 0.9375rem 0 2.8125rem;
+
+  font-size: 0.875rem;
   font-weight: 400;
-  line-height: 19px;
+  line-height: 1.1875rem;
+  color: rgb(9 15 71 / 45%);
   text-align: left;
-  color: rgba(9, 15, 71, 0.45);
 }
 
 .auth-link {

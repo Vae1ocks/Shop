@@ -16,8 +16,7 @@ import { filter, map } from 'rxjs/operators';
   standalone: true,
   imports: [RouterOutlet, PanelWrapperComponent, DotsStepperComponent],
   templateUrl: './registration-shell.component.html',
-  styleUrl: './registration-shell.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationShellComponent {
   private readonly ROUTES_TOKEN = inject(ROUTES_TOKEN);

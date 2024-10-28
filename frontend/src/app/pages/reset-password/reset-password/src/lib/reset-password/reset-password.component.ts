@@ -23,7 +23,6 @@ import { debounceTime } from 'rxjs/operators';
   standalone: true,
   imports: [ReactiveFormsModule, ButtonComponent],
   templateUrl: './reset-password.component.html',
-  styleUrl: './reset-password.component.scss',
 })
 export class ResetPasswordComponent implements OnInit {
   private readonly APP_CONFIG = inject(APP_CONFIG);

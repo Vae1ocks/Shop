@@ -46,7 +46,25 @@
     "plugin/z-index-value-constraint": {
       "min": 1,
       "max": 999
-    }
+    },
+    "selector-pseudo-element-no-unknown": [
+      true,
+      {
+        "ignorePseudoElements": [
+          "ng-deep"
+        ]
+      }
+    ],
+    "scss/at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "tailwind"
+        ]
+      }
+    ]
   },
-  "ignoreFiles": ["!**/*"]
+  "ignoreFiles": [
+    "!**/*"
+  ]
 }
