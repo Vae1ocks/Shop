@@ -1,0 +1,89 @@
+@import 'style-utils';
+
+:host {
+  display: block;
+}
+
+.button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--white);
+  text-transform: uppercase;
+
+  background-color: var(--dark-purple);
+  border-radius: 0.875rem;
+  box-shadow: 0 0.75rem 0.875rem 0 rgb(127 35 225 / 10.2%);
+  transition: background-color 0.3s ease-in-out;
+
+  &_xs {
+    // height: 30px;
+    padding: 11px 20px;
+    // TODO: внести в tailwind
+    border-radius: 10px;
+  }
+
+  &_small {
+    height: 41px;
+    padding: 0 20px;
+  }
+
+  &_medium {
+    // height: 45px;
+    padding: 17px;
+  }
+
+  &_large {
+    height: 48px;
+    padding: 0 20px;
+  }
+
+  @include btn-md;
+
+  &[disabled] {
+    background-color: rgba(196, 196, 196, 1);
+    cursor: not-allowed;
+  }
+
+  @include hover {
+    &:hover:not([disabled]) {
+      background-color: darken($color: rgb(127 35 225), $amount: 10%);
+    }
+  }
+}
+
+.loader {
+  width: 10px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  animation: loader-animation 1s infinite linear alternate;
+}
+
+@keyframes loader-animation {
+  0% {
+    box-shadow:
+      20px 0 var(--white),
+      -20px 0 #0002;
+    background: var(--white);
+  }
+  33% {
+    box-shadow:
+      20px 0 var(--white),
+      -20px 0 #0002;
+    background: #0002;
+  }
+  66% {
+    box-shadow:
+      20px 0 #0002,
+      -20px 0 var(--white);
+    background: #0002;
+  }
+  100% {
+    box-shadow:
+      20px 0 #0002,
+      -20px 0 var(--white);
+    background: var(--white);
+  }
+}

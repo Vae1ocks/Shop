@@ -1,0 +1,5 @@
+<div class="dots-stepper">
+  @for (step of steps(); let index = $index; track $index) {
+    <div class="step" [class.step_active]="activeStep() === index"></div>
+  }
+</div>

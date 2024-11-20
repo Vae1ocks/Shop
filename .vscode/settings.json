@@ -1,0 +1,12 @@
+{
+    "cSpell.words": [
+        "commitlint",
+        "devkit",
+        "ngrx",
+        "sonarjs",
+        "stylelint"
+    ],
+    "eslint.workingDirectories": [
+        "frontend"
+    ]
+}

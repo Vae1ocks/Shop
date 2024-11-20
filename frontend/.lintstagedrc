@@ -1,0 +1,11 @@
+{
+  "*.{js,ts}": [
+    "npm run lint:affected"
+  ],
+  "*.{css,scss}": [
+    "npm run stylelint:affected"
+  ],
+  "*": [
+    "npm run format:write"
+  ]
+}

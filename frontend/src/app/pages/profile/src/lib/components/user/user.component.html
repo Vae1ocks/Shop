@@ -1,0 +1,107 @@
+<div class="profile-layout-info">
+  <div class="profile-layout-info-user">
+    <div class="profile-info-title">Мои данные</div>
+    <div class="profile-info-user">
+      <div class="profile-user-data">
+        <div class="profile-user-image" style="background-image: url('..')">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="30" cy="30" r="30" fill="#D9D9D9" />
+          </svg>
+        </div>
+        <div class="profile-user-names">Имя Фамилия</div>
+      </div>
+      <div class="profile-user-mail"><span>Email:</span>YourPochtagmail.com</div>
+<!--      <div class="profile-info-address-delivery">-->
+<!--        <div class="profile-delivery-title">Адрес доставки</div>-->
+
+<!--        <div class="profile-delivery-address">-->
+<!--          <div class="delivery-address" *ngFor="let item of addressArray">-->
+<!--            <input type="checkbox" [(ngModel)]='item.checked' (change)="checkedInput(item.id)" id="{{item.id}}">-->
+<!--            <label for="{{item.id}}">{{ item.name }}</label>-->
+<!--            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--              <path-->
+<!--                d="M14.25 5.25L13.5995 14.3569C13.5434 15.1418 12.8903 15.75 12.1033 15.75H5.89668C5.10972 15.75 4.45656 15.1418 4.40049 14.3569L3.75 5.25M7.5 8.25V12.75M10.5 8.25V12.75M11.25 5.25V3C11.25 2.58579 10.9142 2.25 10.5 2.25H7.5C7.08579 2.25 6.75 2.58579 6.75 3V5.25M3 5.25H15"-->
+<!--                stroke="#9B9CAD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />-->
+<!--            </svg>-->
+<!--          </div>-->
+<!--        </div>-->
+      <!--      </div>-->
+      <button class="button button-setting">редактировать</button>
+    </div>
+  </div>
+  <div class="profile-layout-info-order">
+    <div class="profile-info-orders">
+      <div class="profile-info-orders-images">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path opacity="0.2"
+                d="M13 35V16C13 15.7348 13.1054 15.4804 13.2929 15.2929C13.4804 15.1054 13.7348 15 14 15H36C36.2652 15 36.5196 15.1054 36.7071 15.2929C36.8946 15.4804 37 15.7348 37 16V35L33 33L29 35L25 33L21 35L17 33L13 35Z"
+                fill="#7F23E1" />
+          <path d="M18.5 22H31.5" stroke="#7F23E1" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+          <path d="M18.5 26H31.5" stroke="#7F23E1" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+          <path
+            d="M13 35V16C13 15.7348 13.1054 15.4804 13.2929 15.2929C13.4804 15.1054 13.7348 15 14 15H36C36.2652 15 36.5196 15.1054 36.7071 15.2929C36.8946 15.4804 37 15.7348 37 16V35L33 33L29 35L25 33L21 35L17 33L13 35Z"
+            stroke="#7F23E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="25" cy="25" r="24.5" stroke="#C9A5ED" />
+        </svg>
+      </div>
+      <div class="profile-info-orders-counts">
+        <div class="profile-info-orders-count">0</div>
+        <div class="profile-info-orders-title">Открытые заказы</div>
+      </div>
+    </div>
+    <div class="profile-info-orders">
+      <div class="profile-info-orders-images">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="25" cy="25" r="24.5" stroke="#C9A5ED" />
+          <path opacity="0.2"
+                d="M13.1375 18.325C13.0469 18.4805 12.9995 18.6574 13 18.8375V31.1625C13.001 31.3405 13.0488 31.5151 13.1388 31.6687C13.2288 31.8224 13.3577 31.9495 13.5125 32.0375L24.5125 38.225C24.6608 38.3097 24.8292 38.3529 25 38.35L25.1125 25L13.1375 18.325Z"
+                fill="#7F23E1" />
+          <path
+            d="M37 31.1624V18.8374C36.999 18.6594 36.9512 18.4848 36.8612 18.3311C36.7712 18.1775 36.6423 18.0503 36.4875 17.9624L25.4875 11.7749C25.3393 11.6893 25.1711 11.6443 25 11.6443C24.8289 11.6443 24.6607 11.6893 24.5125 11.7749L13.5125 17.9624C13.3577 18.0503 13.2288 18.1775 13.1388 18.3311C13.0488 18.4848 13.001 18.6594 13 18.8374V31.1624C13.001 31.3404 13.0488 31.5151 13.1388 31.6687C13.2288 31.8223 13.3577 31.9495 13.5125 32.0374L24.5125 38.2249C24.6607 38.3105 24.8289 38.3555 25 38.3555C25.1711 38.3555 25.3393 38.3105 25.4875 38.2249L36.4875 32.0374C36.6423 31.9495 36.7712 31.8223 36.8612 31.6687C36.9512 31.5151 36.999 31.3404 37 31.1624V31.1624Z"
+            stroke="#7F23E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M31.125 28.0625V21.5625L19 14.875" stroke="#7F23E1" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+          <path d="M36.8617 18.325L25.1117 25L13.1367 18.325" stroke="#7F23E1" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M25.1125 25L25 38.35" stroke="#7F23E1" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+      </div>
+      <div class="profile-info-orders-counts">
+        <div class="profile-info-orders-count">0</div>
+        <div class="profile-info-orders-title">Завершенные заказы</div>
+      </div>
+
+    </div>
+    <div class="profile-info-orders">
+      <div class="profile-info-orders-images">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="25" cy="25" r="24.5" stroke="#C9A5ED" />
+          <rect width="32" height="32" transform="translate(9 9)" fill="white" />
+          <path
+            d="M23.732 12.9022C24.1312 11.6738 25.869 11.6738 26.2682 12.9022L28.2933 19.1341C28.4718 19.6834 28.9837 20.0553 29.5613 20.0553L36.114 20.0556C37.4055 20.0556 37.9425 21.7084 36.8977 22.4676L31.5966 26.3193C31.1293 26.6588 30.9338 27.2606 31.1123 27.81L33.1369 34.042C33.536 35.2704 32.1301 36.2918 31.0851 35.5327L25.7838 31.6813C25.3165 31.3418 24.6837 31.3418 24.2164 31.6813L18.9151 35.5327C17.8701 36.2918 16.4642 35.2704 16.8633 34.042L18.888 27.81C19.0664 27.2606 18.8709 26.6588 18.4036 26.3193L13.1025 22.4676C12.0577 21.7084 12.5947 20.0556 13.8863 20.0556L20.4389 20.0553C21.0165 20.0553 21.5284 19.6834 21.7069 19.1341L23.732 12.9022Z"
+            fill="#E5D3F9" stroke="#7F23E1" stroke-width="2.66667" />
+        </svg>
+      </div>
+      <div class="profile-info-orders-counts">
+        <div class="profile-info-orders-count">1000<span>
+                  <span class="icon-wrapper">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M8.22766 9C8.77678 7.83481 10.2584 7 12.0001 7C14.2092 7 16.0001 8.34315 16.0001 10C16.0001 11.3994 14.7224 12.5751 12.9943 12.9066C12.4519 13.0106 12.0001 13.4477 12.0001 14M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+        stroke="#9B9CAD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    <div class="tooltip">
+      <div class="tooltip-title">1 бонус = 1 рубль</div>
+      Бонусы можно использовать для оплаты покупок в нашем магазине. Начисляются при активации <a>промокодов</a>.</div>
+  </span>
+                </span></div>
+        <div class="profile-info-orders-title">Бонусный счет</div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
